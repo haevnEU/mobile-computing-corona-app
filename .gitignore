@@ -1,3 +1,16 @@
+*/node_modules/
+*/.expo/
+*/dist/
+*/npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+
 # Created by https://www.toptal.com/developers/gitignore/api/reactnative,intellij+all,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=reactnative,intellij+all,visualstudiocode
 
