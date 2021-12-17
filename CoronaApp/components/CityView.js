@@ -18,7 +18,6 @@ class CityView extends React.Component{
 
     render(){
         let data = this.data;
-        console.log(this.state);
         if(this.data !== null) {
             return <View>
                 <Card style={styles.card}>
