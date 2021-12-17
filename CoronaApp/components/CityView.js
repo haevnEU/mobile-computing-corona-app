@@ -1,7 +1,7 @@
 import React from "react";
 import RkiServerDataController from "../api/RkiServerDataController";
 import {Button, StyleSheet, View, Text} from "react-native";
-import LocationService from "../services/LocationService";
+import {LocationService} from "../services/LocationService";
 import { Card } from "react-native-elements";
 
 class CityView extends React.Component{

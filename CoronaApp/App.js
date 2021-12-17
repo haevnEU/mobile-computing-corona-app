@@ -6,8 +6,9 @@ import { Header } from "react-native-elements";
 import {View, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-
+import {getCountyInformationByCoordinate, getCountyInformationByName} from "./api/CountyDataController";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {LocationService} from "./services/LocationService";
 
 function HomeScreen() {
     return (
@@ -20,7 +21,6 @@ function HomeScreen() {
 function MapScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
         </View>
     );
 }
@@ -38,7 +38,14 @@ function SettingScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+    let data = getCountyInformationByName("Oberhausen")
+    console.log(data);
+    console.log("===============");
+    data = getCountyInformationByCoordinate(6.845870, 51.47905);
+    console.log(data);
+
     return (
+        <SafeAreaProvider>
         <NavigationContainer>
             <Header>Hello</Header>
             <Tab.Navigator>
@@ -47,6 +54,7 @@ export default function App() {
                 <Tab.Screen name="Settings" component={SettingScreen} />
             </Tab.Navigator>
         </NavigationContainer>
+        </SafeAreaProvider>
      );
 }
 
