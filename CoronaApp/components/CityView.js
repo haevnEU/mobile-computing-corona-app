@@ -5,7 +5,6 @@ import LocationService from "../services/LocationService";
 import { Card } from "react-native-elements";
 
 class CityView extends React.Component{
-
     data = null;
     state = 0;
     async loadData(){

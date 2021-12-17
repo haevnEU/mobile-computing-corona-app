@@ -27,7 +27,7 @@ export default async function RkiServerDataController(long, lat) {
         }
         );
         let date = new Date();
-        let dateString = date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + "Uhr"
+        let dateString = date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + " Uhr"
         return {
             rawdata: result['attributes'],
             state:{

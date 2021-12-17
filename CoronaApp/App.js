@@ -1,16 +1,54 @@
 
 import {CityView} from "./components/CityView";
+import {SettingsView} from "./components/SettingsView";
 import React from 'react';
-import {View, StyleSheet, SafeAreaView } from 'react-native';
+import { Header } from "react-native-elements";
+import {View, StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const App = () => (
 
-    <SafeAreaView style={styles.container}>
-        <View>
-            <CityView/>
+
+function HomeScreen() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <CityView />
         </View>
-    </SafeAreaView>
-);
+    );
+}
+
+function MapScreen() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+        </View>
+    );
+}
+
+function SettingScreen() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <SettingsView />
+        </View>
+    );
+}
+
+
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Header>Hello</Header>
+            <Tab.Navigator>
+                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen name="Map" component={MapScreen} />
+                <Tab.Screen name="Settings" component={SettingScreen} />
+            </Tab.Navigator>
+        </NavigationContainer>
+     );
+}
 
 const styles = StyleSheet.create({
 
@@ -34,4 +72,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default App;
