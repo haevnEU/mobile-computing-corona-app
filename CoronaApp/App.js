@@ -1,22 +1,21 @@
-
-import {CityView} from "./components/CityView";
 import {SettingsView} from "./components/SettingsView";
 import React from 'react';
 import { Header } from "react-native-elements";
 import {View, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {getCountyInformationByCoordinate, getCountyInformationByName} from "./api/CountyDataController";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {LocationService} from "./services/LocationService";
+import {CountyView} from "./components/CountyView";
+import {getAllCounties} from "./api/CountyDataController";
 
 function HomeScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <CityView />
+            <CountyView />
         </View>
     );
 }
+
 
 function MapScreen() {
     return (
@@ -38,12 +37,6 @@ function SettingScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-    let data = getCountyInformationByName("Oberhausen")
-    console.log(data);
-    console.log("===============");
-    data = getCountyInformationByCoordinate(6.845870, 51.47905);
-    console.log(data);
-
     return (
         <SafeAreaProvider>
         <NavigationContainer>
