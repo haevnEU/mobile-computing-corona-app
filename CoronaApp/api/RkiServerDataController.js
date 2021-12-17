@@ -19,7 +19,7 @@ const fetchData = async (long, lat) => {
 
 export default async function RkiServerDataController(long, lat) {
     let data = await fetchData(long, lat)
-    console.log(data);
+
     let result = data;
     if(null !== data) {
         result = data['features'].find(obj => {
