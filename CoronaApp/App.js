@@ -10,36 +10,42 @@ import {SearchElement} from "./components/SearchElement";
 import {getAllCounties} from "./api/CountyDataController";
 
 function HomeScreen() {
+    const [showSearch, setShowSearch] = useState(true);
+    const [data, setData] = useState({});
+    const [errorText, setErrorText] = useState("");
+    const [counties, setCounties] = useState([]);
+    const [chosenCounty, setChosenCounty] = useState("");
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <CountyView />
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
+                        data={data} setData={setData}
+                        errorText={errorText} setErrorText={setErrorText}
+                        counties={counties} setCounties={setCounties}
+                        chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
+            />
         </View>
     );
 }
 
-async function mapData(){
-    let array = await getAllCounties();
-    array = array.filter((value, index) => array.indexOf(value)===index);
-    let updated = [];
-    for (let i = 0; i < array.length; i++) {
-        const value = array[i];
-        updated.push({ "key": value });
-    }
-    return updated;
-}
 
-function MapScreen() {
-    const [data, setData] = useState([]);
+function MapScreen(props) {
+    const data = props.data;
+    const county = props.county;
+    const setCounty = props.setCounty;
+    const [dataIn, setDataIn] = useState([]);
+    const [countyIn, setCountyIn] = useState("");
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Hello</Text>
-            <SearchElement data={data} />
-            <Button title="Press me" onPress={() => mapData().then(result => setData(result))}/>
+            {
+                //<SearchElement data={dataIn} county={countyIn} setCounty={setCountyIn}/>
+            }
+            <Button title="Press me" onPress={() => mapData().then(result => setDataIn(result))}/>
+            <Button title="Press me" onPress={() => console.log("Chosen county: " + countyIn)}/>
         </View>
     );
 }
 
-function SettingScreen() {
+function SettingScreen(prop) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <SettingsView/>
@@ -50,8 +56,8 @@ function SettingScreen() {
 
 
 const Tab = createBottomTabNavigator();
-
 export default function App() {
+
     return (
         <SafeAreaProvider>
             <Header placement="left" centerComponent={{ text: 'InTrack', style: { color: '#fff', fontSize: 32 } }}/>

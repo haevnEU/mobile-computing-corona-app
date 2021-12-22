@@ -8,7 +8,8 @@ import {
     getCountyInformationByName
 } from "../api/CountyDataController";
 import {DataTable} from "react-native-paper";
-import ApplicationData from "../utils/ApplicationData";
+import ApplicationData, {getMappedCounties} from "../utils/ApplicationData";
+import {SearchElement} from "./SearchElement";
 
 
 const Header = (props) => {
@@ -62,127 +63,55 @@ const CountyDetailsView = (props) => {
     )
 }
 
-const CountyViewNew = (props) => {
-    const [data] = useState(props.data);
-    if (showDetail) {
+
+const CountyView = () => {
+    const [selectedCountyName, setSelectedCountyName] = useState("Berlin Mitte");
+    const [selectedCountyData, setSelectedCountyData] = useState({});
+    const [counties, setCounties] = useState({});
+    const [initialized, setInitialized] = useState(false);
+    const [showSearch, setShowSearch] = useState(true);
+
+    if(!initialized){
+        getMappedCounties().then(result => setCounties(result));
+        setInitialized(true);
+    }
+
+    if (showSearch) {
         return (
             <View>
-                <TextInput placeholder={ApplicationData.county} onChangeText={text => ApplicationData.county = text}/>
                 <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
-                    <Header title={data.name} subtitle={data.state}/>
-                    <Card.Divider/>
-                    <CountyDetailsView data={data.data}/>
-                    <Card.Divider/>
-                    <Button onPress={() => setShowDetail(false)} title="Open Search"/>
+                    <Header title="County Search" />
+                    <Card.Divider />
+                    <View style={styles.card_content}>
+                        <SearchElement data={counties} county={selectedCountyName} setCounty={setSelectedCountyName}/>
+                    </View>
+                    <Card.Divider />
+                    <Button onPress={() => {
+                        getCountyInformationByName(selectedCountyName).then(result => {
+                            setSelectedCountyData(result);
+                            setShowSearch(false);
+                        });
+                    }} title="Search"/>
                 </Card>
             </View>
         )
     } else {
-        return <View/>
+        return (
+            <View>
+                <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
+                    <Header title={selectedCountyData.name} subtitle={selectedCountyData.state}/>
+                    <Card.Divider/>
+                    <CountyDetailsView data={selectedCountyData.data}/>
+                    <Card.Divider/>
+                    <Button onPress={() => {
+                        ApplicationData.county = "Berlin Mitte";
+                        setShowSearch(true);
+                    }} title="Search again"/>
+                </Card>
+            </View>
+        )
     }
 }
-
-const CountySearch = (props) => {
-    return (
-        <View>
-            <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
-                <Header title="County Search" />
-                <Card.Divider />
-                <View style={styles.card_content}>
-                    <TextInput placeholder="Enter a search county" onChangeText={text => ApplicationData.county = text}/>
-                    <Text>{props.text}</Text>
-                </View>
-                <Card.Divider />
-                <Button onPress={() => loadByName(ApplicationData.county)} title="Load Data"/>
-            </Card>
-        </View>
-    )
-}
-
-
-function loadByName(name) {
-    // When an invalid name is provided show an exception message
-    if (undefined === name || null === name) {
-        return;
-    }
-
-    getCountyInformationByName(name).then(result => setData(result));
-}
-
-class CountyView extends React.Component{
-    text = "";
-    data = null;
-    initial = true;
-
-    async loadByName(name){
-        // When an invalid name is provided show an exception message
-        if(undefined === name || null === name){
-            this.text = "Enter a county name"
-            return;
-        }
-
-        // Try to receive information for a county, if the operation fails activate the error message
-        try{
-            this.data = await getCountyInformationByName(name);
-        }catch (ex){
-            this.text = ex.message;
-            this.data = null;
-        }
-        this.forceUpdate();
-    }
-
-    async loadByCoordinate(long, lat) {
-
-        // Try to receive information for a county, if the operation fails activate the error message
-        try {
-            this.data = await getCountyInformationByCoordinate(long, lat);
-        } catch (ex) {
-            this.text= ex.message;
-            this.data = null;
-        }
-        this.forceUpdate();
-    }
-
-    async loadByGps(){
-        try {
-            // Locate the user and use the received county as location
-            let currentCity = await locate();
-            return this.loadByName(currentCity);
-        } catch (ex) {
-            this.text= ex.message;
-            this.data = null;
-        }
-    }
-
-
-    async mapData(){
-        let array = await getAllCounties();
-        array = array.filter((value, index) => array.indexOf(value) === index);
-        let updated = [];
-        for (let i = 0; i < array.length; i++) {
-            const value = array[i];
-            updated.push({ "key": value });
-        }
-        return updated;
-    }
-
-
-    render(){
-
-        let data = this.data;
-        if(data !== null) {
-            return <CountyViewNew visibility={true} data={data} show={false}/>
-        }else return <CountySearch text="" />
-    }
-}
-
-
-
-
-
-
-
-
 
 
 const styles = StyleSheet.create({
