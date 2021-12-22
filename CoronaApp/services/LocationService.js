@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import GpsLocationException from "../exceptions/GpsLocationException";
+import {LocationServiceApiUrl} from "../utils/ApplicationData";
 
 const fetchData = async (url) => {
     const response = await fetch(url);
@@ -7,13 +8,13 @@ const fetchData = async (url) => {
 }
 
 export async function getCityName(long, lat){
-    let result = await fetchData("https://nominatim.openstreetmap.org/reverse?lat=" + lat + "&lon=" + long + "&format=json");
+    let result = await fetchData( LocationServiceApiUrl + "?" + lat + "&lon=" + long + "&format=json");
 
     // When the city mapping api call returns not a valid object throw a new GpsLocationException
     if(result.hasOwnProperty("address") && result['address'].hasOwnProperty("city")){
         return result['address']['city'];
     }else{
-        throw new GpsLocationException("Cannot locate position")
+        throw new GpsLocationException("Cannot locationService position")
     }
 }
 

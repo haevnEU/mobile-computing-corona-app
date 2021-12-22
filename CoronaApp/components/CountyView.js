@@ -1,57 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button, StyleSheet, View, Text, TextInput, Dimensions} from "react-native";
-import {getCityName} from "../services/Locate";
+import {locate} from "../services/LocationService";
 import { Card } from "react-native-elements";
-import {getCountyInformationByName} from "../api/CountyDataController";
+import {
+    getAllCounties,
+    getCountyInformationByCoordinate,
+    getCountyInformationByName
+} from "../api/CountyDataController";
 import {DataTable} from "react-native-paper";
 import ApplicationData from "../utils/ApplicationData";
 
-class CountyView extends React.Component{
-    text = "";
-    data = null;
-    initial = true;
-    async loadByName(name){
-        this.text = "Load data";
 
-        // When an invalid name is provided show an exception message
-        if(undefined === name || null === name){
-            this.text = "Enter a county name"
-            return;
-        }
-        console.log("Load for " + name)
-        try{
-            this.data = await getCountyInformationByName(name);
-        }catch (ex){
-            this.text= ex.message;
-            this.data = null;
-        }
-        this.forceUpdate();
-    }
+const Header = (props) => {
+    return (
+        <View style={styles.card_header}>
+            <Card.Title>{props.title}</Card.Title>
+            <Text>{props.subtitle}</Text>
+        </View>
+    )
+}
 
-
-    async loadByCoordinate(long, lat) {
-        try {
-            let currentCity = await getCityName(long, lat);
-            return this.loadByName(currentCity);
-        } catch (ex) {
-            this.text= ex.message;
-            this.data = null;
-        }
-    }
-
-    async loadByGps(){
-        try {
-            let currentCity = await getCityName();
-            return this.loadByName(currentCity);
-        } catch (ex) {
-            this.text= ex.message;
-            this.data = null;
-        }
-    }
-
-    createElements(){
-        let data = this.data.data;
-        return   <DataTable>
+const CountyDetailsView = (props) => {
+    const [data] = useState(props.data);
+    return (
+        <View style={styles.card_content}>
+            <DataTable>
                 <DataTable.Row>
                     <DataTable.Cell>Einwohner</DataTable.Cell>
                     <DataTable.Cell>{data['population']}</DataTable.Cell>
@@ -85,44 +58,131 @@ class CountyView extends React.Component{
                     <DataTable.Cell>{data['casesPer100k']}</DataTable.Cell>
                 </DataTable.Row>
             </DataTable>
-    }
+        </View>
+    )
+}
 
-    render(){
-        let data = this.data;
-        if(data !== null) {
-            return <View>
-                <TextInput placeholder={ApplicationData.county}   onChangeText={text => ApplicationData.county = text}/>
+const CountyViewNew = (props) => {
+    const [data] = useState(props.data);
+    if (showDetail) {
+        return (
+            <View>
+                <TextInput placeholder={ApplicationData.county} onChangeText={text => ApplicationData.county = text}/>
                 <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
-                    <View style={styles.card_header}>
-                        <Card.Title>{data.name}</Card.Title>
-                        <Text>{data.state}</Text>
-                    </View>
-                    <Card.Divider />
-                    <View style={styles.card_content}>
-                        {this.createElements()}
-                    </View>
-                <Card.Divider />
-                <Button onPress={() => this.loadByName(ApplicationData.county)} title="Load Data"/>
+                    <Header title={data.name} subtitle={data.state}/>
+                    <Card.Divider/>
+                    <CountyDetailsView data={data.data}/>
+                    <Card.Divider/>
+                    <Button onPress={() => setShowDetail(false)} title="Open Search"/>
                 </Card>
-
             </View>
-        }else return<View>
+        )
+    } else {
+        return <View/>
+    }
+}
+
+const CountySearch = (props) => {
+    return (
+        <View>
             <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
-                <View style={styles.card_header}>
-                    <Card.Title>County search</Card.Title>
-                </View>
+                <Header title="County Search" />
                 <Card.Divider />
                 <View style={styles.card_content}>
                     <TextInput placeholder="Enter a search county" onChangeText={text => ApplicationData.county = text}/>
-                    <Text>{this.text}</Text>
+                    <Text>{props.text}</Text>
                 </View>
                 <Card.Divider />
-                <Button onPress={() => this.loadByName(ApplicationData.county)} title="Load Data"/>
+                <Button onPress={() => loadByName(ApplicationData.county)} title="Load Data"/>
             </Card>
-
         </View>
+    )
+}
+
+
+function loadByName(name) {
+    // When an invalid name is provided show an exception message
+    if (undefined === name || null === name) {
+        return;
+    }
+
+    getCountyInformationByName(name).then(result => setData(result));
+}
+
+class CountyView extends React.Component{
+    text = "";
+    data = null;
+    initial = true;
+
+    async loadByName(name){
+        // When an invalid name is provided show an exception message
+        if(undefined === name || null === name){
+            this.text = "Enter a county name"
+            return;
+        }
+
+        // Try to receive information for a county, if the operation fails activate the error message
+        try{
+            this.data = await getCountyInformationByName(name);
+        }catch (ex){
+            this.text = ex.message;
+            this.data = null;
+        }
+        this.forceUpdate();
+    }
+
+    async loadByCoordinate(long, lat) {
+
+        // Try to receive information for a county, if the operation fails activate the error message
+        try {
+            this.data = await getCountyInformationByCoordinate(long, lat);
+        } catch (ex) {
+            this.text= ex.message;
+            this.data = null;
+        }
+        this.forceUpdate();
+    }
+
+    async loadByGps(){
+        try {
+            // Locate the user and use the received county as location
+            let currentCity = await locate();
+            return this.loadByName(currentCity);
+        } catch (ex) {
+            this.text= ex.message;
+            this.data = null;
+        }
+    }
+
+
+    async mapData(){
+        let array = await getAllCounties();
+        array = array.filter((value, index) => array.indexOf(value) === index);
+        let updated = [];
+        for (let i = 0; i < array.length; i++) {
+            const value = array[i];
+            updated.push({ "key": value });
+        }
+        return updated;
+    }
+
+
+    render(){
+
+        let data = this.data;
+        if(data !== null) {
+            return <CountyViewNew visibility={true} data={data} show={false}/>
+        }else return <CountySearch text="" />
     }
 }
+
+
+
+
+
+
+
+
 
 
 const styles = StyleSheet.create({
