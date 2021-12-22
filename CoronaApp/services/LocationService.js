@@ -8,7 +8,7 @@ const fetchData = async (url) => {
 }
 
 export async function getCityName(long, lat){
-    let result = await fetchData( LocationServiceApiUrl + "?" + lat + "&lon=" + long + "&format=json");
+    let result = await fetchData( LocationServiceApiUrl + "?lat=" + lat + "&lon=" + long + "&format=json");
 
     // When the city mapping api call returns not a valid object throw a new GpsLocationException
     if(result.hasOwnProperty("address") && result['address'].hasOwnProperty("city")){

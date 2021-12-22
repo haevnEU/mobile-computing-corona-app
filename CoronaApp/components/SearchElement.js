@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {StyleSheet, View, Text, TextInput, FlatList, TouchableWithoutFeedback} from "react-native";
+import {FlatList, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
+import {Divider} from "react-native-elements";
 
 const SearchElement = (props) => {
     // The data array, general structure [{"key": "value"}]
@@ -25,57 +26,36 @@ const SearchElement = (props) => {
 
         // Return the county name
         return countyFilterInput;
+
     }
 
     return (
-        <View style={styles.searchElementContainer}>
-            <TextInput style={styles.searchElementInput}
-                       placeholder="Enter query"
-                       value={county}
-                       onChangeText={countyInput => setCounty(filterList(countyInput))}/>
+        <View>
 
-            <FlatList style={styles.searchElementSuggestionList}
-                      data={suggestionArray}
-                      renderItem={
-                          ({item}) => (
-                              <TouchableWithoutFeedback style={styles.searchElementSuggestionListElementContainer}
-                                                        onPress={
-                                                            () => {
-                                                                setCounty(item.key);
-                                                                setSuggestionArray({});
-                                                            }
-                                                        }>
-                                  <View style={styles.searchElementSuggestionListElement}>
-                                      <Text>{item.key}</Text>
-                                  </View>
-                              </TouchableWithoutFeedback>
-                          )
-                      }>
+            <TextInput
+                placeholder="Enter query"
+                value={county}
+                onChangeText={countyInput => setCounty(filterList(countyInput))}/>
+            <FlatList
+                data={suggestionArray}
+                renderItem={
+                    ({item}) => (
+                        <TouchableWithoutFeedback
+                            onPress={
+                                () => {
+                                    setCounty(item.key);
+                                    setSuggestionArray({});
+                                }
+                            }>
+                            <View>
+                                <Text style={{textAlign: 'center'}}>{item.key}</Text>
+                                <Divider/>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    )
+                }>
             </FlatList>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-
-    searchElementContainer:{
-
-    },
-
-    searchElementInput:{
-
-    },
-
-    searchElementSuggestionList:{
-
-    },
-
-    searchElementSuggestionListElementContainer:{
-
-    },
-    searchElementSuggestionListElement:{
-
-    },
-});
-
 export {SearchElement};

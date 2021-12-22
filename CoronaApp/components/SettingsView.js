@@ -1,28 +1,32 @@
-import React from "react";
+import React, {useState} from "react";
 import {StyleSheet, View, Text} from "react-native";
 import { Switch } from "react-native-elements";
+import {ApplicationSettings} from "../utils/ApplicationData";
 
-class SettingsView extends React.Component{
 
-    gpsEnabled = false;
 
-    toggleGps(){
-        this.gpsEnabled = !this.gpsEnabled;
-        this.forceUpdate()
+export const SettingsView = () => {
+    const [gpsEnabled, setGpsEnabled] = useState(ApplicationSettings.gps);
+    const [initialized, setInitialized] = useState(false);
+    if(!initialized){
+        setGpsEnabled(ApplicationSettings.gps);
+        setInitialized(true);
     }
 
-    render(){
-        return <View style={styles.container}>
+    return <View style={styles.container}>
 
-            <Switch
-                color="#2089dc"
-                value={this.gpsEnabled}
-                onValueChange={() => this.toggleGps()}
-            />
-            <Text>GPS Tracking</Text>
-            </View>
-    }
+        <Switch
+            color="#2089dc"
+            value={gpsEnabled}
+            onValueChange={(val) => {
+                setGpsEnabled(val);
+                ApplicationSettings.gps = val;
+            }}
+        />
+        <Text>GPS Tracking</Text>
+    </View>
 }
+
 
 
 const styles = StyleSheet.create({
@@ -33,5 +37,3 @@ const styles = StyleSheet.create({
         alignItems: "center"
     }
 });
-
-export {SettingsView};

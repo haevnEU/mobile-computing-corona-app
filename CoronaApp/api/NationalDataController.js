@@ -1,30 +1,20 @@
-const fetchData = async () => {
-    let url = 'https://api.corona-zahlen.org/germany'
-    console.log('Fetching data:....')
-    console.log(fetch(url))
-    return await fetch(url);
-};
+import {NationDataServiceUrl} from "../utils/ApplicationData";
 
+let dataSource = [];
 
+const updateDataSource = async () => {
+    const response = await fetch(NationDataServiceUrl);
+    const result = await response.json();
+    dataSource = {
+        national: {
+            cases7: result['casesPerWeek'],
+            cases7_per_100k: result['casesPer100k'],
+            death: result['deaths'],
+        }
+    }
+}
 
 export default async function NationalDataController() {
-    let data = await fetchData()
-    console.log('Parsing data:....')
-    console.log(data)
-    console.log('Parsed data!...')
-    let result = data;
-    if (null !== data) {
-        result = data['object'].find(obj => {
-                return obj;
-            }
-        );
-
-        return {
-            national: {
-                cases7: result['casesPerWeek'],
-                cases7_per_100k: result['casesPer100k'],
-                death: result['deaths'],
-            },
-        };
-    }
+    await updateDataSource();
+    return dataSource;
 }

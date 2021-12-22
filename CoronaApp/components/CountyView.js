@@ -1,20 +1,16 @@
 import React, {useState} from "react";
-import {Button, StyleSheet, View, Text, TextInput, Dimensions} from "react-native";
-import {locate} from "../services/LocationService";
+import {Button, StyleSheet, View, Text} from "react-native";
 import { Card } from "react-native-elements";
 import {
-    getAllCounties,
-    getCountyInformationByCoordinate,
     getCountyInformationByName
 } from "../api/CountyDataController";
 import {DataTable} from "react-native-paper";
 import ApplicationData, {getMappedCounties} from "../utils/ApplicationData";
 import {SearchElement} from "./SearchElement";
 
-
 const Header = (props) => {
     return (
-        <View style={styles.card_header}>
+        <View>
             <Card.Title>{props.title}</Card.Title>
             <Text>{props.subtitle}</Text>
         </View>
@@ -65,7 +61,7 @@ const CountyDetailsView = (props) => {
 
 
 const CountyView = () => {
-    const [selectedCountyName, setSelectedCountyName] = useState("Berlin Mitte");
+    const [selectedCountyName, setSelectedCountyName] = useState(ApplicationData.county);
     const [selectedCountyData, setSelectedCountyData] = useState({});
     const [counties, setCounties] = useState({});
     const [initialized, setInitialized] = useState(false);
@@ -78,13 +74,11 @@ const CountyView = () => {
 
     if (showSearch) {
         return (
-            <View>
-                <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
-                    <Header title="County Search" />
+            <View style={styles.card} containerStyle={styles.card}>
+                <Card style={styles.card} >
+                    <Card.Title>County Search</Card.Title>
                     <Card.Divider />
-                    <View style={styles.card_content}>
-                        <SearchElement data={counties} county={selectedCountyName} setCounty={setSelectedCountyName}/>
-                    </View>
+                    <SearchElement styles={styles.search_element} data={counties} county={selectedCountyName} setCounty={setSelectedCountyName}/>
                     <Card.Divider />
                     <Button onPress={() => {
                         getCountyInformationByName(selectedCountyName).then(result => {
@@ -98,7 +92,7 @@ const CountyView = () => {
     } else {
         return (
             <View>
-                <Card style={styles.card} containerStyle={{width: Dimensions.get('window').width - 50}}>
+                <Card style={styles.card} containerStyle={styles.card}>
                     <Header title={selectedCountyData.name} subtitle={selectedCountyData.state}/>
                     <Card.Divider/>
                     <CountyDetailsView data={selectedCountyData.data}/>
@@ -113,29 +107,32 @@ const CountyView = () => {
     }
 }
 
-
 const styles = StyleSheet.create({
     card:{
-        marginLeft:0,
-        marginRight:0,
-        width:100
-    },
-    card_header:{
-        position: "relative",
-        alignItems: "center"
+        //width: Dimensions.get('window').width - 50,
+        backgroundColor: 'rgba(52, 52, 52, 0.8)'
     },
     card_content: {
         position: "relative",
+        alignItems: "center",
+        backgroundColor: 'rgba(52, 52, 52, 0.8)'
     },
-
+    card_text:{
+        color: 'white'
+    },
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
         margin: 100,
-        backgroundColor: '#ecf0f1',
     },
+
+    search_element: {
+        backgroundColor: 'rgba(52, 52, 52, 0.8)'
+
+    }
+
 });
 
 export {CountyView}
