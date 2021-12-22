@@ -23,11 +23,11 @@ export default async function RkiServerDataController(long, lat) {
     let result = data;
     if(null !== data) {
         result = data['features'].find(obj => {
-            return obj;
-        }
+                return obj;
+            }
         );
         let date = new Date();
-        let dateString = date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + " Uhr"
+        let dateString = date.getDate() + "." + date.getMonth() + "." + date.getFullYear() + " " + date.getHours() + ":" + ssssssdate.getMinutes() + "Uhr"
         return {
             rawdata: result['attributes'],
             state:{

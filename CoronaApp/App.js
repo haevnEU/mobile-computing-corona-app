@@ -1,4 +1,5 @@
 import {SettingsView} from "./components/SettingsView";
+import {NationView} from "./components/NationView";
 import React, {useState} from 'react';
 import { Header } from "react-native-elements";
 import {View, StyleSheet, Text, Button} from 'react-native';
@@ -8,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {CountyView} from "./components/CountyView";
 import {SearchElement} from "./components/SearchElement";
 import {getAllCounties} from "./api/CountyDataController";
+
 
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
@@ -24,31 +26,23 @@ function HomeScreen() {
                         chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
             />
         </View>
+
     );
 }
 
-
-function MapScreen(props) {
-    const data = props.data;
-    const county = props.county;
-    const setCounty = props.setCounty;
-    const [dataIn, setDataIn] = useState([]);
-    const [countyIn, setCountyIn] = useState("");
+function MapScreen() {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            {
-                //<SearchElement data={dataIn} county={countyIn} setCounty={setCountyIn}/>
-            }
-            <Button title="Press me" onPress={() => mapData().then(result => setDataIn(result))}/>
-            <Button title="Press me" onPress={() => console.log("Chosen county: " + countyIn)}/>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
+            <NationView />
+
         </View>
     );
 }
 
-function SettingScreen(prop) {
+function SettingScreen() {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <SettingsView/>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
+            <SettingsView />
         </View>
     );
 }
@@ -56,19 +50,20 @@ function SettingScreen(prop) {
 
 
 const Tab = createBottomTabNavigator();
+
 export default function App() {
 
     return (
-        <SafeAreaProvider>
-            <Header placement="left" centerComponent={{ text: 'InTrack', style: { color: '#fff', fontSize: 32 } }}/>
-            <NavigationContainer>
-                <Tab.Navigator>
-                    <Tab.Screen name="Home" component={HomeScreen} />
-                    <Tab.Screen name="Map" component={MapScreen} />
-                    <Tab.Screen name="Settings" component={SettingScreen} />
-                </Tab.Navigator>
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <NavigationContainer>
+            <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer} leftComponent={{text: 'InTrack', style: styles.heading}}/>
+            <Tab.Navigator screenOptions={{headerShown: false, tabBarInactiveBackgroundColor:'#2D2D2D',
+                tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white'}}
+                    >
+                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen name="Map" component={MapScreen} />
+                <Tab.Screen name="Settings" component={SettingScreen} />
+            </Tab.Navigator>
+        </NavigationContainer>
      );
 }
 
@@ -92,5 +87,30 @@ const styles = StyleSheet.create({
         borderBottomColor: '#737373',
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
+    heading: {
+        color: 'white',
+        width: 500,
+        fontSize: 30,
+        fontWeight: 'bold',
+        overflow: "visible"
+    },
+    headerContainer: {
+        backgroundColor: '#4d4d4d'
+    },
+
+    card_content: {
+        backgroundColor: "#B6FC95",
+        height: '10%',
+        width: '90%',
+        position: "relative",
+        textAlignVertical: 'center',
+        alignItems: "center",
+        marginBottom: '5%',
+        paddingTop: 7,
+        borderRadius: 50,
+        top: 10
+
+    },
+
 });
 
