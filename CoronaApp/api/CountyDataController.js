@@ -10,7 +10,6 @@ const updateDataSource = async () => {
 
     // Update the datasource if it's older than one day
     if(dataSource['update'] - currentTime < 0){
-        console.log("Update");
         const response = await fetch(CountyDataServiceUrl);
         dataSource.data = await response.json();
         dataSource.update = currentTime + OneDayAsMilli;

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {FlatList, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import {Divider} from "react-native-elements";
+import {styles} from "./SearchElementStyle";
 
 const SearchElement = (props) => {
     // The data array, general structure [{"key": "value"}]
@@ -30,13 +31,14 @@ const SearchElement = (props) => {
     }
 
     return (
-        <View>
-
+        <View style={styles.container}>
             <TextInput
+                style={[styles.input, styles.text]}
                 placeholder="Enter query"
                 value={county}
                 onChangeText={countyInput => setCounty(filterList(countyInput))}/>
             <FlatList
+                style={styles.suggestions}
                 data={suggestionArray}
                 renderItem={
                     ({item}) => (
@@ -48,7 +50,7 @@ const SearchElement = (props) => {
                                 }
                             }>
                             <View>
-                                <Text style={{textAlign: 'center'}}>{item.key}</Text>
+                                <Text style={[styles.suggestion_entry, styles.text]}>{item.key}</Text>
                                 <Divider/>
                             </View>
                         </TouchableWithoutFeedback>

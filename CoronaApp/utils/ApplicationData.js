@@ -19,9 +19,7 @@ export default ApplicationData;
 
 
 export async function getMappedCounties(){
-    console.log("Get Mapped Counties")
     let array = await getAllCounties();
-
     array = array.filter((value, index) => array.indexOf(value)===index);
     let updated = [];
     for (let value of array) {

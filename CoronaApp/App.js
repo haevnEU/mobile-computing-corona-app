@@ -1,12 +1,12 @@
-import {SettingsView} from "./components/SettingsView";
-import {NationView} from "./components/NationView";
+import {SettingsView} from "./components/SettingsView/SettingsView";
+import {NationView} from "./components/NationView/NationView";
 import React, {useState} from 'react';
 import { Header } from "react-native-elements";
 import {View, Text} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {CountyView} from "./components/CountyView";
+import {CountyView} from "./components/CountyView/CountyView";
 import styles from './styles/default'
 import {getCityName, locate} from "./services/LocationService";
 import ApplicationData from "./utils/ApplicationData";

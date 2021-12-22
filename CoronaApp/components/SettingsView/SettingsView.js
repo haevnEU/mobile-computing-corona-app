@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {StyleSheet, View, Text} from "react-native";
+import {View, Text} from "react-native";
 import { Switch } from "react-native-elements";
-import {ApplicationSettings} from "../utils/ApplicationData";
-
+import {ApplicationSettings} from "../../utils/ApplicationData";
+import {styles} from "./SettingsViewStyle";
 
 
 export const SettingsView = () => {
@@ -14,8 +14,7 @@ export const SettingsView = () => {
     }
 
     return <View style={styles.container}>
-
-        <Switch
+        <Switch style={[styles.switch]}
             color="#2089dc"
             value={gpsEnabled}
             onValueChange={(val) => {
@@ -23,17 +22,6 @@ export const SettingsView = () => {
                 ApplicationSettings.gps = val;
             }}
         />
-        <Text>GPS Tracking</Text>
+        <Text styles={styles.text}>GPS Tracking</Text>
     </View>
 }
-
-
-
-const styles = StyleSheet.create({
-
-    container: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center"
-    }
-});
