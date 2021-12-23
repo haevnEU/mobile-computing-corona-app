@@ -1,7 +1,6 @@
 import {styles} from "./AddCountyViewButtonStyle";
 import React from "react";
 import {Pressable, Text, View} from "react-native";
-import {CountyView} from "../CountyView/CountyView";
 
 export const AddCountyButtonView = () => {
 
