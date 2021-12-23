@@ -4,7 +4,6 @@ import { Card, Divider } from "react-native-elements";
 import {
     getCountyInformationByName
 } from "../../api/CountyDataController";
-import {DataTable} from "react-native-paper";
 import ApplicationData, {getMappedCounties} from "../../utils/ApplicationData";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
@@ -12,14 +11,14 @@ import {CustomTable} from "../CustomTable/CustomTable";
 
 const createRow = (key, value) => {
     return ( <View
-        style={{ padding: 10,
-            flexDirection: "row"
-        }}
-    >
-        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
-        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
-    </View>
-);
+            style={{ padding: 10,
+                flexDirection: "row"
+            }}
+        >
+            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
+            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
+        </View>
+    );
 }
 
 const CountyDetailsView = (props) => {
@@ -27,11 +26,11 @@ const CountyDetailsView = (props) => {
     return (<View>
             <CustomTable data={data} />
 
-    </View>
+        </View>
     )
 }
 const createDisplayData = (data)=>{
-   const tmp = [
+    const tmp = [
         {
             "key": "Einwohner",
             "value": data['population']
@@ -57,7 +56,7 @@ const createDisplayData = (data)=>{
             "value": data['deathPerWeek']
         }
     ]
-   return tmp;
+    return tmp;
 }
 
 const CountyView = () => {
@@ -85,6 +84,8 @@ const CountyView = () => {
                             setSelectedCountyData(result);
                             setShowSearch(false);
                             setDisplayData(createDisplayData(result.data))
+
+
                         });
                     }} title="Search"/>
                 </Card>
