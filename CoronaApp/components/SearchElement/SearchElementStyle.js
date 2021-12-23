@@ -17,7 +17,8 @@ export const styles = StyleSheet.create({
     suggestions: {},
 
     suggestion_entry: {
-        textAlign: 'center',
+        // On mobile maybe center
+        textAlign: 'left',
     },
 
 });

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, View, Text} from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Divider } from "react-native-elements";
 import {
     getCountyInformationByName
 } from "../../api/CountyDataController";
@@ -8,41 +8,57 @@ import {DataTable} from "react-native-paper";
 import ApplicationData, {getMappedCounties} from "../../utils/ApplicationData";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
+import {CustomTable} from "../CustomTable/CustomTable";
 
+const createRow = (key, value) => {
+    return ( <View
+        style={{ padding: 10,
+            flexDirection: "row"
+        }}
+    >
+        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
+        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
+    </View>
+);
+}
 
 const CountyDetailsView = (props) => {
     const [data] = useState(props.data);
-    console.log(data);
-    return (
-        <DataTable>
-            <DataTable.Row>
-                <DataTable.Cell styles={[{color: "#ffffff"}]} >Einwohner</DataTable.Cell>
-                <DataTable.Cell>{data['population']}</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>Inzidenz</DataTable.Cell>
-                <DataTable.Cell>{data['incidence']}</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>Fälle gesamt</DataTable.Cell>
-                <DataTable.Cell>{data['cases']}</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>Fälle/Woche</DataTable.Cell>
-                <DataTable.Cell>{data['casesPerWeek']}</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>Tode</DataTable.Cell>
-                <DataTable.Cell>{data['death']}</DataTable.Cell>
-            </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>Tode/Woche</DataTable.Cell>
-                <DataTable.Cell>{data['deathPerWeek']}</DataTable.Cell>
-            </DataTable.Row>
-        </DataTable>
+    return (<View>
+            <CustomTable data={data} />
+
+    </View>
     )
 }
-
+const createDisplayData = (data)=>{
+   const tmp = [
+        {
+            "key": "Einwohner",
+            "value": data['population']
+        },
+        {
+            "key": "Inzidenz",
+            "value": data['incidence']
+        },
+        {
+            "key": "Fälle gesamt",
+            "value": data['cases']
+        },
+        {
+            "key": "Fälle/Woche",
+            "value": data['casesPerWeek']
+        },
+        {
+            "key": "Tode",
+            "value": data['death']
+        },
+        {
+            "key": "Tode/Woche",
+            "value": data['deathPerWeek']
+        }
+    ]
+   return tmp;
+}
 
 const CountyView = () => {
     const [selectedCountyName, setSelectedCountyName] = useState(ApplicationData.county);
@@ -50,7 +66,7 @@ const CountyView = () => {
     const [counties, setCounties] = useState({});
     const [initialized, setInitialized] = useState(false);
     const [showSearch, setShowSearch] = useState(true);
-
+    const [displayData, setDisplayData] = useState([]);
     if(!initialized){
         getMappedCounties().then(result => setCounties(result));
         setInitialized(true);
@@ -68,6 +84,7 @@ const CountyView = () => {
                         getCountyInformationByName(selectedCountyName).then(result => {
                             setSelectedCountyData(result);
                             setShowSearch(false);
+                            setDisplayData(createDisplayData(result.data))
                         });
                     }} title="Search"/>
                 </Card>
@@ -80,7 +97,7 @@ const CountyView = () => {
                     <Card.Title style={[styles.text, styles.headline]}>{selectedCountyData.name}</Card.Title>
                     <Text style={[styles.text, styles.headline]}>{selectedCountyData.state}</Text>
                     <Card.Divider/>
-                    <CountyDetailsView data={selectedCountyData.data}/>
+                    <CountyDetailsView data={displayData}/>
                     <Card.Divider/>
                     <Button onPress={() => {
                         setShowSearch(true);
