@@ -3,13 +3,16 @@ import GpsLocationException from "../exceptions/GpsLocationException";
 import {LocationServiceApiUrl} from "../utils/ApplicationData";
 
 const fetchData = async (url) => {
-    const response = await fetch(url);
-    return response.json();
+    return fetch(url).then(result => {return result}).catch(error => {
+        console.log("Error occurred: ");
+        console.log(error)
+        return {};
+    })
 }
 
 export async function getCityName(long, lat){
     let result = await fetchData( LocationServiceApiUrl + "?lat=" + lat + "&lon=" + long + "&format=json");
-
+    console.log(result)
     // When the city mapping api call returns not a valid object throw a new GpsLocationException
     if(result.hasOwnProperty("address") && result['address'].hasOwnProperty("city")){
         return result['address']['city'];

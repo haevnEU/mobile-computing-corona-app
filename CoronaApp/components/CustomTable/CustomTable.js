@@ -4,8 +4,8 @@ import {styles} from "./CustomTableStyle";
 import {Divider} from "react-native-paper";
 
 
-const createRow = (key, value)=> {
-    return (<View style={styles.row}>
+const createRow = (key, value, index)=> {
+    return (<View style={styles.row} key={"entry#" + index}>
             <Text style={styles.cell}>{key}</Text>
             <Text style={styles.cell}>{value}</Text>
             <Divider />
@@ -14,16 +14,17 @@ const createRow = (key, value)=> {
 }
 
 const generateRows = (data)=> {
-    const result = [];
+    const result = []
+    let index = 0;
     data.map(row => {
-        result.push(createRow(row.key, row.value));
+        result.push(createRow(row.key, row.value, index));
+            index++;
     })
     return result;
 }
 
 export const CustomTable = (props) => {
     const [data] = useState(props.data);
-    console.log("Table")
     return (
         <View style={styles.container}>
             <Text style={styles.header}>{props.header}</Text>

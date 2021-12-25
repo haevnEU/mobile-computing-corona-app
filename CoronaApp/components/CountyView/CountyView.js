@@ -2,30 +2,19 @@ import React, {useEffect, useState} from "react";
 import {Button, View, Text} from "react-native";
 import { Card, Divider } from "react-native-elements";
 import {
-    getCountyInformationByName
+    getCountyInformationByName, getMappedCounties
 } from "../../api/CountyDataController";
-import ApplicationData, {getMappedCounties} from "../../utils/ApplicationData";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
 import {CustomTable} from "../CustomTable/CustomTable";
+import ApplicationData from "../../utils/ApplicationData";
 
-const createRow = (key, value) => {
-    return ( <View
-            style={{ padding: 10,
-                flexDirection: "row"
-            }}
-        >
-            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
-            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
-        </View>
-    );
-}
 
 const CountyDetailsView = (props) => {
     const [data] = useState(props.data);
     return (<View>
             <CustomTable data={data} />
-    </View>
+       </View>
     )
 }
 const createDisplayData = (data)=>{
@@ -66,6 +55,7 @@ const CountyView = () => {
     const [displayData, setDisplayData] = useState([]);
     if(!initialized){
         getMappedCounties().then(result => setCounties(result));
+
         setInitialized(true);
     }
 
@@ -81,9 +71,9 @@ const CountyView = () => {
                         getCountyInformationByName(selectedCountyName).then(result => {
                             setSelectedCountyData(result);
                             setShowSearch(false);
-                            setDisplayData(createDisplayData(result.data))
-
-
+                            const tp = createDisplayData(result.data);
+                            setDisplayData(tp)
+                            console.log(showSearch);
                         });
                     }} title="Search"/>
                 </Card>
@@ -96,7 +86,8 @@ const CountyView = () => {
                     <Card.Title style={[styles.text, styles.headline]}>{selectedCountyData.name}</Card.Title>
                     <Text style={[styles.text, styles.headline]}>{selectedCountyData.state}</Text>
                     <Card.Divider/>
-                    <CountyDetailsView data={displayData}/>
+                    <CustomTable data={displayData} />
+
                     <Card.Divider/>
                     <Button onPress={() => {
                         setShowSearch(true);

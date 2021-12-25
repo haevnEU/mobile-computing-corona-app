@@ -5,13 +5,15 @@ import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/ApplicationData";
 const dataSource = {update: 0};
 let counties = {};
 
-const updateDataSource = async () => {
+export const updateDataSource = async () => {
     let currentTime = Date.now();
 
     // Update the datasource if it's older than one day
     if(dataSource['update'] - currentTime < 0){
         const response = await fetch(CountyDataServiceUrl);
         dataSource.data = await response.json();
+        console.log("Updated data");
+        console.log(dataSource)
         dataSource.update = currentTime + OneDayAsMilli;
 
         // Each update of the datasource also updates the county list
@@ -66,4 +68,15 @@ export async function getCountyInformationByCoordinate(long, lat) {
 export async function getAllCounties(){
     await updateDataSource();
     return counties;
+}
+
+
+export async function getMappedCounties(){
+    let array = await getAllCounties();
+    array = array.filter((value, index) => array.indexOf(value)===index);
+    let updated = [];
+    for (let value of array) {
+        updated.push({ "key": value });
+    }
+    return updated;
 }
