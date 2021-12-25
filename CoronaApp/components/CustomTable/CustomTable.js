@@ -15,16 +15,16 @@ const createRow = (key, value)=> {
     )
 }
 
-const generateRows = (data)=>{
-  return data.map(row => {
-      console.log("map")
-      createRow(row.key, row.value);
-  })
+const generateRows = (data)=> {
+    const result = [];
+    data.map(row => {
+        result.push(createRow(row.key, row.value));
+    })
+    return result;
 }
 
 export const CustomTable = (props) => {
     const [data] = useState(props.data);
-    console.log("Table")
     return (
         <View>
             {generateRows(data)}

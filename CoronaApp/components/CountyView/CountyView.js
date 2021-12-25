@@ -26,12 +26,11 @@ const CountyDetailsView = (props) => {
     const [data] = useState(props.data);
     return (<View>
             <CustomTable data={data} />
-
     </View>
     )
 }
 const createDisplayData = (data)=>{
-   const tmp = [
+   return [
         {
             "key": "Einwohner",
             "value": data['population']
@@ -57,7 +56,6 @@ const createDisplayData = (data)=>{
             "value": data['deathPerWeek']
         }
     ]
-   return tmp;
 }
 
 const CountyView = () => {
@@ -82,9 +80,10 @@ const CountyView = () => {
                     <Card.Divider />
                     <Button styles={[styles.text]} onPress={() => {
                         getCountyInformationByName(selectedCountyName).then(result => {
+                            const data = createDisplayData(result.data);
                             setSelectedCountyData(result);
                             setShowSearch(false);
-                            setDisplayData(createDisplayData(result.data))
+                            setDisplayData(data)
                         });
                     }} title="Search"/>
                 </Card>
