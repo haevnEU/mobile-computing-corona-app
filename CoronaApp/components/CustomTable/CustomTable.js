@@ -1,16 +1,14 @@
 import {Text, View} from "react-native";
 import React, {useState} from "react";
+import {styles} from "./CustomTableStyle";
+import {Divider} from "react-native-paper";
 
 
 const createRow = (key, value)=> {
-    return (<View
-            style={{
-                padding: 10,
-                flexDirection: "row"
-            }}
-        >
-            <Text style={{flex: 0.5, color: "#ffffff", fontSize: 28}}>{key}</Text>
-            <Text style={{flex: 0.5, color: "#ffffff", fontSize: 28}}>{value}</Text>
+    return (<View style={styles.row}>
+            <Text style={styles.cell}>{key}</Text>
+            <Text style={styles.cell}>{value}</Text>
+            <Divider />
         </View>
     )
 }
@@ -25,8 +23,11 @@ const generateRows = (data)=> {
 
 export const CustomTable = (props) => {
     const [data] = useState(props.data);
+    console.log("Table")
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.header}>{props.header}</Text>
+            <Divider />
             {generateRows(data)}
         </View>
     )
