@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
 
     headline:{
         color: "#ffffff",
-        fontSize:32,
+        fontSize:25,
         textAlign: "center"
     },
 
@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
 
 
     card:{
-        //width: Dimensions.get('window').width - 50,
-        backgroundColor: 'rgba(52, 52, 52, 0.8)'
+        backgroundColor: '#4A4A4A',
+        borderRadius: 25
     },
     card_content: {
         position: "relative",

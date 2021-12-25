@@ -4,7 +4,6 @@ import { Card, Divider } from "react-native-elements";
 import {
     getCountyInformationByName
 } from "../../api/CountyDataController";
-import {DataTable} from "react-native-paper";
 import ApplicationData, {getMappedCounties} from "../../utils/ApplicationData";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
@@ -12,14 +11,14 @@ import {CustomTable} from "../CustomTable/CustomTable";
 
 const createRow = (key, value) => {
     return ( <View
-        style={{ padding: 10,
-            flexDirection: "row"
-        }}
-    >
-        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
-        <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
-    </View>
-);
+            style={{ padding: 10,
+                flexDirection: "row"
+            }}
+        >
+            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{key}</Text>
+            <Text style={{flex: 0.5, color: "#ffffff", fontSize:28}} >{value}</Text>
+        </View>
+    );
 }
 
 const CountyDetailsView = (props) => {
@@ -80,10 +79,11 @@ const CountyView = () => {
                     <Card.Divider />
                     <Button styles={[styles.text]} onPress={() => {
                         getCountyInformationByName(selectedCountyName).then(result => {
-                            const data = createDisplayData(result.data);
                             setSelectedCountyData(result);
                             setShowSearch(false);
-                            setDisplayData(data)
+                            setDisplayData(createDisplayData(result.data))
+
+
                         });
                     }} title="Search"/>
                 </Card>

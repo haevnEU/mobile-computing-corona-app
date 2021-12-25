@@ -8,7 +8,7 @@ const updateDataSource = async () => {
     dataSource = {
         national: {
             cases7: result['casesPerWeek'],
-            cases7_per_100k: result['casesPer100k'],
+            cases7_per_100k: result['weekIncidence'],
             death: result['deaths'],
         }
     }
