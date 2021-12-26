@@ -1,14 +1,13 @@
 import {Text, View} from "react-native";
 import React, {useState} from "react";
 import {styles} from "./CustomTableStyle";
-import {Divider} from "react-native-paper";
 
 
 const createRow = (key, value, index)=> {
-    return (<View style={styles.row} key={"entry#" + index}>
+    return (
+        <View style={styles.row} key={"entry#" + index}>
             <Text style={styles.cell}>{key}</Text>
             <Text style={styles.cell}>{value}</Text>
-            <Divider />
         </View>
     )
 }
@@ -28,7 +27,6 @@ export const CustomTable = (props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>{props.header}</Text>
-            <Divider />
             {generateRows(data)}
         </View>
     )

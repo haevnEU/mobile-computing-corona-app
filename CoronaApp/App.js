@@ -15,6 +15,7 @@ import {updateCountyDataSource} from "./api/CountyDataController"
 import logger from "./utils/Logger";
 
 
+import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
@@ -24,7 +25,7 @@ function HomeScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
-            {//   <AddCountyButtonView/>
+            {//
             }
             <ScrollView
                 horizontal={true}
@@ -35,6 +36,7 @@ function HomeScreen() {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={12}
             >
+                <AddCountyButtonView />
             <NationView />
             <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
                         data={data} setData={setData}

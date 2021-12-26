@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
 
     text:{
         color: "#ffffff",
-        fontSize:28
+        fontSize:28,
+        textAlign: 'center',
     },
 
     headline:{
@@ -18,7 +19,7 @@ export const styles = StyleSheet.create({
 
     suggestion_entry: {
         // On mobile maybe center
-        textAlign: 'left',
+        textAlign: 'center',
     },
 
 });

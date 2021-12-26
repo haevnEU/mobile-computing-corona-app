@@ -21,13 +21,17 @@ class Logger {
     log(message, level){
         let datetime = this.getCurrentDateTime();
         if(level === DEBUG){
-            console.debug("[DBG ] " + datetime + ": " + message);
+            console.debug("[DBG ] " + datetime + ":");
+            console.debug(message);
         }else if(level === INFO){
-            console.info("[INFO] " + datetime + ": " + message);
+            console.info("[INFO] " + datetime + ":");
+            console.info(message);
         }else if(level === WARN){
-            console.warn("[WARN] " + datetime + ": " + message);
+            console.warn("[WARN] " + datetime + ":");
+            console.warn(message);
         }else if(level === CRITICAL){
-            console.error("[ERR ] " + datetime + ": " + message);
+            console.error("[ERR ] " + datetime + ":");
+            console.error(message);
         }else if(level === EXCEPTION){
             console.error(message)
         }
