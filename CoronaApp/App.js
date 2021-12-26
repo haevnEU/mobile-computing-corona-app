@@ -2,17 +2,17 @@ import {SettingsView} from "./components/SettingsView/SettingsView";
 import {NationView} from "./components/NationView/NationView";
 import React, {useEffect, useState} from 'react';
 import {Header} from "react-native-elements";
-import {ActivityIndicator, Text, View} from 'react-native';
+import {ActivityIndicator, Dimensions, ScrollView, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {CountyView} from "./components/CountyView/CountyView";
 import styles from './styles/default'
-import {getCurrentCityName, isGranted, request} from "./services/LocationService";
-import ApplicationData from "./utils/ApplicationData";
+import {getCurrentCityName, isGranted, Locator, request} from "./services/LocationService";
+import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 
-import {updateDataSource} from "./api/CountyDataController"
-import Toast from 'react-native-root-toast'
+import {updateCountyDataSource} from "./api/CountyDataController"
+import logger from "./utils/Logger";
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
@@ -23,14 +23,24 @@ function HomeScreen() {
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             {//   <AddCountyButtonView/>
-            }<NationView />
+            }
+            <ScrollView
+                horizontal={true}
+                decelerationRate={"normal"}
+                snapToInterval={ITEM_WIDTH}
+                bounces={false}
+                style={{ marginTop: 40, paddingHorizontal: 0 }}
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={12}
+            >
+            <NationView />
             <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
                         data={data} setData={setData}
                         errorText={errorText} setErrorText={setErrorText}
                         counties={counties} setCounties={setCounties}
                         chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
             />
-
+        </ScrollView>
         </View>
 
     );
@@ -58,28 +68,40 @@ const Tab = createBottomTabNavigator();
 export default function App() {
     const [loading, setLoading] = useState(true);
     const [loadingText, setLoadingTest] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
-useEffect(async () => {
-    setLoadingTest("Request permissions");
-    await request();
-    setLoadingTest("Super fast V8 turbo is updating data sources");
-    await updateDataSource();
-    if(isGranted()){
-        setLoadingTest("Locating user inside real world using V8 turrrrrrbo");
-        ApplicationData.county = await getCurrentCityName().catch(error => {
-            Toast.show('V8 Turbo cannot locate you.', {
-                duration: Toast.durations.LONG,
+    useEffect(async () => {
+        logger.enter("App initial useEffect");
+
+        logger.info("Request all required permissions")
+        setLoadingTest("Request permissions");
+        await Locator.request();
+
+        logger.info("Update data sources");
+        setLoadingTest("Super fast V8 turbo is updating data sources");
+        await updateCountyDataSource();
+
+        if (Locator.isGranted()) {
+            logger.info("Locate user");
+            setLoadingTest("Locating user inside real world using V8 turrrrrrbo");
+            ApplicationData.county = await Locator.getCurrentCityName().catch(error => {
+                logger.critical("Cannot locate the user using default Berlin Mitte");
+                logger.exception(error);
+                return "Berlin Mitte"
             });
-            return "Berlin Mitte"
-        });
-    }
-    setLoadingTest("V8 goes rrrrrrrr")
-    setLoading(false);
-}, []);
+        } else {
+            logger.warn("Location service has no permission");
+        }
+
+        logger.info("Done initializing");
+        setLoadingTest("V8 goes rrrrrrrr")
+        setLoading(false);
+
+        logger.leave("App initial useEffect");
+    }, []);
 
     if (loading) {
         return (
             <SafeAreaProvider>
-                <View style={{   justifyContent: 'center', alignItems: 'center', flex:1}}>
+                <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
                     <Text>{loadingText}</Text>
                     <ActivityIndicator size={"large"}/>
                 </View>
@@ -104,4 +126,3 @@ useEffect(async () => {
         );
     }
 }
-

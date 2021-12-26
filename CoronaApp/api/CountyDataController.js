@@ -1,45 +1,55 @@
-import {getCityName} from "../services/LocationService";
 import CountyDoesNotExistsException from "../exceptions/CountyDoesNotExistsException";
 import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/ApplicationData";
+import logger from "../utils/Logger";
 
 const dataSource = {update: 0};
 let counties = {};
 
-export const updateDataSource = async () => {
+export const updateCountyDataSource = async () => {
+    logger.enter("updateCountyDataSource()", "CountyDataController");
     let currentTime = Date.now();
 
     // Update the datasource if it's older than one day
     if(dataSource['update'] - currentTime < 0){
+        logger.info("Update county data");
         const response = await fetch(CountyDataServiceUrl);
         dataSource.data = await response.json();
-        console.log("Updated data");
-        console.log(dataSource)
         dataSource.update = currentTime + OneDayAsMilli;
 
         // Each update of the datasource also updates the county list
+        logger.info("Update county list")
         let dataAsObject = dataSource.data.data;
         counties = Object
             .keys(dataAsObject)
             .map(key => dataAsObject[key].name);
     }
+
+    logger.leave("updateCountyDataSource()", "CountyDataController");
 }
 
 export async function getCountyInformationByName(name) {
-    await updateDataSource();
+    logger.enter("getCountyInformationByName(" + name +")", "CountyDataController");
 
+    await updateCountyDataSource();
+
+    logger.info("Simplify datasource for local operation")
     // Get and map the data of the datasource.
     let dataAsObject = dataSource.data.data;
     let dataAsArray = Object
         .keys(dataAsObject)
         .map(key => dataAsObject[key]);
 
+    logger.info("Extract county information")
     // Extract the county out of the datasource
     let county = dataAsArray.filter(data => data.name.toLowerCase() === name.toLowerCase() )[0];
 
     // Given county does not exist => throw a new exception
     if(undefined === county || null == county){
+        logger.unexpectedLeft("getCountyInformationByName(" + name +")");
         throw new CountyDoesNotExistsException("County " + name + " does not exists");
     }
+
+    logger.leave("getCountyInformationByName(" + name +")", "CountyDataController");
     // Map the county object to a custom json format
     return {
         "raw":county,
@@ -59,24 +69,30 @@ export async function getCountyInformationByName(name) {
     };
 }
 
-export async function getCountyInformationByCoordinate(long, lat) {
-    // First map the coordinate to a city using the LocationService
-    let county = await getCityName(long, lat);
-    return getCountyInformationByName(county);
-}
-
 export async function getAllCounties(){
-    await updateDataSource();
+    logger.enter("getAllCounties", "CountyDataController");
+
+    await updateCountyDataSource();
+
+    logger.leave("getAllCounties", "CountyDataController");
     return counties;
 }
 
 
 export async function getMappedCounties(){
+    logger.enter("getMappedCounties", "CountyDataController");
+
     let array = await getAllCounties();
+
+    logger.info("Filter counties");
     array = array.filter((value, index) => array.indexOf(value)===index);
     let updated = [];
+
+    logger.info("Map filtered counties to a json object")
     for (let value of array) {
         updated.push({ "key": value });
     }
+
+    logger.leave("getMappedCounties", "CountyDataController");
     return updated;
 }

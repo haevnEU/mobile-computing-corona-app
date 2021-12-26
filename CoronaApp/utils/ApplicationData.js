@@ -1,3 +1,5 @@
+import {Dimensions} from "react-native";
+
 const ApplicationData = {
     "county": "Bochum",
     "state": "NRW",
@@ -7,6 +9,7 @@ const ApplicationData = {
 export const ApplicationSettings = {
     "gps": false
 }
+export const ITEM_WIDTH = Dimensions.get("window").width *0.9
 
 export const LocationServiceApiUrl = "https://nominatim.openstreetmap.org/reverse";
 export const CountyDataServiceUrl = "https://api.corona-zahlen.org/districts";

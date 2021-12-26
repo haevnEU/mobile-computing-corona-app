@@ -1,4 +1,5 @@
 import {StyleSheet} from "react-native";
+import {ITEM_WIDTH} from "../../utils/ApplicationData";
 
 export const styles = StyleSheet.create({
     container:{
@@ -36,6 +37,7 @@ export const styles = StyleSheet.create({
 
 
     card:{
+        width: ITEM_WIDTH,
         backgroundColor: '#4A4A4A',
         borderRadius: 25
     },

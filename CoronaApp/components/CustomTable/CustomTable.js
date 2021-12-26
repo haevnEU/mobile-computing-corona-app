@@ -18,7 +18,7 @@ const generateRows = (data)=> {
     let index = 0;
     data.map(row => {
         result.push(createRow(row.key, row.value, index));
-            index++;
+        index++;
     })
     return result;
 }
