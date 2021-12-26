@@ -13,6 +13,8 @@ import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 
 import {updateCountyDataSource} from "./api/CountyDataController"
 import logger from "./utils/Logger";
+
+
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
