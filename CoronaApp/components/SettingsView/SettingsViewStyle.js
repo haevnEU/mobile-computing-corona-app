@@ -8,14 +8,15 @@ export const styles = StyleSheet.create({
     },
 
     text:{
-        color: "#ffffff"
+        color: "#ffffff",
+        fontSize:25
     },
 
     input: {
     },
 
     switch:{
-
+        color: "#ff00ff",
     }
 
 

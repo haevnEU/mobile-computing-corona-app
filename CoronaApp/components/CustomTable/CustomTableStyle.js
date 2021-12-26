@@ -20,12 +20,4 @@ export const styles = StyleSheet.create({
     header:{
 
     },
-
-    title:{
-
-    },
-
-    subtitle:{
-
-    }
 });

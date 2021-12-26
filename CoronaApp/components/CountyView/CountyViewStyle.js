@@ -2,12 +2,22 @@ import {StyleSheet} from "react-native";
 import {ITEM_WIDTH} from "../../utils/ApplicationData";
 
 export const styles = StyleSheet.create({
+
     container:{
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
         margin: 100,
+    },
+
+    button_container:{
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+
+    button:{
+        alignItems: 'center'
     },
 
     text:{
@@ -18,35 +28,28 @@ export const styles = StyleSheet.create({
 
     title:{
         color: "#ffffff",
+        textAlign: "center",
         fontSize:28
     },
 
-    headline:{
+    subtitle:{
         color: "#ffffff",
-        fontSize:25,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize:25
     },
-
-    input: {
-    },
-
-    suggestions: {},
-
-    suggestion_entry: {
-        textAlign: 'center',
-    },
-
 
     card:{
         width: ITEM_WIDTH,
         backgroundColor: '#4A4A4A',
         borderRadius: 25
     },
+
     card_content: {
         position: "relative",
         alignItems: "center",
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
     },
+
     card_text:{
         color: 'white'
     },

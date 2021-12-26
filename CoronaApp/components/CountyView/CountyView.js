@@ -8,8 +8,6 @@ import {CustomTable} from "../CustomTable/CustomTable";
 import ApplicationData from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 
-
-
 const createDisplayData = (data) => {
    return [
         {
@@ -54,10 +52,12 @@ const CountyView = () => {
     if (showSearch) {
         return (
             <View>
-                <Card style={[styles.card, styles.text, styles.headline]} containerStyle={styles.card}>
-                    <Card.Title style={[styles.headline]}>County Search</Card.Title>
+                <Card containerStyle={styles.card}>
+                    <Card.Title style={[styles.title]}>County Search</Card.Title>
                     <Card.Divider/>
-                    <SearchElement styles={styles.search_element} data={counties} county={selectedCountyName}
+                    <SearchElement styles={styles.search_element}
+                                   data={counties}
+                                   county={selectedCountyName}
                                    setCounty={setSelectedCountyName}/>
 
                     <Card.Divider/>{
@@ -67,8 +67,9 @@ const CountyView = () => {
                         </View>
                     )
                 }
-                    <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                        <Button title="Locate" styles={[styles.text]}
+                    <View style={[styles.button_container]}>
+                        <Button title="Locate"
+                                styles={[styles.text, styles.button]}
                                 disabled={loading}
                                 onPress={
                                     () => {
@@ -81,7 +82,8 @@ const CountyView = () => {
                                 }
                         />
 
-                        <Button styles={[styles.text, {alignItems: 'center'}]} disabled={loading}
+                        <Button styles={[styles.text, styles.button]}
+                                disabled={loading}
                                 onPress={() => {
                                     getCountyInformationByName(selectedCountyName).then(result => {
                                         setSelectedCountyData(result);
@@ -95,9 +97,9 @@ const CountyView = () => {
     } else {
         return (
             <View>
-                <Card style={styles.card} containerStyle={styles.card}>
-                    <Card.Title style={[styles.text, styles.headline]}>{selectedCountyData.name}</Card.Title>
-                    <Text style={[styles.text, styles.headline]}>{selectedCountyData.state}</Text>
+                <Card containerStyle={styles.card}>
+                    <Card.Title style={[styles.title]}>{selectedCountyData.name}</Card.Title>
+                    <Text style={[styles.subtitle]}>{selectedCountyData.state}</Text>
                     <Card.Divider/>
                     <CustomTable data={createDisplayData(selectedCountyData.data)} />
                     <Card.Divider/>

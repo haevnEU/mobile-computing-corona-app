@@ -25,7 +25,7 @@ function HomeScreen() {
             {//   <AddCountyButtonView/>
             }
             <ScrollView
-                horizontal={true}
+                horizontal={false}
                 decelerationRate={"normal"}
                 snapToInterval={ITEM_WIDTH}
                 bounces={false}
