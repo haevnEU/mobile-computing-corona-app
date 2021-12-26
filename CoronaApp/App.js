@@ -1,19 +1,18 @@
 import {SettingsView} from "./components/SettingsView/SettingsView";
 import {NationView} from "./components/NationView/NationView";
-import React, {useState} from 'react';
-import { Header } from "react-native-elements";
-import {View, Text, Button, ActivityIndicator} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {Header} from "react-native-elements";
+import {ActivityIndicator, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {CountyView} from "./components/CountyView/CountyView";
 import styles from './styles/default'
-import {getCityName, locate} from "./services/LocationService";
+import {getCurrentCityName, isGranted, request} from "./services/LocationService";
 import ApplicationData from "./utils/ApplicationData";
-import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView"
 
 import {updateDataSource} from "./api/CountyDataController"
-
+import Toast from 'react-native-root-toast'
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
@@ -56,20 +55,26 @@ function SettingScreen() {
 
 
 const Tab = createBottomTabNavigator();
-
 export default function App() {
     const [loading, setLoading] = useState(true);
     const [loadingText, setLoadingTest] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
-    const init = async() =>{
-        let gps = await locate();
-        await updateDataSource();
-        ApplicationData.county = await getCityName(gps.long, gps.lat);
+useEffect(async () => {
+    setLoadingTest("Request permissions");
+    await request();
+    setLoadingTest("Super fast V8 turbo is updating data sources");
+    await updateDataSource();
+    if(isGranted()){
+        setLoadingTest("Locating user inside real world using V8 turrrrrrbo");
+        ApplicationData.county = await getCurrentCityName().catch(error => {
+            Toast.show('V8 Turbo cannot locate you.', {
+                duration: Toast.durations.LONG,
+            });
+            return "Berlin Mitte"
+        });
     }
-
-    init().then(result => {
-        setLoading(false);
-
-    })
+    setLoadingTest("V8 goes rrrrrrrr")
+    setLoading(false);
+}, []);
 
     if (loading) {
         return (
