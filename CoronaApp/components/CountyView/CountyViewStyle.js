@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
 
     text:{
         color: "#ffffff",
-        fontSize:28
+        fontSize:22,
+        textAlign: "center"
     },
 
     title:{
