@@ -433,3 +433,4 @@ Temporary Items
 !.vscode/*.code-snippets
 
 # End of https://www.toptal.com/developers/gitignore/api/reactnative,intellij+all,visualstudiocode
+/CoronaApp/package-lock.json
