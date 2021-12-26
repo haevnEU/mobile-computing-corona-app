@@ -2,13 +2,13 @@ import {SettingsView} from "./components/SettingsView/SettingsView";
 import {NationView} from "./components/NationView/NationView";
 import React, {useEffect, useState} from 'react';
 import {Header} from "react-native-elements";
-import {ActivityIndicator, Dimensions, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {CountyView} from "./components/CountyView/CountyView";
 import styles from './styles/default'
-import {getCurrentCityName, isGranted, Locator, request} from "./services/LocationService";
+import {Locator} from "./services/LocationService";
 import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 
 import {updateCountyDataSource} from "./api/CountyDataController"

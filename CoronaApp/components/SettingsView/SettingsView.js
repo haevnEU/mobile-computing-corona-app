@@ -8,7 +8,6 @@ import {Locator} from "../../services/LocationService";
 
 export const SettingsView = () => {
     const [gpsEnabled, setGpsEnabled] = useState(ApplicationSettings.gps);
-    const [initialized, setInitialized] = useState(false);
     useEffect(() =>{
 
         setGpsEnabled(Locator.isGranted());

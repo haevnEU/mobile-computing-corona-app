@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, View, Text} from "react-native";
+import {View, Text} from "react-native";
 import { Card } from "react-native-elements";
 import NationalDataController from "../../api/NationalDataController";
 import {styles} from "./NationViewStyle";
