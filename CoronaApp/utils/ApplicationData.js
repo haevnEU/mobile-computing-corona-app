@@ -3,7 +3,10 @@ import {Dimensions} from "react-native";
 const ApplicationData = {
     "county": "Bochum",
     "state": "NRW",
-    "Country": "Germany"
+    "Country": "Germany",
+    "counties": [
+        "Oberhausen", "Essen"
+    ]
 }
 
 export const ApplicationSettings = {

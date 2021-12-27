@@ -1,9 +1,6 @@
 import * as Location from 'expo-location';
 import GpsLocationException from "../exceptions/GpsLocationException";
-import {
-    ApplicationSettings,
-    LocationServiceApiUrl
-} from "../utils/ApplicationData";
+import {ApplicationSettings, LocationServiceApiUrl} from "../utils/ApplicationData";
 import logger from "../utils/Logger";
 
 export default class LocationService {
@@ -26,7 +23,7 @@ export default class LocationService {
 
     async getCurrentCityName() {
         logger.enter("getCurrentCityName()", "LocationService");
-        let coords = await locate();
+        let coords = await Locator.locate();
         let name = this.getCityName(coords.long, coords.lat);
         logger.leave("getCurrentCityName()", "LocationService");
         return name;
@@ -46,7 +43,6 @@ export default class LocationService {
         ApplicationSettings.gps = this.#granted;
         logger.leave("request()", "LocationService");
     }
-
 
     disable() {
         logger.enter("disable()", "LocationService");
@@ -71,22 +67,3 @@ export default class LocationService {
 }
 
 export const Locator = new LocationService();
-export async function getCityName(long, lat){
-    return Locator.getCityName(long, lat);
-}
-
-export async function getCurrentCityName(){
-    return Locator.getCurrentCityName();
-}
-
-export function isGranted(){
-    return Locator.isGranted()
-}
-
-export async function request(){
-    return Locator.request()
-}
-
-export async function locate(){
-    return Locator.locate()
-}

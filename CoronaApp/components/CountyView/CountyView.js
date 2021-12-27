@@ -4,38 +4,10 @@ import {Card} from "react-native-elements";
 import {getCountyInformationByName, getMappedCounties} from "../../api/CountyDataController";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
-import {CustomTable} from "../CustomTable/CustomTable";
 import ApplicationData from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
+import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
 
-const createDisplayData = (data) => {
-   return [
-        {
-            "key": "Einwohner",
-            "value": data['population']
-        },
-        {
-            "key": "Inzidenz",
-            "value": data['incidence']
-        },
-        {
-            "key": "Fälle gesamt",
-            "value": data['cases']
-        },
-        {
-            "key": "Fälle/Woche",
-            "value": data['casesPerWeek']
-        },
-        {
-            "key": "Tode",
-            "value": data['death']
-        },
-        {
-            "key": "Tode/Woche",
-            "value": data['deathPerWeek']
-        }
-    ]
-}
 
 const CountyView = () => {
     const [selectedCountyName, setSelectedCountyName] = useState(ApplicationData.county);
@@ -60,13 +32,15 @@ const CountyView = () => {
                                    county={selectedCountyName}
                                    setCounty={setSelectedCountyName}/>
 
-                    <Card.Divider/>{
-                    loading && (<View>
-                            <ActivityIndicator size={"large"}/>
-                            <Text style={[styles.text]}>Locating device using V8 turbo</Text>
-                        </View>
-                    )
-                }
+                    <Card.Divider/>
+                    {
+                        loading && (
+                            <View>
+                                <ActivityIndicator size={"large"}/>
+                                <Text style={[styles.text]}>Locating device using V8 turbo</Text>
+                            </View>
+                        )
+                    }
                     <View style={[styles.button_container]}>
                         <Button title="Locate"
                                 styles={[styles.text, styles.button]}
@@ -97,16 +71,7 @@ const CountyView = () => {
     } else {
         return (
             <View>
-                <Card containerStyle={styles.card}>
-                    <Card.Title style={[styles.title]}>{selectedCountyData.name}</Card.Title>
-                    <Text style={[styles.subtitle]}>{selectedCountyData.state}</Text>
-                    <Card.Divider/>
-                    <CustomTable data={createDisplayData(selectedCountyData.data)} />
-                    <Card.Divider/>
-                    <Button onPress={() => {
-                        setShowSearch(true);
-                    }} title="Search again"/>
-                </Card>
+                <CustomCountyCard county={selectedCountyData} onButton={() => setShowSearch(true)} buttonText={"Search again"} />
             </View>
         )
     }

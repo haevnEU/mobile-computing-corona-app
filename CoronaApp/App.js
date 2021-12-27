@@ -1,21 +1,20 @@
-import {SettingsView} from "./components/SettingsView/SettingsView";
-import {NationView} from "./components/NationView/NationView";
 import React, {useEffect, useState} from 'react';
-import {Header} from "react-native-elements";
 import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
+import {Header} from "react-native-elements";
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {CountyView} from "./components/CountyView/CountyView";
-import styles from './styles/default'
 import {Locator} from "./services/LocationService";
-import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
-
+import {CountyView} from "./components/CountyView/CountyView";
+import {NationView} from "./components/NationView/NationView";
 import {updateCountyDataSource} from "./api/CountyDataController"
+import {SettingsView} from "./components/SettingsView/SettingsView";
+import styles from './styles/default'
 import logger from "./utils/Logger";
-
-
+import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
+
+
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
@@ -25,8 +24,6 @@ function HomeScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
-            {//
-            }
             <ScrollView
                 horizontal={true}
                 decelerationRate={"normal"}
@@ -34,9 +31,7 @@ function HomeScreen() {
                 bounces={false}
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={12}
-            >
-                <AddCountyButtonView />
+                scrollEventThrottle={12}>
             <NationView />
             <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
                         data={data} setData={setData}
@@ -46,14 +41,22 @@ function HomeScreen() {
             />
         </ScrollView>
         </View>
-
     );
 }
 
-function MapScreen() {
+function CountyScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-
+            <ScrollView
+                horizontal={true}
+                decelerationRate={"normal"}
+                snapToInterval={ITEM_WIDTH}
+                bounces={false}
+                style={{ marginTop: 40, paddingHorizontal: 0 }}
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={12}>
+                <AddCountyButtonView />
+            </ScrollView>
         </View>
     );
 }
@@ -66,9 +69,8 @@ function SettingScreen() {
     );
 }
 
-
-
 const Tab = createBottomTabNavigator();
+
 export default function App() {
     const [loading, setLoading] = useState(true);
     const [loadingText, setLoadingTest] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
@@ -96,7 +98,7 @@ export default function App() {
         }
 
         logger.info("Done initializing");
-        setLoadingTest("V8 goes rrrrrrrr")
+        setLoadingTest("...")
         setLoading(false);
 
         logger.leave("App initial useEffect");
@@ -122,7 +124,7 @@ export default function App() {
                     }}
                     >
                         <Tab.Screen name="Home" component={HomeScreen}/>
-                        <Tab.Screen name="Map" component={MapScreen}/>
+                        <Tab.Screen name="Counties" component={CountyScreen}/>
                         <Tab.Screen name="Settings" component={SettingScreen}/>
                     </Tab.Navigator>
                 </NavigationContainer>
@@ -130,3 +132,4 @@ export default function App() {
         );
     }
 }
+
