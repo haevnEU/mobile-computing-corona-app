@@ -6,5 +6,5 @@ Ziel der Applikation ist es eine einfach gestaltete Informationsquelle der aktue
 
 Erstellt durch:
 
-Milewski, Nils [10010480]
+Milewski, Nils [10010480] <br>
 Lichner, Lucas [10013552]
