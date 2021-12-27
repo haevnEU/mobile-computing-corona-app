@@ -5,6 +5,10 @@ import logger from "../utils/Logger";
 const dataSource = {update: 0};
 let counties = {};
 
+/**
+ * Updates invalid data for german counties(Landkreise).
+ * @returns {Promise<void>}
+ */
 export const updateCountyDataSource = async () => {
     logger.enter("updateCountyDataSource()", "CountyDataController");
     let currentTime = Date.now();
@@ -27,6 +31,11 @@ export const updateCountyDataSource = async () => {
     logger.leave("updateCountyDataSource()", "CountyDataController");
 }
 
+/**
+ * Request details about a given county.
+ * @param name Name of the county
+ * @returns {Promise<JSON>} Json object containing all information about the county.
+ */
 export async function getCountyInformationByName(name) {
     logger.enter("getCountyInformationByName(" + name +")", "CountyDataController");
 
@@ -78,8 +87,11 @@ export async function getAllCounties(){
     return counties;
 }
 
-
-export async function getMappedCounties(){
+/**
+ * Maps all german counties(Landkreise) into a processable json entity with the form [{"key":"value"}, ...].
+ * @returns {Promise<*[]>}
+ */
+export async function getCountyListAsProcessableJsonObject(){
     logger.enter("getMappedCounties", "CountyDataController");
 
     let array = await getAllCounties();

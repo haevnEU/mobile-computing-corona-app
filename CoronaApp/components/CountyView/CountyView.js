@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, View, Text, ActivityIndicator} from "react-native";
 import {Card} from "react-native-elements";
-import {getCountyInformationByName, getMappedCounties} from "../../api/CountyDataController";
+import {getCountyInformationByName, getCountyListAsProcessableJsonObject} from "../../api/CountyDataController";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
 import ApplicationData from "../../utils/ApplicationData";
@@ -17,7 +17,7 @@ const CountyView = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(async () => {
-        getMappedCounties().then(result => setCounties(result))
+        getCountyListAsProcessableJsonObject().then(result => setCounties(result))
     }, [])
 
 
