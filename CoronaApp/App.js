@@ -13,6 +13,7 @@ import styles from './styles/default'
 import logger from "./utils/Logger";
 import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
+import {ImpressumView} from "./components/ImpressumView/ImpressumView";
 
 
 function HomeScreen() {
@@ -25,7 +26,7 @@ function HomeScreen() {
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             <ScrollView
-                horizontal={true}
+
                 decelerationRate={"normal"}
                 snapToInterval={ITEM_WIDTH}
                 bounces={false}
@@ -65,6 +66,7 @@ function SettingScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
             <SettingsView />
+            <ImpressumView />
         </View>
     );
 }

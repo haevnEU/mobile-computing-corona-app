@@ -9,7 +9,7 @@ export const AddCountyButtonView = (props) => {
     return(
         <View >
             <Pressable style={styles.button} onPress={() => 'onPress sollte die County Search aufgerufen werden'}>
-            <Text style={styles.text}> Neuen Landreis hinzufügen</Text>
+            <Text style={styles.text}> Neuen Landkreis hinzufügen</Text>
             </Pressable>
         </View>
 
