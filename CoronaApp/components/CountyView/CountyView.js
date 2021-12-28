@@ -4,7 +4,7 @@ import {Card} from "react-native-elements";
 import {getCountyInformationByName, getCountyListAsProcessableJsonObject} from "../../api/CountyDataController";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyViewStyle";
-import ApplicationData from "../../utils/ApplicationData";
+import ApplicationData, {ApplicationSettings} from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
 
@@ -53,21 +53,24 @@ const CountyView = () => {
                         )
                     }
                     <View style={[styles.button_container]}>
-                        <Button title="Locate"
-                                styles={[styles.text, styles.button]}
-                                disabled={loading}
-                                onPress={() => {
-                                    // Display loading state while the current city is located
-                                    setLoading(true);
-                                    Locator.getCurrentLocationName().then(result => {
-                                        // The current county is located so disable search animation and update
-                                        // the currently selected county name
-                                        setCurrentlySelectedCountyName(result);
-                                        setLoading(false);
-                                    });
-                                }}
-                        />
-
+                        {ApplicationSettings.gps && (
+                            <Button title="Locate"
+                                 styles={[styles.text, styles.button]}
+                                 disabled={loading && ApplicationSettings.gps}
+                                 onPress={() => {
+                                     if(ApplicationSettings.gps) {
+                                         // Display loading state while the current city is located
+                                         setLoading(true);
+                                         Locator.getCurrentLocationName().then(result => {
+                                             // The current county is located so disable search animation and update
+                                             // the currently selected county name
+                                             setCurrentlySelectedCountyName(result);
+                                             setLoading(false);
+                                         });
+                                     }
+                                 }}
+                        />)
+                        }
                         <Button styles={[styles.text, styles.button]}
                                 disabled={loading}
                                 onPress={() => {
