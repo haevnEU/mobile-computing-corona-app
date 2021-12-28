@@ -73,22 +73,25 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
     const [loading, setLoading] = useState(true);
-    const [loadingText, setLoadingTest] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+    const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+
+    // This is runs once when the application started, after finishing the loading screen will be hidden
     useEffect(async () => {
+        // Note the setLoadingText will inform the user what operation is currently executed
         logger.enter("App initial useEffect");
 
         logger.info("Request all required permissions")
-        setLoadingTest("Request permissions");
+        setLoadingText("Request permissions");
         await Locator.request();
 
         logger.info("Update data sources");
-        setLoadingTest("Super fast V8 turbo is updating data sources");
+        setLoadingText("Super fast V8 turbo is updating data sources");
         await updateCountyDataSource();
 
         if (Locator.isGranted()) {
             logger.info("Locate user");
-            setLoadingTest("Locating user inside real world using V8 turrrrrrbo");
-            ApplicationData.county = await Locator.getCurrentCityName().catch(error => {
+            setLoadingText("Locating user inside real world using V8 turrrrrrbo");
+            ApplicationData.county = await Locator.getCurrentLocationName().catch(error => {
                 logger.critical("Cannot locate the user using default Berlin Mitte");
                 logger.exception(error);
                 return "Berlin Mitte"
@@ -98,7 +101,7 @@ export default function App() {
         }
 
         logger.info("Done initializing");
-        setLoadingTest("...")
+        setLoadingText("...")
         setLoading(false);
 
         logger.leave("App initial useEffect");

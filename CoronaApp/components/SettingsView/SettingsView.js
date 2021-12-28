@@ -5,9 +5,15 @@ import {ApplicationSettings} from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 
-
+/**
+ * This component contains all elements for the application setting
+ * @returns {JSX.Element} New React Native Custom settings component
+ */
 export const SettingsView = () => {
+    // determines if the gps location is enabled or not
     const [gpsEnabled, setGpsEnabled] = useState(ApplicationSettings.gps);
+
+    // Updates the settings once when the component is loaded
     useEffect(() => {setGpsEnabled(Locator.isGranted())}, []);
 
     return (
@@ -16,9 +22,11 @@ export const SettingsView = () => {
                     value={gpsEnabled}
                     onValueChange={gpsState => {
                         if (!gpsState) {
+                            // Disable the gps module
                             Locator.disable();
                             setGpsEnabled(Locator.isGranted());
                         } else {
+                            // Try to enable the gps module
                             Locator.request().then(() => setGpsEnabled(Locator.isGranted()));
                         }
                     }}

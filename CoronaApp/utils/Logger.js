@@ -1,3 +1,7 @@
+/**
+ * This is custom logger class.<br>
+ * The purpose is to made debugging via console a little bit easier
+ */
 class Logger {
     #level = 0;
     #enters = 0;
@@ -5,6 +9,10 @@ class Logger {
         this.#level = level;
     }
 
+    /**
+     * Returns a human-readable format of the current date and time
+     * @returns {string} Dte and Time as dd/MM/yyyy HH:mm:ss
+     */
     getCurrentDateTime(){
         const padding = (input) => {
             return (input < 10 ? '0' : '') + input;
@@ -18,6 +26,11 @@ class Logger {
             + padding(timestamp.getSeconds());
     }
 
+    /**
+     * Logs a message to the console with given level
+     * @param message Message to be logged
+     * @param level Level of the message
+     */
     log(message, level){
         let datetime = this.getCurrentDateTime();
         if(level === DEBUG){
@@ -37,6 +50,13 @@ class Logger {
         }
     }
 
+    /**
+     * States that a method was entered.<br>
+     * Format is [INFO] dd/MM/yyyy HH:mm:ss: ENTER methodName#fileName. Entered amount.<br>
+     * Increments a counter which displays how many method were entered.
+     * @param methodName Name of the method
+     * @param fileName Optional file name
+     */
     enter(methodName, fileName){
         if(fileName === undefined || fileName === null){
             fileName = "";
@@ -47,6 +67,13 @@ class Logger {
         this.#enters++;
     }
 
+    /**
+     * States that a method was left.<br>
+     * Format is [INFO] dd/MM/yyyy HH:mm:ss: LEAVE methodName#fileName. Entered amount.<br>
+     * Decrements a counter which displays how many method were left, any non-null amount states that a method wasnt finished
+     * @param methodName Name of the method
+     * @param fileName Optional file name
+     */
     leave(methodName, fileName){
         if(fileName === undefined || fileName === null){
             fileName = "";
@@ -57,6 +84,12 @@ class Logger {
         this.info("LEAVE " + fileName + methodName + ". Left: " + this.#enters);
     }
 
+    /**
+     * States that a method was unexpected left.<br>
+     * Format is [WARN] dd/MM/yyyy HH:mm:ss: UNEXPECTED methodName#fileName. Entered amount.
+     * @param methodName Name of the method
+     * @param fileName Optional file name
+     */
     unexpectedLeft(methodName, fileName) {
         if(fileName === undefined || fileName === null){
             fileName = "";
@@ -66,22 +99,42 @@ class Logger {
         this.warn("UNEXPECTED LEFT " + fileName + methodName);
     }
 
+    /**
+     * Prints a debug message, debug is the lowest level.
+     * @param data Data to log
+     */
     debug(data){
         this.log(data, DEBUG);
     }
 
+    /**
+     * Prints an info, this is the normal level.
+     * @param data Data to log
+     */
     info(data){
         this.log(data, INFO);
     }
 
+    /**
+     * Prints a warning, this should be used if a misbehaviour could occur or occurred but the application was recovered.
+     * @param data Data to log
+     */
     warn(data){
         this.log(data, WARN);
     }
 
+    /**
+     * Prints a critical message, this is the highest level and states that a non-recoverable state was entered.
+     * @param data Data to log
+     */
     critical(data){
         this.log(data, CRITICAL);
     }
 
+    /**
+     * Prints an exception
+     * @param error Exception to print
+     */
     exception(error) {
         this.log(error, EXCEPTION);
     }

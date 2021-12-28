@@ -4,10 +4,17 @@ import { Card } from "react-native-elements";
 import NationalDataController from "../../api/NationalDataController";
 import {styles} from "./NationViewStyle";
 
+/**
+ * This component represents information about a nation
+ * @returns {JSX.Element} New React Native Custom Nation View
+ */
 export const NationView = () => {
-    const [data, setData] = useState({});
+    /**
+     * If this attribute is false a loading animation is shown
+     */
     const [initialized, setInitialized] = useState(false);
-
+    const [data, setData] = useState({});
+    // Initialize the data once when the component is loaded
     useEffect(() => {
         NationalDataController().then(result => {
             setData(result);

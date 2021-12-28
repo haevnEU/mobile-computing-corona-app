@@ -4,7 +4,19 @@ import {Button, Text} from "react-native";
 import {CustomTable} from "../CustomTable/CustomTable";
 import React, {useState} from "react";
 
-
+/**
+ * Transforms a county data document into a processable entity
+ * <ul>Mandatory input elements
+ *  <li>population</li>
+ *  <li>incidence</li>
+ *  <li>cases</li>
+ *  <li>casesPerWeek</li>
+ *  <li>death</li>
+ *  <li>deathPerWeek</li>
+ * </ul>
+ * @param data Input json document
+ * @returns Mapped data
+ */
 export const extractCountyDataset = (data) => {
     return [
         {
@@ -34,6 +46,11 @@ export const extractCountyDataset = (data) => {
     ]
 }
 
+/**
+ * This component shows information about a county
+ * @param props The properties must contain county information
+ * @returns {JSX.Element} React native component
+ */
 export const CustomCountyCard = (props) => {
     const [county, setCounty] = useState(props.county);
     return (
