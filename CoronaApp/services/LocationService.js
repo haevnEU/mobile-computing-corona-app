@@ -69,7 +69,7 @@ export default class LocationService {
      * @returns {Promise<boolean>} true if successful enabled
      */
     async enable(){
-        return await this.request();
+        return this.request();
     }
 
     /**
