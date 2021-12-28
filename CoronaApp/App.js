@@ -1,19 +1,21 @@
-import {SettingsView} from "./components/SettingsView/SettingsView";
-import {NationView} from "./components/NationView/NationView";
 import React, {useEffect, useState} from 'react';
-import {Header} from "react-native-elements";
 import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
+import {Header} from "react-native-elements";
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {CountyView} from "./components/CountyView/CountyView";
-import styles from './styles/default'
 import {Locator} from "./services/LocationService";
-import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
-
+import {CountyView} from "./components/CountyView/CountyView";
+import {NationView} from "./components/NationView/NationView";
 import {updateCountyDataSource} from "./api/CountyDataController"
+import {SettingsView} from "./components/SettingsView/SettingsView";
+import styles from './styles/default'
 import logger from "./utils/Logger";
+import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
 import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
+import {ImpressumView} from "./components/ImpressumView/ImpressumView";
+
+
 function HomeScreen() {
     const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
@@ -23,18 +25,14 @@ function HomeScreen() {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
-            {//
-            }
             <ScrollView
-                horizontal={true}
+
                 decelerationRate={"normal"}
                 snapToInterval={ITEM_WIDTH}
                 bounces={false}
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={12}
-            >
-                <AddCountyButtonView />
+                scrollEventThrottle={12}>
             <NationView />
             <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
                         data={data} setData={setData}
@@ -44,14 +42,22 @@ function HomeScreen() {
             />
         </ScrollView>
         </View>
-
     );
 }
 
-function MapScreen() {
+function CountyScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-
+            <ScrollView
+                horizontal={true}
+                decelerationRate={"normal"}
+                snapToInterval={ITEM_WIDTH}
+                bounces={false}
+                style={{ marginTop: 40, paddingHorizontal: 0 }}
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={12}>
+                <AddCountyButtonView />
+            </ScrollView>
         </View>
     );
 }
@@ -60,31 +66,34 @@ function SettingScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
             <SettingsView />
+            <ImpressumView />
         </View>
     );
 }
 
-
-
 const Tab = createBottomTabNavigator();
+
 export default function App() {
     const [loading, setLoading] = useState(true);
-    const [loadingText, setLoadingTest] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+    const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+
+    // This is runs once when the application started, after finishing the loading screen will be hidden
     useEffect(async () => {
+        // Note the setLoadingText will inform the user what operation is currently executed
         logger.enter("App initial useEffect");
 
         logger.info("Request all required permissions")
-        setLoadingTest("Request permissions");
+        setLoadingText("Request permissions");
         await Locator.request();
 
         logger.info("Update data sources");
-        setLoadingTest("Super fast V8 turbo is updating data sources");
+        setLoadingText("Super fast V8 turbo is updating data sources");
         await updateCountyDataSource();
 
         if (Locator.isGranted()) {
             logger.info("Locate user");
-            setLoadingTest("Locating user inside real world using V8 turrrrrrbo");
-            ApplicationData.county = await Locator.getCurrentCityName().catch(error => {
+            setLoadingText("Locating user inside real world using V8 turrrrrrbo");
+            ApplicationData.county = await Locator.getCurrentLocationName().catch(error => {
                 logger.critical("Cannot locate the user using default Berlin Mitte");
                 logger.exception(error);
                 return "Berlin Mitte"
@@ -94,7 +103,7 @@ export default function App() {
         }
 
         logger.info("Done initializing");
-        setLoadingTest("V8 goes rrrrrrrr")
+        setLoadingText("...")
         setLoading(false);
 
         logger.leave("App initial useEffect");
@@ -120,7 +129,7 @@ export default function App() {
                     }}
                     >
                         <Tab.Screen name="Home" component={HomeScreen}/>
-                        <Tab.Screen name="Map" component={MapScreen}/>
+                        <Tab.Screen name="Counties" component={CountyScreen}/>
                         <Tab.Screen name="Settings" component={SettingScreen}/>
                     </Tab.Navigator>
                 </NavigationContainer>
@@ -128,3 +137,4 @@ export default function App() {
         );
     }
 }
+

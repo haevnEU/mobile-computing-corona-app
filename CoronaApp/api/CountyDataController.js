@@ -2,11 +2,22 @@ import CountyDoesNotExistsException from "../exceptions/CountyDoesNotExistsExcep
 import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/ApplicationData";
 import logger from "../utils/Logger";
 
-const dataSource = {update: 0};
-let counties = {};
 
+
+
+
+const dataSource = {update: 0};
+
+let germanCountiesDocument = {};
+
+/**
+ * Updates the datasource for german counties(Landkreise).<br>
+ * Note: To achieve a resource friendly usage the datasource can only be updated once a day
+ * @returns {Promise<boolean>} Always truee
+ */
 export const updateCountyDataSource = async () => {
     logger.enter("updateCountyDataSource()", "CountyDataController");
+
     let currentTime = Date.now();
 
     // Update the datasource if it's older than one day
@@ -19,14 +30,20 @@ export const updateCountyDataSource = async () => {
         // Each update of the datasource also updates the county list
         logger.info("Update county list")
         let dataAsObject = dataSource.data.data;
-        counties = Object
+        germanCountiesDocument = Object
             .keys(dataAsObject)
             .map(key => dataAsObject[key].name);
     }
 
     logger.leave("updateCountyDataSource()", "CountyDataController");
+    return true;
 }
 
+/**
+ * Request details about a given german county(Landkreis).
+ * @param name Name of the county
+ * @returns {Promise<JSON>} Json object containing all information about the county.
+ */
 export async function getCountyInformationByName(name) {
     logger.enter("getCountyInformationByName(" + name +")", "CountyDataController");
 
@@ -69,30 +86,39 @@ export async function getCountyInformationByName(name) {
     };
 }
 
-export async function getAllCounties(){
+/**
+ * Access the key value mapped german county (Landkreis) list
+ * @returns {Promise<{}>} Json document containing all german counties (Landkreise)
+ */
+export async function getAllGermanCounties(){
     logger.enter("getAllCounties", "CountyDataController");
 
     await updateCountyDataSource();
 
     logger.leave("getAllCounties", "CountyDataController");
-    return counties;
+    return germanCountiesDocument;
 }
 
-
-export async function getMappedCounties(){
+/**
+ * Maps all german counties(Landkreise) into a processable json entity with the form [{"key":"value"}, ...].
+ * @returns {Promise<*[]>}
+ */
+export async function getCountyListAsProcessableJsonObject(){
     logger.enter("getMappedCounties", "CountyDataController");
 
-    let array = await getAllCounties();
+    let resultingCountyList = [];
+    let array = await getAllGermanCounties();
 
     logger.info("Filter counties");
+    // This filter removes all entries which occurr more than ones
     array = array.filter((value, index) => array.indexOf(value)===index);
-    let updated = [];
 
     logger.info("Map filtered counties to a json object")
+    // Map and add every entry of the array to the resulting county list
     for (let value of array) {
-        updated.push({ "key": value });
+        resultingCountyList.push({ "key": value });
     }
 
     logger.leave("getMappedCounties", "CountyDataController");
-    return updated;
+    return resultingCountyList;
 }

@@ -4,20 +4,26 @@ import {Divider} from "react-native-elements";
 import {styles} from "./SearchElementStyle";
 import logger from "../../utils/Logger";
 
+/**
+ * This is a search element
+ * @param props Properties must contain a mapped county dataset and the getter/setter for the currently selected county
+ * @returns {JSX.Element} New React Native Search element
+ */
 const SearchElement = (props) => {
     // The data array, general structure [{"key": "value"}]
     const data = props.data;
 
     // Following two must be declared as [county, setCounty] = useState();
-    // County variable (getter)
-    const county = props.county;
-    // County variable (setter)
-    const setCounty = props.setCounty;
+    // currentlySelectedCountyName variable (getter)
+    const currentlySelectedCountyName = props.currentlySelectedCountyName;
+    // currentlySelectedCountyName variable (setter)
+    const setCurrentlySelectedCountyName = props.setCurrentlySelectedCountyName;
     const [suggestionArray, setSuggestionArray] = useState({});
 
     // Filters the given data array in respect to the entered county name
     function filterList(countyFilterInput) {
         logger.enter("filterList(" + countyFilterInput + ")", "SearchElement");
+
         // When no county is provided return an empty array
         if (countyFilterInput.length === 0) {
             logger.warn("Given county filter is empty")
@@ -33,7 +39,6 @@ const SearchElement = (props) => {
         logger.leave("filterList(" + countyFilterInput + ")", "SearchElement");
         // Return the county name
         return countyFilterInput;
-
     }
 
     return (
@@ -41,8 +46,8 @@ const SearchElement = (props) => {
             <TextInput
                 style={[styles.input, styles.text]}
                 placeholder="Enter query"
-                value={county}
-                onChangeText={countyInput => setCounty(filterList(countyInput))}/>
+                value={currentlySelectedCountyName}
+                onChangeText={countyInput => setCurrentlySelectedCountyName(filterList(countyInput))}/>
             <FlatList
                 style={styles.suggestions}
                 data={suggestionArray}
@@ -51,7 +56,7 @@ const SearchElement = (props) => {
                         <TouchableWithoutFeedback
                             onPress={
                                 () => {
-                                    setCounty(item.key);
+                                    setCurrentlySelectedCountyName(item.key);
                                     setSuggestionArray({});
                                 }
                             }>
