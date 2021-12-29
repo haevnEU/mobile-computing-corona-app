@@ -57,7 +57,7 @@ export default class LocationService {
     }
 
     /**
-     * Maps the isGranted method for a intuitive definition
+     * Maps the isGranted method for an intuitive definition
      * @returns {boolean} true if module is enabled
      */
     isEnabled(){
@@ -65,7 +65,7 @@ export default class LocationService {
     }
 
     /**
-     * Maps the request method for a intuitive definition
+     * Maps the request method for an intuitive definition
      * @returns {Promise<boolean>} true if successful enabled
      */
     async enable(){

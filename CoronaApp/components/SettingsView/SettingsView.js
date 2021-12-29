@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {View, Text} from "react-native";
 import { Switch } from "react-native-elements";
-import {ApplicationSettings} from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 

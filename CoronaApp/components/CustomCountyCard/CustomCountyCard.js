@@ -52,7 +52,7 @@ export const extractCountyDataset = (data) => {
  * @returns {JSX.Element} React native component
  */
 export const CustomCountyCard = (props) => {
-    const [county, setCounty] = useState(props.county);
+    const [county, _] = useState(props.county);
     return (
         <Card containerStyle={styles.card}>
             <Card.Title style={[styles.title]}>{county.name}</Card.Title>

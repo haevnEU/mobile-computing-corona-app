@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
 import ApplicationData, {ITEM_WIDTH} from "../../utils/ApplicationData";
-import {NationView} from "../../components/NationView/NationView";
-import {CountyDetailCard} from "../../components/CountyDetailCard/CountyDetailCard";
 import logger from "../../utils/Logger";
 import {getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
@@ -10,7 +8,7 @@ import {SearchCard} from "../../components/CountySearchCard/SearchCard";
 
 
 export default function CountyScreen(props) {
-    const [favouriteCounties, _] = useState([]);
+    const [favouriteCounties] = useState([]);
 
     const [rerender, setRerender] = useState(false);
     const [searchResult, setSearchResult] = useState("");

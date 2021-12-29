@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Button, View, Text, ActivityIndicator} from "react-native";
 import {Card} from "react-native-elements";
-import {getCountyInformationByName, getCountyListAsProcessableJsonObject} from "../../api/CountyDataController";
+import {getCountyInformationByName} from "../../api/CountyDataController";
 import {SearchElement} from "../SearchElement/SearchElement";
 import {styles} from "./CountyDetailCardStyle";
-import ApplicationData, {ApplicationSettings} from "../../utils/ApplicationData";
+import ApplicationData from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
 

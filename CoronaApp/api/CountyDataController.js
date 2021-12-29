@@ -13,7 +13,7 @@ let germanCountiesDocument = {};
 /**
  * Updates the datasource for german counties(Landkreise).<br>
  * Note: To achieve a resource friendly usage the datasource can only be updated once a day
- * @returns {Promise<boolean>} Always truee
+ * @returns {Promise<boolean>} Always true
  */
 export const updateCountyDataSource = async () => {
     logger.enter("updateCountyDataSource()", "CountyDataController");
@@ -110,7 +110,7 @@ export async function getCountyListAsProcessableJsonObject(){
     let array = await getAllGermanCounties();
 
     logger.info("Filter counties");
-    // This filter removes all entries which occurr more than ones
+    // This filter removes all entries which occur more than ones
     array = array.filter((value, index) => array.indexOf(value)===index);
 
     logger.info("Map filtered counties to a json object")

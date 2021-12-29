@@ -32,7 +32,7 @@ const generateRows = (data)=> {
 /**
  * Creates a new Table based on a 2xn array
  * @param props Properties must contain a 2xn array
- * @returns {JSX.Element} React Native Custom Table comnponent
+ * @returns {JSX.Element} React Native Custom Table component
  */
 export const CustomTable = (props) => {
     const [data] = useState(props.data);

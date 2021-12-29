@@ -1,6 +1,6 @@
 /**
  * This is custom logger class.<br>
- * The purpose is to made debugging via console a little bit easier
+ * The purpose is to made debugging via console a little easier
  */
 class Logger {
     #level = 0;
@@ -70,7 +70,7 @@ class Logger {
     /**
      * States that a method was left.<br>
      * Format is [INFO] dd/MM/yyyy HH:mm:ss: LEAVE methodName#fileName. Entered amount.<br>
-     * Decrements a counter which displays how many method were left, any non-null amount states that a method wasnt finished
+     * Decrements a counter which displays how many method were left, any non-null amount states that a method wasn't finished
      * @param methodName Name of the method
      * @param fileName Optional file name
      */

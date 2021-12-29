@@ -1,26 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Button, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import {Header} from "react-native-elements";
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Locator} from "./services/LocationService";
-import {CountyDetailCard} from "./components/CountyDetailCard/CountyDetailCard";
-import {NationView} from "./components/NationView/NationView";
 import {
-    getCountyInformationByName,
     getCountyListAsProcessableJsonObject,
     updateCountyDataSource
 } from "./api/CountyDataController"
 import {SettingsView} from "./components/SettingsView/SettingsView";
 import styles from './styles/default'
 import logger from "./utils/Logger";
-import ApplicationData, {ApplicationSettings, ITEM_WIDTH} from "./utils/ApplicationData";
-import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
+import ApplicationData from "./utils/ApplicationData";
 import {ImpressumView} from "./components/ImpressumView/ImpressumView";
-import {CustomCountyCard} from "./components/CustomCountyCard/CustomCountyCard";
-import {SearchElement} from "./components/SearchElement/SearchElement";
-import {SearchCard} from "./components/CountySearchCard/SearchCard";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
 import CountyScreen from "./Screens/CountyScreen/CountyScreen";
 
