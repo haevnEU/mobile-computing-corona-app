@@ -1,7 +1,9 @@
 import {StyleSheet} from "react-native";
+import {ITEM_WIDTH} from "../../utils/ApplicationData";
 
 export const styles = StyleSheet.create({
     button:{
+        width: ITEM_WIDTH,
         height: 80,
         marginLeft: 20,
         marginRight: 20,

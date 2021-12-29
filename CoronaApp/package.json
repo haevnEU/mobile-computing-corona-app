@@ -26,5 +26,8 @@
     "react-native-table-component": "^1.2.1",
     "react-native-web": "0.17.1"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "typescript": "~4.3.5"
+  }
 }

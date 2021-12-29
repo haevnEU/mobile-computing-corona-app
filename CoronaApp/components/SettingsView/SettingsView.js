@@ -9,25 +9,21 @@ import {styles} from "./SettingsViewStyle";
  * This component contains all elements for the application setting
  * @returns {JSX.Element} New React Native Custom settings component
  */
-export const SettingsView = () => {
-    // determines if the gps location is enabled or not
-    const [gpsEnabled, setGpsEnabled] = useState(ApplicationSettings.gps);
-
-    // Updates the settings once when the component is loaded
-    useEffect(() => {setGpsEnabled(Locator.isGranted())}, []);
-
+export const SettingsView = (props) => {
+    let gps = props.gps[0];
+    let gpsToggle = props.gps[1];
     return (
         <View style={styles.container}>
             <Switch color={styles.switch.color}
-                    value={gpsEnabled}
+                    value={gps}
                     onValueChange={gpsState => {
                         if (!gpsState) {
                             // Disable the gps module
                             Locator.disable();
-                            setGpsEnabled(Locator.isGranted());
+                            gpsToggle(Locator.isGranted());
                         } else {
                             // Try to enable the gps module
-                            Locator.request().then(() => setGpsEnabled(Locator.isGranted()));
+                            Locator.request().then(() => gpsToggle(Locator.isGranted()));
                         }
                     }}
             />

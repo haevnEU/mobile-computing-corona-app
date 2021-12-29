@@ -14,7 +14,7 @@ import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
  * Searching can be done manually by entering a county name or via the location service of the device.
  * @returns {JSX.Element}
  */
-const CountyView = () => {
+const CountyView = (props) => {
     /**
      * This attribute is used to determine a loading state. <br>
      * If true a loading animation will be displayed and the search and locate button are disabled
@@ -22,14 +22,9 @@ const CountyView = () => {
     const [loading, setLoading] = useState(false);
     const [currentlySelectedCountyName, setCurrentlySelectedCountyName] = useState(ApplicationData.county);
     const [currentlySelectedCountyData, setCurrentlySelectedCountyData] = useState({});
-    const [countyList, setCountyList] = useState({});
     const [showSearch, setShowSearch] = useState(true);
 
-
-    // Request and set the county list once the code is called
-    useEffect(async () => {
-        getCountyListAsProcessableJsonObject().then(result => setCountyList(result))
-    }, [])
+    let gps = props.gps[0]
 
     // Toggle the view between a search view and a county details view
     if (showSearch) {
@@ -39,7 +34,7 @@ const CountyView = () => {
                     <Card.Title style={[styles.title]}>County Search</Card.Title>
                     <Card.Divider/>
                     <SearchElement styles={styles.search_element}
-                                   data={countyList}
+                                   data={props.countyList}
                                    currentlySelectedCountyName={currentlySelectedCountyName}
                                    setCurrentlySelectedCountyName={setCurrentlySelectedCountyName}/>
 
@@ -53,12 +48,12 @@ const CountyView = () => {
                         )
                     }
                     <View style={[styles.button_container]}>
-                        {ApplicationSettings.gps && (
+                        {gps && (
                             <Button title="Locate"
                                  styles={[styles.text, styles.button]}
-                                 disabled={loading && ApplicationSettings.gps}
+                                 disabled={loading &&  gps}
                                  onPress={() => {
-                                     if(ApplicationSettings.gps) {
+                                     if(gps) {
                                          // Display loading state while the current city is located
                                          setLoading(true);
                                          Locator.getCurrentLocationName().then(result => {

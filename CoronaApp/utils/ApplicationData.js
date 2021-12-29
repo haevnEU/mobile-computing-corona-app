@@ -4,7 +4,7 @@ const ApplicationData = {
     "county": "Bochum",
     "state": "NRW",
     "Country": "Germany",
-    "counties": [
+    "favourites": [
         "Oberhausen", "Essen"
     ]
 }
