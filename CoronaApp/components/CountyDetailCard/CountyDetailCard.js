@@ -3,7 +3,7 @@ import {Button, View, Text, ActivityIndicator} from "react-native";
 import {Card} from "react-native-elements";
 import {getCountyInformationByName, getCountyListAsProcessableJsonObject} from "../../api/CountyDataController";
 import {SearchElement} from "../SearchElement/SearchElement";
-import {styles} from "./CountyViewStyle";
+import {styles} from "./CountyDetailCardStyle";
 import ApplicationData, {ApplicationSettings} from "../../utils/ApplicationData";
 import {Locator} from "../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
@@ -14,7 +14,7 @@ import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
  * Searching can be done manually by entering a county name or via the location service of the device.
  * @returns {JSX.Element}
  */
-const CountyView = (props) => {
+const CountyDetailCard = (props) => {
     /**
      * This attribute is used to determine a loading state. <br>
      * If true a loading animation will be displayed and the search and locate button are disabled
@@ -89,4 +89,4 @@ const CountyView = (props) => {
     }
 }
 
-export {CountyView}
+export {CountyDetailCard}

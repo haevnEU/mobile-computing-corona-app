@@ -1,5 +1,5 @@
 import {Card} from "react-native-elements";
-import {styles} from "../CountyView/CountyViewStyle";
+import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
 import {Button, Text} from "react-native";
 import {CustomTable} from "../CustomTable/CustomTable";
 import React, {useState} from "react";

@@ -30,8 +30,6 @@ export const styles = StyleSheet.create({
         paddingTop: 500,
         alignItems: undefined,
         justifyContent: undefined,
-        backdropColor: 'black',
-        backdropOpacity: 1,
     }
 
 });

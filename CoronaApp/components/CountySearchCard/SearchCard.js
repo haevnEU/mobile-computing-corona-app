@@ -1,34 +1,29 @@
-import {ActivityIndicator, Button, Text, View} from "react-native";
+import {Button, View} from "react-native";
 import {Card} from "react-native-elements";
-import {styles} from "../CountyView/CountyViewStyle";
+import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
 import {SearchElement} from "../SearchElement/SearchElement";
-import {ApplicationSettings} from "../../utils/ApplicationData";
-import {Locator} from "../../services/LocationService";
-import {getCountyInformationByName} from "../../api/CountyDataController";
-import React, {useState} from "react";
+import React from "react";
 
-const CountySearchCard = (props) => {
+const SearchCard = (props) => {
 
 return (
     <View>
         <Card containerStyle={styles.card}>
-            <Card.Title style={[styles.title]}>County Search</Card.Title>
+            <Card.Title style={[styles.title]}>{props.title || "Search"}</Card.Title>
             <Card.Divider/>
             <SearchElement styles={styles.search_element}
-                           data={props.countyList}
+                           data={props.dataList}
                            currentlySelectedCountyName={props.searchResult}
                            setCurrentlySelectedCountyName={props.setSearchResult}/>
 
             <Card.Divider/>
             <View style={[styles.button_container]}>
                 <Button styles={[styles.text, styles.button]}
-                        onPress={() => {
-                            props.onSearch();
-                        }}
+                        onPress={props.onSearch()}
                         title={props.buttonText || "Search"}/>
             </View>
         </Card>
     </View>
 )
 }
-export {CountySearchCard};
+export {SearchCard};
