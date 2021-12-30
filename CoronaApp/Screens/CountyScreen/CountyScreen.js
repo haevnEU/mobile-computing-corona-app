@@ -40,18 +40,23 @@ export default function CountyScreen(props) {
      * Adds a county to the favourite list
      * @returns {Promise<boolean>} Always true
      */
-    async function addCounty(){
+    async function addCounty() {
         logger.enter("addCounty", "App")
+        try {
+            let county = searchResult;
+            let result = await getCountyInformationByName(county)
+            favouriteCounties.push({"key": county, "details": result});
+            ApplicationData.favourites.push(county)
+            softRerender();
 
-        let county = searchResult;
-        let result = await getCountyInformationByName(county);
-        favouriteCounties.push({"key": county, "details": result});
-        ApplicationData.favourites.push(county)
-        softRerender();
+            logger.leave("addCounty", "App")
 
-        logger.leave("addCounty", "App")
-
-        return true;
+            return true;
+        } catch (ex) {
+            logger.exception(ex);
+            logger.unexpectedLeft("addCounty", "App");
+            return false;
+        }
     }
 
     /**
