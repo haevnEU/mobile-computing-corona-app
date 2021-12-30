@@ -1,4 +1,5 @@
 import {StyleSheet} from "react-native";
+import {Locator} from "../../services/LocationService";
 
 export const styles = StyleSheet.create({
     container:{
@@ -32,7 +33,8 @@ export const styles = StyleSheet.create({
     },
 
     switch:{
-        color: "#ff00ff",
+        color: "#ff00ff"
+
     },
 
 });

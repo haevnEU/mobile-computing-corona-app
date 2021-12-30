@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import {View, Text, Button} from "react-native";
-import {Switch} from "react-native-elements";
+import {View, Text, Switch} from "react-native";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "../ImpressumView/ImpressumView";
@@ -16,8 +15,10 @@ export const SettingsView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
-                <Switch color={styles.switch.color}
-                        value={gps}
+                <Switch
+                    thumbColor={Locator.isGranted() ? "green" : "gray"}
+
+                    value={gps}
                         onValueChange={gpsState => {
                             if (!gpsState) {
                                 // Disable the gps module

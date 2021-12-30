@@ -5,7 +5,7 @@ import logger from "../../utils/Logger";
 import {doesCountyExists, getAllGermanCounties, getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
 import {SearchCard} from "../../components/CountySearchCard/SearchCard";
-import {CARD_ITEM_WIDTH, isMobile, toastingDanger, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
+import {CARD_ITEM_WIDTH, isMobile, toastingBad, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
 import CountyDoesNotExistsException from "../../exceptions/CountyDoesNotExistsException";
 
 
@@ -67,7 +67,7 @@ export default function CountyScreen(props) {
             logger.leave("addCounty", "App")
             return true;
         } catch (ex) {
-            toastingDanger("An error occurred")
+            toastingBad("An error occurred")
             logger.exception(ex);
             logger.unexpectedLeft("addCounty", "App");
             return false;
