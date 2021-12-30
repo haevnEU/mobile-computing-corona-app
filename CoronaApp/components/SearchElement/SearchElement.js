@@ -53,7 +53,7 @@ const SearchElement = (props) => {
                 data={suggestionArray}
                 renderItem={
                     ({item}) => (
-                        <TouchableWithoutFeedback
+                        <TouchableWithoutFeedback style={styles.button}
                             onPress={
                                 () => {
                                     setCurrentlySelectedCountyName(item.key);

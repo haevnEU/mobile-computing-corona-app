@@ -13,7 +13,6 @@ import {SettingsView} from "./components/SettingsView/SettingsView";
 import styles from './styles/default'
 import logger from "./utils/Logger";
 import ApplicationData from "./utils/ApplicationData";
-import {ImpressumView} from "./components/ImpressumView/ImpressumView";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
 import CountyScreen from "./Screens/CountyScreen/CountyScreen";
 
@@ -22,7 +21,7 @@ function SettingScreen(props) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
             <SettingsView gps={props.gps} />
-            <ImpressumView />
+
         </View>
     );
 }

@@ -1,35 +1,40 @@
 import {StyleSheet} from "react-native";
 
 export const styles = StyleSheet.create({
-    container:{
+    buttonContainer:{
         marginTop: 25,
         height: 50,
         width: 150,
         alignItems: 'center',
         borderRadius: 25,
         backgroundColor: 'white',
-        alignSelf: "center"
+        justifyContent: "center",
+        alignSelf: "center",
     },
 
     modalText:{
-        color: '#2d2d2d',
+        color: 'white',
         fontSize:25,
         alignSelf: "center"
     },
 
     modalTextBold:{
-        color: '#2d2d2d',
         fontSize:25,
-        fontWeight: 'bold',
-        alignSelf: "center"
+        alignSelf:'center',
+        color:'white',
+        fontWeight: 'bold'
     },
 
     modal: {
-        backgroundColor: 'black',
-        margin: 100,
-        paddingTop: 500,
-        alignItems: undefined,
-        justifyContent: undefined,
+        backgroundColor: '#2d2d2d',
+        width: '80%',
+        marginTop: 150,
+        height: '60%',
+        alignSelf: 'center',
+        borderRadius: 50,
+        justifyContent: 'center',
+        borderColor: 'white',
+        borderWidth: 1,
     }
 
 });

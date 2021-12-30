@@ -1,11 +1,11 @@
 import {StyleSheet} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
 
 export const styles = StyleSheet.create({
     container:{
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+
     },
     text:{
         color: "#ffffff",
@@ -16,9 +16,11 @@ export const styles = StyleSheet.create({
     switch:{
     },
     card:{
-        width: ITEM_WIDTH,
+        alignSelf: 'center',
+        width: '90%',
         backgroundColor: '#4A4A4A',
-        borderRadius: 25
+        borderRadius: 25,
+
     },
     card_content: {
         position: "relative",

@@ -13,11 +13,13 @@ export const styles = StyleSheet.create({
 
     button_container:{
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     button:{
-        alignItems: 'center'
+        borderRadius: 25,
+        width: 25,
+        alignSelf: 'center'
     },
 
     text:{
@@ -57,6 +59,6 @@ export const styles = StyleSheet.create({
     search_element: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
 
-    }
+    },
 
 });

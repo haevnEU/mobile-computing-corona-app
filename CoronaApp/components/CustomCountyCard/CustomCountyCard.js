@@ -60,7 +60,7 @@ export const CustomCountyCard = (props) => {
             <Card.Divider/>
             <CustomTable data={extractCountyDataset(county.data)}/>
             <Card.Divider/>
-            {props.onButton && <Button onPress={props.onButton} title={props.buttonText}/>}
+            {props.onButton && <Button style={styles.button} onPress={props.onButton} title={props.buttonText}/>}
         </Card>
     )
 }
