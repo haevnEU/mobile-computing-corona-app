@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
 import ApplicationData from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
-import {doesCountyExists, getAllGermanCounties, getCountyInformationByName} from "../../api/CountyDataController";
+import {doesCountyExists, getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
 import {SearchCard} from "../../components/CountySearchCard/SearchCard";
 import {CARD_ITEM_WIDTH, isMobile, toastingBad, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
-import CountyDoesNotExistsException from "../../exceptions/CountyDoesNotExistsException";
 
 
 export default function CountyScreen(props) {

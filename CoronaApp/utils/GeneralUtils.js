@@ -1,8 +1,5 @@
-import {Dimensions, Platform, Share, Text} from "react-native";
-import View from "react-native-web/dist/vendor/react-native/Animated/components/AnimatedView";
-import {useToast} from "react-native-toast-notifications";
-import {useEffect} from "react";
-import logger from "./Logger";
+import {Dimensions, Platform} from "react-native";
+
 
 export function isWeb(){
     return Platform.OS === 'web';

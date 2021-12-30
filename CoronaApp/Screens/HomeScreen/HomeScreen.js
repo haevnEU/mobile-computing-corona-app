@@ -8,7 +8,6 @@ import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
 export default function HomeScreen(props) {
     const [data, setData] = useState({});
     const [errorText, setErrorText] = useState("");
-    const [counties, setCounties] = useState([]);
     const [chosenCounty, setChosenCounty] = useState("");
 
     return (

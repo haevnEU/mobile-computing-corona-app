@@ -1,4 +1,3 @@
-import {Dimensions} from "react-native";
 
 const ApplicationData = {
     "county": "Bochum",
