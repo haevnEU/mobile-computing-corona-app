@@ -31,7 +31,7 @@ export const SettingsView = (props) => {
                 />
 
 
-                <Text styles={styles.text}> GPS Tracking</Text>
+                <Text style={styles.text}> GPS Tracking</Text>
             </View>
             <ImpressumView/>
         </View>

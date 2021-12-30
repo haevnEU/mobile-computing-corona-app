@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     },
 
     text:{
-        color: "#FFFFFF",
+        color: "red",
         margin: 10,
         fontSize: 20
     },
