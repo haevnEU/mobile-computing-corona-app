@@ -1,4 +1,6 @@
 import {StyleSheet} from "react-native";
+import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
+
 
 export const styles = StyleSheet.create({
 
@@ -45,7 +47,7 @@ export const styles = StyleSheet.create({
     },
 
     card:{
-        width: '90%',
+        width: (isMobile() ? CARD_ITEM_WIDTH : '90%'),
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
         borderRadius: 25

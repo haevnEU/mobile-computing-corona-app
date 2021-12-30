@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
-import ApplicationData, {ITEM_WIDTH} from "../../utils/ApplicationData";
+import ApplicationData from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
 import {getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
 import {SearchCard} from "../../components/CountySearchCard/SearchCard";
-import { Platform } from 'react-native';
-import {isMobile} from "../../utils/GeneralUtils";
+import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
 
 
 export default function CountyScreen(props) {
@@ -106,7 +105,7 @@ export default function CountyScreen(props) {
             <ScrollView
                 horizontal={isMobile()}
                 decelerationRate={"normal"}
-                snapToInterval={ITEM_WIDTH}
+                snapToInterval={CARD_ITEM_WIDTH}
                 bounces={false}
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}

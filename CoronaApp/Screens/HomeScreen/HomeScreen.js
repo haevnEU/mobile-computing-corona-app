@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import {Platform, ScrollView, View} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
+import {ScrollView, View} from "react-native";
 import {NationView} from "../../components/NationView/NationView";
 import {CountyDetailCard} from "../../components/CountyDetailCard/CountyDetailCard";
-import {isMobile} from "../../utils/GeneralUtils";
+import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
 
 
 export default function HomeScreen(props) {
@@ -17,7 +16,7 @@ export default function HomeScreen(props) {
             <ScrollView
                 horizontal={isMobile()}
                 decelerationRate={"normal"}
-                snapToInterval={ITEM_WIDTH}
+                snapToInterval={CARD_ITEM_WIDTH}
                 bounces={false}
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}
