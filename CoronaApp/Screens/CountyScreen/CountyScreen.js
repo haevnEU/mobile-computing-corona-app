@@ -2,15 +2,15 @@ import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
 import ApplicationData from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
-import {getCountyInformationByName} from "../../api/CountyDataController";
+import {doesCountyExists, getAllGermanCounties, getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
 import {SearchCard} from "../../components/CountySearchCard/SearchCard";
-import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
+import {CARD_ITEM_WIDTH, isMobile, toastingDanger, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
+import CountyDoesNotExistsException from "../../exceptions/CountyDoesNotExistsException";
 
 
 export default function CountyScreen(props) {
     const [favouriteCounties] = useState([]);
-
 
     const [rerender, setRerender] = useState(false);
     const [searchResult, setSearchResult] = useState("");
@@ -48,21 +48,26 @@ export default function CountyScreen(props) {
         try {
             let county = searchResult;
             if(ApplicationData.favourites.indexOf(county) >= 0){
-                logger.info("County already added");
+                toastingWarning("County " + county + " already added")
+                logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
+                return false;
+            }
+            if(!doesCountyExists(county)){
+                toastingWarning("County does not exists");
                 return false;
             }
             let result = await getCountyInformationByName(county)
 
             favouriteCounties.push({"key": county, "details": result});
-            console.log(favouriteCounties)
             ApplicationData.favourites.push(county)
             softRerender();
 
+            toastingGood(county + " added");
             logger.leave("addCounty", "App")
-
             return true;
         } catch (ex) {
+            toastingDanger("An error occurred")
             logger.exception(ex);
             logger.unexpectedLeft("addCounty", "App");
             return false;
@@ -130,7 +135,6 @@ export default function CountyScreen(props) {
                 {
                     renderElements()
                 }
-
             </ScrollView>
         </View>
     );

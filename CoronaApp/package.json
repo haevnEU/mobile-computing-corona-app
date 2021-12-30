@@ -22,8 +22,11 @@
     "react-native-elements": "^3.4.2",
     "react-native-multiple-select": "^0.5.7",
     "react-native-paper": "^4.11.1",
+    "react-native-push-notification-popup": "^1.6.0",
+    "react-native-root-siblings": "^4.1.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-table-component": "^1.2.1",
+    "react-native-toast-notifications": "^3.2.3",
     "react-native-web": "0.17.1"
   },
   "private": true,

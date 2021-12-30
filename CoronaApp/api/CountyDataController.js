@@ -100,6 +100,14 @@ export async function getAllGermanCounties(){
     return germanCountiesDocument;
 }
 
+export function doesCountyExists(county){
+    logger.enter("doesCountyExists(" + county + ")", "CountyDataController");
+
+
+    logger.leave("doesCountyExists(" + county + ")", "CountyDataController");
+    return germanCountiesDocument.indexOf(county) >= 0;
+}
+
 /**
  * Maps all german counties(Landkreise) into a processable json entity with the form [{"key":"value"}, ...].
  * @returns {Promise<*[]>}

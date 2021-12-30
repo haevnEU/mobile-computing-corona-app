@@ -15,6 +15,8 @@ import logger from "./utils/Logger";
 import ApplicationData from "./utils/ApplicationData";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
 import CountyScreen from "./Screens/CountyScreen/CountyScreen";
+import Toast from "react-native-toast-notifications";
+
 
 
 function SettingScreen(props) {
@@ -70,9 +72,9 @@ export default function App() {
         logger.info("Done initializing");
         setLoadingText("...")
         setLoading(false);
-
         logger.leave("App initial useEffect");
     }, []);
+
 
     if (loading) {
         return (
@@ -84,25 +86,27 @@ export default function App() {
             </SafeAreaProvider>)
     } else {
         return (
-            <SafeAreaProvider>
-                <NavigationContainer>
-                    <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer}
-                            leftComponent={{text: 'InTrack', style: styles.heading}}/>
-                    <Tab.Navigator screenOptions={{
-                        headerShown: false, tabBarInactiveBackgroundColor: '#2D2D2D',
-                        tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white'
-                    }}
-                    >
-                        <Tab.Screen name="Home" children={() => <HomeScreen countyList={countyList}
-                                                                            gps={[gpsEnabled, setGpsEnabled]} />}/>
-                        <Tab.Screen name="Counties" children={() => <CountyScreen countyList={countyList}
-                                                                                  gps={[gpsEnabled, setGpsEnabled]} />}/>
-                        <Tab.Screen name="Settings" children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]} />}/>
+                <SafeAreaProvider>
 
-                    </Tab.Navigator>
-                </NavigationContainer>
-            </SafeAreaProvider>
+                    <NavigationContainer>
+                        <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer}
+                                leftComponent={{text: 'InTrack', style: styles.heading}}/>
+                        <Tab.Navigator screenOptions={{
+                            headerShown: false, tabBarInactiveBackgroundColor: '#2D2D2D',
+                            tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white'
+                        }}
+                        >
+                            <Tab.Screen name="Home" children={() => <HomeScreen countyList={countyList}
+                                                                                gps={[gpsEnabled, setGpsEnabled]}/>}/>
+                            <Tab.Screen name="Counties" children={() => <CountyScreen countyList={countyList}
+                                                                                      gps={[gpsEnabled, setGpsEnabled]}/>}/>
+                            <Tab.Screen name="Settings"
+                                        children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}/>
+
+                        </Tab.Navigator>
+                    </NavigationContainer>
+                    <Toast ref={(ref) => global['toast'] = ref} />
+                </SafeAreaProvider>
         );
     }
 }
-
