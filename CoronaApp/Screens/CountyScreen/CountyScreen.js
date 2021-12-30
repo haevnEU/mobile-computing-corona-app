@@ -5,6 +5,8 @@ import logger from "../../utils/Logger";
 import {getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
 import {SearchCard} from "../../components/CountySearchCard/SearchCard";
+import { Platform } from 'react-native';
+import {isMobile} from "../../utils/GeneralUtils";
 
 
 export default function CountyScreen(props) {
@@ -102,7 +104,7 @@ export default function CountyScreen(props) {
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             <ScrollView
-                horizontal={false}
+                horizontal={isMobile()}
                 decelerationRate={"normal"}
                 snapToInterval={ITEM_WIDTH}
                 bounces={false}
