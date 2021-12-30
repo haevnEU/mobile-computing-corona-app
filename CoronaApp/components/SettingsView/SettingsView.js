@@ -1,8 +1,9 @@
 import React from "react";
 import {View, Text} from "react-native";
-import { Switch } from "react-native-elements";
+import {Switch} from "react-native-elements";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
+import {ImpressumView} from "../ImpressumView/ImpressumView";
 
 /**
  * This component contains all elements for the application setting
@@ -13,6 +14,7 @@ export const SettingsView = (props) => {
     let gpsToggle = props.gps[1];
     return (
         <View style={styles.container}>
+            <View style={styles.settingsContainer}>
             <Switch color={styles.switch.color}
                     value={gps}
                     onValueChange={gpsState => {
@@ -26,6 +28,11 @@ export const SettingsView = (props) => {
                         }
                     }}
             />
-            <Text styles={[styles.text]}>GPS Tracking</Text>
+
+
+            <Text styles={styles.text}>   GPS Tracking</Text>
+            </View>
+
+            <ImpressumView />
         </View>)
 }

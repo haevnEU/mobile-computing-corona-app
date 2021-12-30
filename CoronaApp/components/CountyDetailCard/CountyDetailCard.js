@@ -50,7 +50,7 @@ const CountyDetailCard = (props) => {
                     <View style={[styles.button_container]}>
                         {gps && (
                             <Button title="Locate"
-                                 styles={[styles.text, styles.button]}
+                                 styles={{borderRadius: 40}}
                                  disabled={loading &&  gps}
                                  onPress={() => {
                                      if(gps) {

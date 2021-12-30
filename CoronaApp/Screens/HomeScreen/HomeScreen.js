@@ -14,7 +14,7 @@ export default function HomeScreen(props) {
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             <ScrollView
-                horizontal={true}
+                horizontal={false}
                 decelerationRate={"normal"}
                 snapToInterval={ITEM_WIDTH}
                 bounces={false}

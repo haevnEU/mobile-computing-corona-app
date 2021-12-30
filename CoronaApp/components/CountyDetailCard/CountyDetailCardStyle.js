@@ -1,5 +1,4 @@
 import {StyleSheet} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
 
 export const styles = StyleSheet.create({
 
@@ -13,11 +12,18 @@ export const styles = StyleSheet.create({
 
     button_container:{
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: 500,
+        width: 50,
+        alignSelf: 'center'
     },
 
     button:{
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 500,
+        margin: 5,
+        width: 50,
+        color: 'white'
     },
 
     text:{
@@ -35,11 +41,12 @@ export const styles = StyleSheet.create({
     subtitle:{
         color: "#ffffff",
         textAlign: "center",
-        fontSize:25
+        fontSize: 25
     },
 
     card:{
-        width: ITEM_WIDTH,
+        width: '90%',
+        alignSelf: 'center',
         backgroundColor: '#4A4A4A',
         borderRadius: 25
     },
