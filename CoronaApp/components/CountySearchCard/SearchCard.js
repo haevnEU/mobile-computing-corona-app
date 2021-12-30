@@ -19,7 +19,7 @@ return (
             <Card.Divider/>
             <View style={[styles.button_container]}>
                 <Button styles={[styles.text, styles.button]}
-                        onPress={props.onSearch()}
+                        onPress={props.onSearch}
                         title={props.buttonText || "Search"}/>
             </View>
         </Card>
