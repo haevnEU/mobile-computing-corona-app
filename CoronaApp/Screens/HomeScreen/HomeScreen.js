@@ -6,11 +6,11 @@ import {CountyDetailCard} from "../../components/CountyDetailCard/CountyDetailCa
 
 
 export default function HomeScreen(props) {
-    const [showSearch, setShowSearch] = useState(true);
     const [data, setData] = useState({});
     const [errorText, setErrorText] = useState("");
     const [counties, setCounties] = useState([]);
     const [chosenCounty, setChosenCounty] = useState("");
+
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             <ScrollView
@@ -22,11 +22,10 @@ export default function HomeScreen(props) {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={12}>
                 <NationView />
-                <CountyDetailCard showSearch={showSearch} setShowSearch={setShowSearch}
+                <CountyDetailCard
                                   gps={props.gps}
                                   data={data} setData={setData}
                                   errorText={errorText} setErrorText={setErrorText}
-                                  counties={counties} setCounties={setCounties}
                                   chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
                                   countyList={props.countyList}
                 />
