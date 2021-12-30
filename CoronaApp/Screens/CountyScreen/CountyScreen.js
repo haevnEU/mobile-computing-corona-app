@@ -11,6 +11,7 @@ import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
 export default function CountyScreen(props) {
     const [favouriteCounties] = useState([]);
 
+
     const [rerender, setRerender] = useState(false);
     const [searchResult, setSearchResult] = useState("");
 
@@ -27,6 +28,7 @@ export default function CountyScreen(props) {
     useEffect(async () => {
         logger.enter("initialize of CountyScreen", "App")
 
+        favouriteCounties.length = 0;
         logger.info("Read favourites from application data")
         for(let county of ApplicationData.favourites){
             let details = await getCountyInformationByName(county);
@@ -45,8 +47,15 @@ export default function CountyScreen(props) {
         logger.enter("addCounty", "App")
         try {
             let county = searchResult;
+            if(ApplicationData.favourites.indexOf(county) >= 0){
+                logger.info("County already added");
+                logger.leave("addCounty", "App");
+                return false;
+            }
             let result = await getCountyInformationByName(county)
+
             favouriteCounties.push({"key": county, "details": result});
+            console.log(favouriteCounties)
             ApplicationData.favourites.push(county)
             softRerender();
 
