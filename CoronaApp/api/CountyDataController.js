@@ -71,14 +71,14 @@ export async function getCountyInformationByName(name) {
         "name": county['name'],
         "state": county['state'],
         "data": {
-            "population":   Math.round(county['population']),
-            "cases":        Math.round(county['cases']),
-            "casesPerWeek": Math.round(county['casesPerWeek']),
-            "death":        Math.round(county['deaths']),
-            "deathPerWeek": Math.round(county['deathsPerWeek']),
-            "recovered":    Math.round(county['recovered']),
-            "incidence":    Math.round(county['weekIncidence']),
-            "casesPer100k": Math.round(county['casesPer100k']),
+            "population":   Math.round(county['population']).toLocaleString(),
+            "cases":        Math.round(county['cases']).toLocaleString(),
+            "casesPerWeek": Math.round(county['casesPerWeek']).toLocaleString(),
+            "death":        Math.round(county['deaths']).toLocaleString(),
+            "deathPerWeek": Math.round(county['deathsPerWeek']).toLocaleString(),
+            "recovered":    Math.round(county['recovered']).toLocaleString(),
+            "incidence":    Math.round(county['weekIncidence']).toLocaleString(),
+            "casesPer100k": Math.round(county['casesPer100k']).toLocaleString(),
             "delta": county['delta']
         }
     };

@@ -35,9 +35,9 @@ export const NationView = () => {
                     <Card.Title style={styles.text}>Aktuelle Nationale <Text style={{color: '#2d2d2d'}}>Inzidenz </Text></Card.Title>
                     <Card.Divider/>
                     <View style={styles.card_content}>
-                        <Text style={styles.text}>Fälle {data.national.cases7}</Text>
-                        <Text style={styles.text}>Fälle/100k {(Math.round(data.national.cases7_per_100k * 100) / 100).toFixed(2)}</Text>
-                        <Text style={styles.text}>Tode {data.national.death}</Text>
+                        <Text style={styles.text}>Fälle {data.national.cases7.toLocaleString()}</Text>
+                        <Text style={styles.text}>Fälle/100k {(Math.round(data.national.cases7_per_100k * 100) / 100).toFixed(2).toLocaleString()}</Text>
+                        <Text style={styles.text}>Tode {data.national.death.toLocaleString()}</Text>
                     </View>
                 </Card>
             </View>
