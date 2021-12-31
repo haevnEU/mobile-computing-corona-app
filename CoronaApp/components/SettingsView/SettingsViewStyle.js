@@ -1,4 +1,5 @@
 import {StyleSheet} from "react-native";
+import {isWeb} from "../../utils/GeneralUtils";
 
 export const styles = StyleSheet.create({
     container:{
@@ -32,7 +33,6 @@ export const styles = StyleSheet.create({
     },
 
     switch:{
-        trackColor: "#ff00ff",
     },
 
 });

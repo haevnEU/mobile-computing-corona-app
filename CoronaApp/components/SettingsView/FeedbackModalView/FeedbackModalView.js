@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Modal, Text, TextInput, TouchableHighlight, View} from 'react-native';
-import {styles} from "./FeedBackModalViewStyle";
 import {toastingBad, toastingGood, toastingWarning} from "../../../utils/GeneralUtils";
+import {styles} from "./FeedbackModalViewStyle";
 
 const sendFeedback = async (text) => {
     console.log(text)
