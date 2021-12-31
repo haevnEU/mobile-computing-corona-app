@@ -3,7 +3,7 @@ import {View, Text, Switch} from "react-native";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "./ImpressumView/ImpressumView";
-import {FeedbackView} from "./FeedbackView/FeedbackView";
+import {FeedbackModalView} from "./FeedbackModalView/FeedbackModalView";
 
 /**
  * This component contains all elements for the application setting
@@ -15,10 +15,9 @@ export const SettingsView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
-                <Switch
-                    thumbColor={Locator.isGranted() ? "green" : "gray"}
-
-                    value={gps}
+                <Switch trackColor = {'#ff00ff'}
+                        thumbColor = {'#B6FC95'}
+                        value={gps}
                         onValueChange={gpsState => {
                             if (!gpsState) {
                                 // Disable the gps module
@@ -30,13 +29,10 @@ export const SettingsView = (props) => {
                             }
                         }}
                 />
-
-
-                <Text style={styles.text}> GPS Tracking</Text>
+                <Text style={styles.text}>GPS Tracking</Text>
             </View>
+            <FeedbackModalView />
             <ImpressumView/>
-            <FeedbackView />
-
         </View>
     )
 }

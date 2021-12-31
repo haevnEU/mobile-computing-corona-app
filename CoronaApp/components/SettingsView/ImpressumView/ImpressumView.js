@@ -14,7 +14,7 @@ export const ImpressumView = () => {
                 <View style={styles.modal}>
                     <Text style={styles.modalTextBold}>Impressum</Text>
                     <Text style={styles.modalText}>{'\n Hochschule Ruhr West \n Duisburger Straße 100 \n 45479 Mülheim an der Ruhr \n ' +
-                    'Erstellt durch: \n Nils Milewski \n Lucas Lichner\n\n'
+                    '\nErstellt durch: \n Nils Milewski \n Lucas Lichner\n\n'
                     }</Text>
                     <TouchableHighlight
                         style={styles.buttonContainer} onPress={() => {

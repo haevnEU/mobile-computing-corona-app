@@ -72,7 +72,7 @@ export const NationView = () => {
         return (
             <View>
                 <Card style={[styles.card, styles.text, styles.headline]}  containerStyle={styles.card}>
-                    <Card.Title style={styles.text}>Aktuelle Nationale <Text style={{color: '#2d2d2d'}}>Inzidenz </Text></Card.Title>
+                    <Card.Title style={styles.text}>Aktuelle Nationale Inzidenz</Card.Title>
                     <Text style={[styles.subtitle]}>Germany</Text>
                     <Card.Divider/>
                     <CustomTable data={extractNationDataset(data)}/>

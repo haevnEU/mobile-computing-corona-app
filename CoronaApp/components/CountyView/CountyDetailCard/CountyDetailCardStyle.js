@@ -9,20 +9,17 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        margin: 100,
     },
 
     button_container:{
         flexDirection: 'row',
         justifyContent: 'center',
-        borderRadius: 500,
         width: 50,
         alignSelf: 'center'
     },
 
     button:{
         alignItems: 'center',
-        borderRadius: 500,
         margin: 5,
         width: 50,
         color: 'white'
