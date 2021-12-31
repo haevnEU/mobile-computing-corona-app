@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         borderRadius: 25,
-        margin: 10,
+        margin: 5,
         backgroundColor: '#4a4a4a',
         borderColor: 'white',
         borderWidth: 1,
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'row',
         alignItems: "center",
-        margin: 10,
+        margin: 5,
         backgroundColor: '#4a4a4a',
     },
 
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     },
 
     switch:{
-        color: "#ff00ff",
+        trackColor: "#ff00ff",
     },
 
 });

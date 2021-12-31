@@ -15,8 +15,7 @@ export const styles = StyleSheet.create({
     input: {
     },
     button:{
-        borderRadius: 25,
-        width: '25%',
+
         alignSelf: 'center'
     },
 

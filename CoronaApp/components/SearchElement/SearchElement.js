@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FlatList, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
+import {FlatList, Text, TextInput, TouchableOpacity , View} from "react-native";
 import {Divider} from "react-native-elements";
 import {styles} from "./SearchElementStyle";
 import logger from "../../utils/Logger";
@@ -53,7 +53,7 @@ const SearchElement = (props) => {
                 data={suggestionArray}
                 renderItem={
                     ({item}) => (
-                        <TouchableWithoutFeedback style={styles.button}
+                        <TouchableOpacity  style={styles.button}
                             onPress={
                                 () => {
                                     setCurrentlySelectedCountyName(item.key);
@@ -64,7 +64,7 @@ const SearchElement = (props) => {
                                 <Text style={[styles.suggestion_entry, styles.text]}>{item.key}</Text>
                                 <Divider/>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </TouchableOpacity >
                     )
                 }>
             </FlatList>

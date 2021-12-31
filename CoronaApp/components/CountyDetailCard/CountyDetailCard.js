@@ -51,6 +51,7 @@ const CountyDetailCard = (props) => {
                         {gps && (
                             <Button title="Locate"
                                  styles={{borderRadius: 40}}
+                                 color={'#B6FC95'}
                                  disabled={loading &&  gps}
                                  onPress={() => {
                                      if(gps) {
@@ -67,6 +68,7 @@ const CountyDetailCard = (props) => {
                         />)
                         }
                         <Button styles={[styles.text, styles.button]}
+                                color={'#B6FC95'}
                                 disabled={loading}
                                 onPress={() => {
                                     getCountyInformationByName(currentlySelectedCountyName).then(result => {
