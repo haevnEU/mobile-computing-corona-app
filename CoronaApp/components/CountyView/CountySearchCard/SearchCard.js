@@ -1,7 +1,7 @@
 import {Button, View} from "react-native";
 import {Card} from "react-native-elements";
 import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
-import {SearchElement} from "../SearchElement/SearchElement";
+import {SearchElement} from "../../customElements/SearchElement/SearchElement";
 import React from "react";
 
 const SearchCard = (props) => {

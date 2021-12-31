@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FlatList, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import {Divider} from "react-native-elements";
 import {styles} from "./SearchElementStyle";
-import logger from "../../utils/Logger";
+import logger from "../../../utils/Logger";
 
 /**
  * This is a search element

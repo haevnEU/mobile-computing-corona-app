@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {ScrollView, View} from "react-native";
 import {NationView} from "../../components/NationView/NationView";
-import {CountyDetailCard} from "../../components/CountyDetailCard/CountyDetailCard";
+import {CountyDetailCard} from "../../components/CountyView/CountyDetailCard/CountyDetailCard";
 import {CARD_ITEM_WIDTH, isMobile} from "../../utils/GeneralUtils";
 
 

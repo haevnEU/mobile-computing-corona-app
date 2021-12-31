@@ -3,8 +3,8 @@ import {ScrollView, View} from "react-native";
 import ApplicationData from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
 import {doesCountyExists, getCountyInformationByName} from "../../api/CountyDataController";
-import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
-import {SearchCard} from "../../components/CountySearchCard/SearchCard";
+import {CustomCountyCard} from "../../components/CountyView/CustomCountyCard/CustomCountyCard";
+import {SearchCard} from "../../components/CountyView/CountySearchCard/SearchCard";
 import {CARD_ITEM_WIDTH, isMobile, toastingBad, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
 
 
