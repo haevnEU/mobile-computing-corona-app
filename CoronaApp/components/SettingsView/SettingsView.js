@@ -1,8 +1,24 @@
-import React from "react";
-import {View, Text, Switch} from "react-native";
+import React, {useState} from "react";
+import {View, Text, Switch, Button, TextInput} from "react-native";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "../ImpressumView/ImpressumView";
+import {Input} from "react-native-elements";
+import {toastingBad, toastingGood} from "../../utils/GeneralUtils";
+import {FeedbackView} from "./FeedbackView/FeedbackView";
+
+const send = async (text) => {
+    fetch('https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            feedback: text
+        })
+    }).then(response => toastingGood("Feedback received")).catch(error => toastingBad("Cannot send feedback"));
+}
 
 /**
  * This component contains all elements for the application setting
@@ -11,7 +27,7 @@ import {ImpressumView} from "../ImpressumView/ImpressumView";
 export const SettingsView = (props) => {
     let gps = props.gps[0];
     let gpsToggle = props.gps[1];
-
+    const [feedback, setFeedback] = useState("");
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
@@ -35,6 +51,8 @@ export const SettingsView = (props) => {
                 <Text style={styles.text}> GPS Tracking</Text>
             </View>
             <ImpressumView/>
+            <FeedbackView />
+
         </View>
     )
 }
