@@ -5,10 +5,7 @@ import {OneDayAsMilli} from "../utils/GeneralUtils";
 
 
 
-
-
 const dataSource = {update: 0};
-
 let germanCountiesDocument = {};
 
 /**

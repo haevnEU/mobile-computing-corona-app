@@ -4,6 +4,11 @@ import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
 import {SearchElement} from "../../customElements/SearchElement/SearchElement";
 import React from "react";
 
+/**
+ * This component shows a generic search card
+ * @param props The properties must contain a dataList array, a searchResult state and an onSearch callback
+ * @returns {JSX.Element} React native component
+ */
 const SearchCard = (props) => {
 
 return (

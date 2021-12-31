@@ -14,7 +14,7 @@ import styles from './styles/default'
 import logger from "./utils/Logger";
 import ApplicationData from "./utils/ApplicationData";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
-import CountyScreen from "./Screens/CountyScreen/CountyScreen";
+import FavouriteCountyScreen from "./Screens/CountyScreen/FavouriteCountyScreen";
 import Toast from "react-native-toast-notifications";
 
 
@@ -98,8 +98,8 @@ export default function App() {
                         >
                             <Tab.Screen name="Home" children={() => <HomeScreen countyList={countyList}
                                                                                 gps={[gpsEnabled, setGpsEnabled]}/>}/>
-                            <Tab.Screen name="Counties" children={() => <CountyScreen countyList={countyList}
-                                                                                      gps={[gpsEnabled, setGpsEnabled]}/>}/>
+                            <Tab.Screen name="Counties" children={() => <FavouriteCountyScreen countyList={countyList}
+                                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}/>
                             <Tab.Screen name="Settings"
                                         children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}/>
 

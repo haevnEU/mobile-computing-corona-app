@@ -7,19 +7,6 @@ import {Input} from "react-native-elements";
 import {toastingBad, toastingGood} from "../../utils/GeneralUtils";
 import {FeedbackView} from "./FeedbackView/FeedbackView";
 
-const send = async (text) => {
-    fetch('https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            feedback: text
-        })
-    }).then(response => toastingGood("Feedback received")).catch(error => toastingBad("Cannot send feedback"));
-}
-
 /**
  * This component contains all elements for the application setting
  * @returns {JSX.Element} New React Native Custom settings component
@@ -27,7 +14,6 @@ const send = async (text) => {
 export const SettingsView = (props) => {
     let gps = props.gps[0];
     let gpsToggle = props.gps[1];
-    const [feedback, setFeedback] = useState("");
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>

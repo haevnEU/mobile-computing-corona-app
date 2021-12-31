@@ -8,7 +8,7 @@ import {SearchCard} from "../../components/CountyView/CountySearchCard/SearchCar
 import {CARD_ITEM_WIDTH, isMobile, toastingBad, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
 
 
-export default function CountyScreen(props) {
+export default function FavouriteCountyScreen(props) {
     const [favouriteCounties] = useState([]);
 
     const [rerender, setRerender] = useState(false);
@@ -47,13 +47,13 @@ export default function CountyScreen(props) {
         try {
             let county = searchResult;
             if(ApplicationData.favourites.indexOf(county) >= 0){
-                toastingWarning("County " + county + " already added")
+                toastingWarning("County \"" + county + "\" already added")
                 logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
                 return false;
             }
             if(!doesCountyExists(county)){
-                toastingWarning("County does not exists");
+                toastingWarning("County does \"" + county + "\" not exists");
                 return false;
             }
             let result = await getCountyInformationByName(county)
@@ -62,7 +62,7 @@ export default function CountyScreen(props) {
             ApplicationData.favourites.push(county)
             softRerender();
 
-            toastingGood(county + " added");
+            toastingGood("County \"" + county + "\" added to favourites");
             logger.leave("addCounty", "App")
             return true;
         } catch (ex) {
@@ -97,6 +97,7 @@ export default function CountyScreen(props) {
 
             softRerender();
 
+            toastingGood("County \"" + county + "\" removed from favourites")
             logger.enter("removeCounty", "App");
         }
     }

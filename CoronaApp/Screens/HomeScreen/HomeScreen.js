@@ -24,7 +24,6 @@ export default function HomeScreen(props) {
                 <CountyDetailCard
                                   gps={props.gps}
                                   data={data} setData={setData}
-                                  errorText={errorText} setErrorText={setErrorText}
                                   chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
                                   countyList={props.countyList}
                 />

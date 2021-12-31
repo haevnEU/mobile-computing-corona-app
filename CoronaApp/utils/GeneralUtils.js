@@ -1,4 +1,6 @@
 import {Dimensions, Platform} from "react-native";
+import text from "react-native-web/dist/exports/Text";
+import logger from "./Logger";
 
 
 export function isWeb(){
@@ -15,17 +17,56 @@ export const DEVICE_WIDTH = Dimensions.get("window").width * 0.9
 
 export const CARD_ITEM_WIDTH = DEVICE_WIDTH * 0.9
 
-export function toasting(message, duration = 4000){
-    toast.show(message);
+
+function toaster(message, format){
+    logger.enter("toaster", "GeneralUtils");
+    logger.info("Toast data with format");
+    logger.info(format)
+    toast.show(message, format);
+    logger.leave("toaster", "GeneralUtils");
 }
 
-export function toastingGood(message){
-    toast.show(message, {type: "success"});
-}
-export function toastingWarning(message){
-    toast.show(message, {type: "warning"});
-}
-export function toastingBad(message){
-    toast.show(message, {type: "danger"});
+export function toasting(message){
+    toaster(message, {
+        textStyle: toastTextStyle,
+        swipeEnabled: toastSwipe,
+        placement: toastPlacement,
+    });
 }
 
+export function toastingGood(message) {
+    toaster(message,
+        {
+            type: "success",
+            textStyle: toastTextStyle,
+            swipeEnabled: toastSwipe,
+            placement: toastPlacement,
+        }
+    );
+}
+
+export function toastingWarning(message) {
+    toaster(message,
+        {
+            type: "warning",
+            textStyle: toastTextStyle,
+            swipeEnabled: toastSwipe,
+            placement: toastPlacement,
+        }
+    );
+}
+
+export function toastingBad(message) {
+    toaster(message,
+        {
+            type: "danger",
+            textStyle: toastTextStyle,
+            swipeEnabled: toastSwipe,
+            placement: toastPlacement,
+        }
+    );
+}
+
+const toastSwipe = true;
+const toastPlacement = "bottom"
+const toastTextStyle = { fontSize: 23 };

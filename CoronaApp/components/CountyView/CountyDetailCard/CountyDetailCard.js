@@ -7,6 +7,7 @@ import {styles} from "./CountyDetailCardStyle";
 import ApplicationData from "../../../utils/ApplicationData";
 import {Locator} from "../../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
+import {toastingWarning} from "../../../utils/GeneralUtils";
 
 /**
  * This is a custom react native component.<br>
@@ -61,7 +62,7 @@ const CountyDetailCard = (props) => {
                                              // the currently selected county name
                                              setCurrentlySelectedCountyName(result);
                                              setLoading(false);
-                                         });
+                                         }).catch(ex => toastingWarning("County associated with \"" + gps + "\" does not exist"));
                                      }
                                  }}
                         />)
@@ -74,7 +75,7 @@ const CountyDetailCard = (props) => {
                                         // this implies that the search view is no longer required => hide it
                                         setCurrentlySelectedCountyData(result);
                                         setShowSearch(false);
-                                    });
+                                    }).catch(ex => toastingWarning("County \"" + currentlySelectedCountyName + "\" does not exist"));
                                 }} title="Search"/>
                     </View>
                 </Card>
