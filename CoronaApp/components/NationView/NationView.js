@@ -4,7 +4,6 @@ import { Card } from "react-native-elements";
 import NationalDataController from "../../api/NationalDataController";
 import {styles} from "./NationViewStyle";
 import {CustomTable} from "../customElements/CustomTable/CustomTable";
-import {extractCountyDataset} from "../CountyView/CustomCountyCard/CustomCountyCard";
 
 /**
  * Transforms a county data document into a processable entity
