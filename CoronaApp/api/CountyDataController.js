@@ -71,14 +71,14 @@ export async function getCountyInformationByName(name) {
         "name": county['name'],
         "state": county['state'],
         "data": {
-            "population":   Math.round(county['population']).toLocaleString(),
-            "cases":        Math.round(county['cases']).toLocaleString(),
-            "casesPerWeek": Math.round(county['casesPerWeek']).toLocaleString(),
-            "death":        Math.round(county['deaths']).toLocaleString(),
-            "deathPerWeek": Math.round(county['deathsPerWeek']).toLocaleString(),
-            "recovered":    Math.round(county['recovered']).toLocaleString(),
-            "incidence":    Math.round(county['weekIncidence']).toLocaleString(),
-            "casesPer100k": Math.round(county['casesPer100k']).toLocaleString(),
+            "population":   (Math.round(county['population'] * 100) / 100).toLocaleString(),
+            "cases":        (Math.round(county['cases'] * 100) / 100).toLocaleString(),
+            "casesPerWeek": (Math.round(county['casesPerWeek'] * 100) / 100).toLocaleString(),
+            "death":        (Math.round(county['deaths'] * 100) / 100).toLocaleString(),
+            "deathPerWeek": (Math.round(county['deathsPerWeek'] * 100) / 100).toLocaleString(),
+            "recovered":    (Math.round(county['recovered'] * 100) / 100).toLocaleString(),
+            "incidence":    (Math.round(county['weekIncidence'] * 100) / 100).toLocaleString(),
+            "casesPer100k": (Math.round(county['casesPer100k'] * 100) / 100).toLocaleString(),
             "delta": county['delta']
         }
     };

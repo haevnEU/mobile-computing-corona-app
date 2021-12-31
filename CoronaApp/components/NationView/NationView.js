@@ -3,6 +3,46 @@ import {View, Text, ActivityIndicator} from "react-native";
 import { Card } from "react-native-elements";
 import NationalDataController from "../../api/NationalDataController";
 import {styles} from "./NationViewStyle";
+import {CustomTable} from "../customElements/CustomTable/CustomTable";
+import {extractCountyDataset} from "../CountyView/CustomCountyCard/CustomCountyCard";
+
+/**
+ * Transforms a county data document into a processable entity
+ * <ul>Mandatory input elements
+ *  <li>population</li>
+ *  <li>incidence</li>
+ *  <li>cases</li>
+ *  <li>casesPerWeek</li>
+ *  <li>death</li>
+ *  <li>deathPerWeek</li>
+ * </ul>
+ * @param data Input json document
+ * @returns Mapped data
+ */
+export const extractNationDataset = (data) => {
+    return [
+        {
+            "key": "Fälle",
+            "value": data.national.cases7
+        },
+        {
+            "key": "Fälle/100k",
+            "value": data.national.cases7_per_100k
+        },
+        {
+            "key": "R Wert",
+            "value": data.national.death
+        },
+        {
+            "key": "Fälle/Woche",
+            "value": data.national.r_value
+        },
+        {
+            "key": "Hospitalisierung",
+            "value": data.national.hospitalization
+        }
+    ]
+}
 
 /**
  * This component represents information about a nation
@@ -34,11 +74,7 @@ export const NationView = () => {
                 <Card style={[styles.card, styles.text, styles.headline]}  containerStyle={styles.card}>
                     <Card.Title style={styles.text}>Aktuelle Nationale <Text style={{color: '#2d2d2d'}}>Inzidenz </Text></Card.Title>
                     <Card.Divider/>
-                    <View style={styles.card_content}>
-                        <Text style={styles.text}>Fälle {data.national.cases7.toLocaleString()}</Text>
-                        <Text style={styles.text}>Fälle/100k {(Math.round(data.national.cases7_per_100k * 100) / 100).toFixed(2).toLocaleString()}</Text>
-                        <Text style={styles.text}>Tode {data.national.death.toLocaleString()}</Text>
-                    </View>
+                    <CustomTable data={extractNationDataset(data)}/>
                 </Card>
             </View>
         )

@@ -25,9 +25,11 @@ const updateDataSource = async () => {
         dataSource = {
             update: (currentTime + OneDayAsMilli),
             national: {
-                cases7: result['casesPerWeek'],
-                cases7_per_100k: result['weekIncidence'],
-                death: result['deaths'],
+                cases7: (Math.round(result['casesPerWeek'] * 100) / 100).toLocaleString(),
+                cases7_per_100k: (Math.round(result['weekIncidence']* 100) / 100),
+                death: (Math.round(result['deaths']* 100) / 100).toLocaleString(),
+                r_value: (Math.round(result['r']['value']* 100) / 100).toLocaleString(),
+                hospitalization: (Math.round(result['hospitalization']['incidence7Days']* 100) / 100).toLocaleString()
             }
         }
     }
