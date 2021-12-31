@@ -26,15 +26,15 @@ export const extractNationDataset = (data) => {
             "value": data.national.cases7
         },
         {
-            "key": "Fälle/100k",
+            "key": "Inzidenz",
             "value": data.national.cases7_per_100k
         },
         {
-            "key": "R Wert",
+            "key": "Todesfälle",
             "value": data.national.death
         },
         {
-            "key": "Fälle/Woche",
+            "key": "R Wert",
             "value": data.national.r_value
         },
         {
