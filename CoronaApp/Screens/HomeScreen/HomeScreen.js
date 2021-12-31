@@ -19,13 +19,13 @@ export default function HomeScreen(props) {
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={12}>
-                <NationView />
                 <CountyDetailCard
                                   gps={props.gps}
                                   data={data} setData={setData}
                                   chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
                                   countyList={props.countyList}
                 />
+                <NationView />
             </ScrollView>
         </View>
     );
