@@ -1,5 +1,4 @@
 import {Dimensions, Platform} from "react-native";
-import text from "react-native-web/dist/exports/Text";
 import logger from "./Logger";
 
 

@@ -17,13 +17,12 @@ const sendFeedback = async (text) => {
         body: JSON.stringify({
             feedback: text
         })
-    }).then(response => toastingGood("Feedback received"))
-        .catch(error => toastingBad("Cannot send feedback")).finally(() => true);
+    }).then(() => toastingGood("Feedback received"))
+        .catch(() => toastingBad("Cannot send feedback")).finally(() => true);
 
 }
 
 export const FeedbackView = () => {
-    const [sending, setSending] = useState(false);
     const [feedback, setFeedback] = useState("");
 
     return (
@@ -35,7 +34,7 @@ export const FeedbackView = () => {
             <Button title="Send"
                     onPress={
                         () => {
-                            sendFeedback(feedback).then(result => setSending(false));
+                            sendFeedback(feedback).then();
                             setFeedback("")
                         }
                     }

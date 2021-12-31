@@ -1,10 +1,8 @@
-import React, {useState} from "react";
-import {View, Text, Switch, Button, TextInput} from "react-native";
+import React from "react";
+import {View, Text, Switch} from "react-native";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "./ImpressumView/ImpressumView";
-import {Input} from "react-native-elements";
-import {toastingBad, toastingGood} from "../../utils/GeneralUtils";
 import {FeedbackView} from "./FeedbackView/FeedbackView";
 
 /**

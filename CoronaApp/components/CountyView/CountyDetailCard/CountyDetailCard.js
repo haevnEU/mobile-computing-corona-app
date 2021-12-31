@@ -62,7 +62,7 @@ const CountyDetailCard = (props) => {
                                              // the currently selected county name
                                              setCurrentlySelectedCountyName(result);
                                              setLoading(false);
-                                         }).catch(ex => toastingWarning("County associated with \"" + gps + "\" does not exist"));
+                                         }).catch(() => toastingWarning("County associated with \"" + gps + "\" does not exist"));
                                      }
                                  }}
                         />)
@@ -75,7 +75,7 @@ const CountyDetailCard = (props) => {
                                         // this implies that the search view is no longer required => hide it
                                         setCurrentlySelectedCountyData(result);
                                         setShowSearch(false);
-                                    }).catch(ex => toastingWarning("County \"" + currentlySelectedCountyName + "\" does not exist"));
+                                    }).catch(() => toastingWarning("County \"" + currentlySelectedCountyName + "\" does not exist"));
                                 }} title="Search"/>
                     </View>
                 </Card>
