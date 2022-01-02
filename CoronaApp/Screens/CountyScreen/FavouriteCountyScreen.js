@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
-import ApplicationData, {ITEM_WIDTH} from "../../utils/ApplicationData";
+import ApplicationData from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
-import {getCountyInformationByName} from "../../api/CountyDataController";
-import {CustomCountyCard} from "../../components/CustomCountyCard/CustomCountyCard";
-import {SearchCard} from "../../components/CountySearchCard/SearchCard";
+import {doesCountyExists, getCountyInformationByName} from "../../api/CountyDataController";
+import {CustomCountyCard} from "../../components/CountyView/CustomCountyCard/CustomCountyCard";
+import {SearchCard} from "../../components/CountyView/CountySearchCard/SearchCard";
+import {CARD_ITEM_WIDTH, isMobile, toastingBad, toastingGood, toastingWarning} from "../../utils/GeneralUtils";
 
 
-export default function CountyScreen(props) {
+export default function FavouriteCountyScreen(props) {
     const [favouriteCounties] = useState([]);
 
     const [rerender, setRerender] = useState(false);
@@ -26,6 +27,7 @@ export default function CountyScreen(props) {
     useEffect(async () => {
         logger.enter("initialize of CountyScreen", "App")
 
+        favouriteCounties.length = 0;
         logger.info("Read favourites from application data")
         for(let county of ApplicationData.favourites){
             let details = await getCountyInformationByName(county);
@@ -40,18 +42,35 @@ export default function CountyScreen(props) {
      * Adds a county to the favourite list
      * @returns {Promise<boolean>} Always true
      */
-    async function addCounty(){
+    async function addCounty() {
         logger.enter("addCounty", "App")
+        try {
+            let county = searchResult;
+            if(ApplicationData.favourites.indexOf(county) >= 0){
+                toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt")
+                logger.info("County " + county + " already added");
+                logger.leave("addCounty", "App");
+                return false;
+            }
+            if(!doesCountyExists(county)){
+                toastingWarning("Landkreis \"" + county + "\" existiert nicht");
+                return false;
+            }
+            let result = await getCountyInformationByName(county)
 
-        let county = searchResult;
-        let result = await getCountyInformationByName(county);
-        favouriteCounties.push({"key": county, "details": result});
-        ApplicationData.favourites.push(county)
-        softRerender();
+            favouriteCounties.push({"key": county, "details": result});
+            ApplicationData.favourites.push(county)
+            softRerender();
 
-        logger.leave("addCounty", "App")
-
-        return true;
+            toastingGood("Landkreis \"" + county + "\" wurde zu den favoriten hinzugefügt");
+            logger.leave("addCounty", "App")
+            return true;
+        } catch (ex) {
+            toastingBad("Es ist ein Fehler passiert")
+            logger.exception(ex);
+            logger.unexpectedLeft("addCounty", "App");
+            return false;
+        }
     }
 
     /**
@@ -78,6 +97,7 @@ export default function CountyScreen(props) {
 
             softRerender();
 
+            toastingGood("Landkreis \"" + county + "\" wurde aus den Favoriten entfernt")
             logger.enter("removeCounty", "App");
         }
     }
@@ -87,7 +107,7 @@ export default function CountyScreen(props) {
             return (
                 <View key={item.key}>
                     <CustomCountyCard county={item.details}
-                                      buttonText={"Remove"}
+                                      buttonText={"Entfernen"}
                                       onButton={()=> removeCounty(item)} />
                 </View>
             )
@@ -97,9 +117,9 @@ export default function CountyScreen(props) {
     return (
         <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
             <ScrollView
-                horizontal={false}
+                horizontal={isMobile()}
                 decelerationRate={"normal"}
-                snapToInterval={ITEM_WIDTH}
+                snapToInterval={CARD_ITEM_WIDTH}
                 bounces={false}
                 style={{ marginTop: 40, paddingHorizontal: 0 }}
                 showsHorizontalScrollIndicator={false}
@@ -109,13 +129,12 @@ export default function CountyScreen(props) {
                                 setSearchResult={setSearchResult}
                                 gps={props.gps}
                                 dataList={props.countyList}
-                                buttonText={"Add County"}
+                                buttonText={"Hinzufügen"}
                                 onSearch={() => addCounty()} />
                 </View>
                 {
                     renderElements()
                 }
-
             </ScrollView>
         </View>
     );

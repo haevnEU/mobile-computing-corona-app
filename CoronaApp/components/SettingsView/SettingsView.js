@@ -2,9 +2,8 @@ import React from "react";
 import {View, Text, Switch} from "react-native";
 import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
-import {ImpressumView} from "../ImpressumView/ImpressumView";
-import {FeedbackModalView} from "../FeedbackModalView/FeedbackModalView";
-
+import {ImpressumView} from "./ImpressumView/ImpressumView";
+import {FeedbackModalView} from "./FeedbackModalView/FeedbackModalView";
 
 /**
  * This component contains all elements for the application setting
@@ -16,23 +15,24 @@ export const SettingsView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
-            <Switch trackColor = {'#ff00ff'}
-                    thumbColor = {'#B6FC95'}
-                    value={gps}
-                    onValueChange={gpsState => {
-                        if (!gpsState) {
-                            // Disable the gps module
-                            Locator.disable();
-                            gpsToggle(Locator.isGranted());
-                        } else {
-                            // Try to enable the gps module
-                            Locator.request().then(() => gpsToggle(Locator.isGranted()));
-                        }
-                    }}
-            />
-            <Text style={styles.text}>GPS Tracking</Text>
+                <Switch trackColor = {'#ff00ff'}
+                        thumbColor = {'#B6FC95'}
+                        value={gps}
+                        onValueChange={gpsState => {
+                            if (!gpsState) {
+                                // Disable the gps module
+                                Locator.disable();
+                                gpsToggle(Locator.isGranted());
+                            } else {
+                                // Try to enable the gps module
+                                Locator.request().then(() => gpsToggle(Locator.isGranted()));
+                            }
+                        }}
+                />
+                <Text style={styles.text}>GPS Tracking</Text>
             </View>
             <FeedbackModalView />
-            <ImpressumView />
-        </View>)
+            <ImpressumView/>
+        </View>
+    )
 }

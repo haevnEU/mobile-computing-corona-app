@@ -1,13 +1,11 @@
 import CountyDoesNotExistsException from "../exceptions/CountyDoesNotExistsException";
-import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/ApplicationData";
+import {CountyDataServiceUrl} from "../utils/ApplicationData";
 import logger from "../utils/Logger";
-
-
+import {OneDayAsMilli} from "../utils/GeneralUtils";
 
 
 
 const dataSource = {update: 0};
-
 let germanCountiesDocument = {};
 
 /**
@@ -73,14 +71,14 @@ export async function getCountyInformationByName(name) {
         "name": county['name'],
         "state": county['state'],
         "data": {
-            "population":   Math.round(county['population']),
-            "cases":        Math.round(county['cases']),
-            "casesPerWeek": Math.round(county['casesPerWeek']),
-            "death":        Math.round(county['deaths']),
-            "deathPerWeek": Math.round(county['deathsPerWeek']),
-            "recovered":    Math.round(county['recovered']),
-            "incidence":    Math.round(county['weekIncidence']),
-            "casesPer100k": Math.round(county['casesPer100k']),
+            "population":   (Math.round(county['population'] * 100) / 100).toLocaleString(),
+            "cases":        (Math.round(county['cases'] * 100) / 100).toLocaleString(),
+            "casesPerWeek": (Math.round(county['casesPerWeek'] * 100) / 100).toLocaleString(),
+            "death":        (Math.round(county['deaths'] * 100) / 100).toLocaleString(),
+            "deathPerWeek": (Math.round(county['deathsPerWeek'] * 100) / 100).toLocaleString(),
+            "recovered":    (Math.round(county['recovered'] * 100) / 100).toLocaleString(),
+            "incidence":    (Math.round(county['weekIncidence'] * 100) / 100).toLocaleString(),
+            "casesPer100k": (Math.round(county['casesPer100k'] * 100) / 100).toLocaleString(),
             "delta": county['delta']
         }
     };
@@ -97,6 +95,14 @@ export async function getAllGermanCounties(){
 
     logger.leave("getAllCounties", "CountyDataController");
     return germanCountiesDocument;
+}
+
+export function doesCountyExists(county){
+    logger.enter("doesCountyExists(" + county + ")", "CountyDataController");
+
+
+    logger.leave("doesCountyExists(" + county + ")", "CountyDataController");
+    return germanCountiesDocument.indexOf(county) >= 0;
 }
 
 /**

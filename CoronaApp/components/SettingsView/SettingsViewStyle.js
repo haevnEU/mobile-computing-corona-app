@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     },
 
     text:{
-        color: "#FFFFFF",
+        color: "#fff",
         margin: 10,
         fontSize: 20
     },
@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
     },
 
     switch:{
-        trackColor: "#ff00ff",
     },
 
 });

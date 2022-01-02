@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
+import {CARD_ITEM_WIDTH} from "../../../utils/GeneralUtils";
 
 export const styles = StyleSheet.create({
 
@@ -41,9 +41,10 @@ export const styles = StyleSheet.create({
     },
 
     card:{
-        width: ITEM_WIDTH,
+        width: CARD_ITEM_WIDTH,
         backgroundColor: '#4A4A4A',
-        borderRadius: 25
+        borderRadius: 25,
+
     },
 
     card_content: {

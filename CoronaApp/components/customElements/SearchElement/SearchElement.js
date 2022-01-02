@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {FlatList, Text, TextInput, TouchableOpacity , View} from "react-native";
+import {FlatList, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Divider} from "react-native-elements";
 import {styles} from "./SearchElementStyle";
-import logger from "../../utils/Logger";
+import logger from "../../../utils/Logger";
 
 /**
  * This is a search element
@@ -45,7 +45,7 @@ const SearchElement = (props) => {
         <View style={styles.container}>
             <TextInput
                 style={[styles.input, styles.text]}
-                placeholder="Enter query"
+                placeholder="Suche eingeben"
                 value={currentlySelectedCountyName}
                 onChangeText={countyInput => setCurrentlySelectedCountyName(filterList(countyInput))}/>
             <FlatList
@@ -53,7 +53,7 @@ const SearchElement = (props) => {
                 data={suggestionArray}
                 renderItem={
                     ({item}) => (
-                        <TouchableOpacity  style={styles.button}
+                        <TouchableOpacity   style={styles.button}
                             onPress={
                                 () => {
                                     setCurrentlySelectedCountyName(item.key);
@@ -64,7 +64,7 @@ const SearchElement = (props) => {
                                 <Text style={[styles.suggestion_entry, styles.text]}>{item.key}</Text>
                                 <Divider/>
                             </View>
-                        </TouchableOpacity >
+                        </TouchableOpacity  >
                     )
                 }>
             </FlatList>

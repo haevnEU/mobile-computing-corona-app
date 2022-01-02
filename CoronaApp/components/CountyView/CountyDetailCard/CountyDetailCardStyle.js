@@ -1,4 +1,6 @@
 import {StyleSheet} from "react-native";
+import {CARD_ITEM_WIDTH, isMobile} from "../../../utils/GeneralUtils";
+
 
 export const styles = StyleSheet.create({
 
@@ -12,14 +14,29 @@ export const styles = StyleSheet.create({
     button_container:{
         flexDirection: 'row',
         justifyContent: 'center',
+        backgroundColor: '#B6FC95',
+        width: '15vw',
+        minWidth: 200,
+        marginRight: 15,
+        marginLeft: 15,
+        height: 60,
+        alignSelf: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
 
-        width: 50,
-        alignSelf: 'center'
+    multiple_button_container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button_text:{
+        fontSize: 25,
+        color: '#2d2d2d',
+
     },
 
     button:{
         alignItems: 'center',
-
         margin: 5,
         width: 50,
         color: 'white'
@@ -44,7 +61,7 @@ export const styles = StyleSheet.create({
     },
 
     card:{
-        width: '90%',
+        width: (isMobile() ? CARD_ITEM_WIDTH : '90%'),
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
         borderRadius: 25
@@ -63,6 +80,6 @@ export const styles = StyleSheet.create({
     search_element: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
 
-    }
+    },
 
 });
