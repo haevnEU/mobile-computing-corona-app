@@ -49,6 +49,10 @@ const CountyDetailCard = (props) => {
                         )
                     }
                     <View style={[styles.multiple_button_container]}>
+
+
+
+                            {gps && (
                             <TouchableOpacity disabled={loading && gps}
                                               style={[styles.button_container]}
                                               onPress={() => {
@@ -63,11 +67,10 @@ const CountyDetailCard = (props) => {
                                     }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
                                 }
                             }}>
-
-                                    <Text style={styles.button_text}> Finden </Text>
+                                <Text style={styles.button_text}> Finden </Text>
 
                             </TouchableOpacity>
-
+                            )}
                         <TouchableOpacity disabled={loading}
                                           style={[styles.button_container]}
                                           onPress={() => {
