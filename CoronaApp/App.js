@@ -16,7 +16,7 @@ import ApplicationData from "./utils/ApplicationData";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
 import FavouriteCountyScreen from "./Screens/CountyScreen/FavouriteCountyScreen";
 import Toast from "react-native-toast-notifications";
-
+import { Ionicons, MaterialIcons  } from '@expo/vector-icons';
 
 
 function SettingScreen(props) {
@@ -93,15 +93,30 @@ export default function App() {
                                 leftComponent={{text: 'InTrack', style: styles.heading}}/>
                         <Tab.Navigator screenOptions={{
                             headerShown: false, tabBarInactiveBackgroundColor: '#2D2D2D',
-                            tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white'
+                            tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white',   showIcon: true
                         }}
                         >
-                            <Tab.Screen name="Home" children={() => <HomeScreen countyList={countyList}
-                                                                                gps={[gpsEnabled, setGpsEnabled]}/>}/>
-                            <Tab.Screen name="Counties" children={() => <FavouriteCountyScreen countyList={countyList}
-                                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}/>
-                            <Tab.Screen name="Settings"
-                                        children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}/>
+                            <Tab.Screen name="Start" children={() => <HomeScreen countyList={countyList}
+                                                                                gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Home',
+                            tabBarIcon: () => (
+                                <Ionicons name="home" color='white' size={24} />), }}/>
+
+                            <Tab.Screen name="Favoriten" children={() => <FavouriteCountyScreen countyList={countyList}
+                                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Favoriten',
+                            tabBarIcon: () => (
+                                <MaterialIcons name="favorite" size={24} color="white" />),}}/>
+
+
+                            <Tab.Screen name="Einstellungen"
+                                        children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Einstellungen',
+                            tabBarIcon: () => (
+                            <Ionicons name="settings-sharp" size={24} color="white" />),}}/>
 
                         </Tab.Navigator>
                     </NavigationContainer>

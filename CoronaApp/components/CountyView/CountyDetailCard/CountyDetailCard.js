@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, View, Text, ActivityIndicator} from "react-native";
+import {View, Text, ActivityIndicator, TouchableOpacity} from "react-native";
 import {Card} from "react-native-elements";
 import {getCountyInformationByName} from "../../../api/CountyDataController";
 import {SearchElement} from "../../customElements/SearchElement/SearchElement";
@@ -32,7 +32,7 @@ const CountyDetailCard = (props) => {
         return (
             <View>
                 <Card containerStyle={styles.card}>
-                    <Card.Title style={[styles.title]}>County Search</Card.Title>
+                    <Card.Title style={[styles.title]}>Landkreis suchen</Card.Title>
                     <Card.Divider/>
                     <SearchElement styles={styles.search_element}
                                    data={props.countyList}
@@ -48,37 +48,42 @@ const CountyDetailCard = (props) => {
                             </View>
                         )
                     }
-                    <View style={[styles.button_container]}>
-                        {gps && (
-                            <Button title="Locate"
-                                 styles={{borderRadius: 40}}
-                                    color={'#B6FC95'}
-                                    disabled={loading &&  gps}
-                                 onPress={() => {
-                                     if(gps) {
-                                         // Display loading state while the current city is located
-                                         setLoading(true);
-                                         Locator.getCurrentLocationName().then(result => {
-                                             // The current county is located so disable search animation and update
-                                             // the currently selected county name
-                                             setCurrentlySelectedCountyName(result);
-                                             setLoading(false);
-                                         }).catch(() => toastingWarning("County associated with \"" + gps + "\" does not exist"));
-                                     }
-                                 }}
-                        />)
-                        }
-                        <Button styles={[styles.text, styles.button]}
-                                color={'#B6FC95'}
-                                disabled={loading}
-                                onPress={() => {
-                                    getCountyInformationByName(currentlySelectedCountyName).then(result => {
-                                        // The data is loaded and now stored inside the county data
-                                        // this implies that the search view is no longer required => hide it
-                                        setCurrentlySelectedCountyData(result);
-                                        setShowSearch(false);
-                                    }).catch(() => toastingWarning("County \"" + currentlySelectedCountyName + "\" does not exist"));
-                                }} title="Search"/>
+                    <View style={[styles.multiple_button_container]}>
+                            <TouchableOpacity disabled={loading && gps}
+                                              style={[styles.button_container]}
+                                              onPress={() => {
+                                if(gps) {
+                                    // Display loading state while the current city is located
+                                    setLoading(true);
+                                    Locator.getCurrentLocationName().then(result => {
+                                        // The current county is located so disable search animation and update
+                                        // the currently selected county name
+                                        setCurrentlySelectedCountyName(result);
+                                        setLoading(false);
+                                    }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
+                                }
+                            }}>
+
+                                    <Text style={styles.button_text}> Finden </Text>
+
+                            </TouchableOpacity>
+
+                        <TouchableOpacity disabled={loading}
+                                          style={[styles.button_container]}
+                                          onPress={() => {
+                                              getCountyInformationByName(currentlySelectedCountyName).then(result => {
+                                                  // The data is loaded and now stored inside the county data
+                                                  // this implies that the search view is no longer required => hide it
+                                                  setCurrentlySelectedCountyData(result);
+                                                  setShowSearch(false);
+                                              }).catch(() => toastingWarning("Landkreis \"" + currentlySelectedCountyName + "\" existiert nicht"));
+                                              }
+                                          }>
+
+                                <Text style={styles.button_text}> Suchen </Text>
+
+                        </TouchableOpacity>
+
                     </View>
                 </Card>
             </View>
@@ -86,7 +91,7 @@ const CountyDetailCard = (props) => {
     } else {
         return (
             <View>
-                <CustomCountyCard county={currentlySelectedCountyData} onButton={() => setShowSearch(true)} buttonText={"Search again"} />
+                <CustomCountyCard county={currentlySelectedCountyData} onButton={() => setShowSearch(true)} buttonText={"Erneut suchen"} />
             </View>
         )
     }

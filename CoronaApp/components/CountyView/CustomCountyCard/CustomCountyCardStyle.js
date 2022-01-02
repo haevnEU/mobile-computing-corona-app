@@ -43,7 +43,8 @@ export const styles = StyleSheet.create({
     card:{
         width: CARD_ITEM_WIDTH,
         backgroundColor: '#4A4A4A',
-        borderRadius: 25
+        borderRadius: 25,
+
     },
 
     card_content: {

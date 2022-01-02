@@ -47,13 +47,13 @@ export default function FavouriteCountyScreen(props) {
         try {
             let county = searchResult;
             if(ApplicationData.favourites.indexOf(county) >= 0){
-                toastingWarning("County \"" + county + "\" already added")
+                toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt")
                 logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
                 return false;
             }
             if(!doesCountyExists(county)){
-                toastingWarning("County does \"" + county + "\" not exists");
+                toastingWarning("Landkreis \"" + county + "\" existiert nicht");
                 return false;
             }
             let result = await getCountyInformationByName(county)
@@ -62,11 +62,11 @@ export default function FavouriteCountyScreen(props) {
             ApplicationData.favourites.push(county)
             softRerender();
 
-            toastingGood("County \"" + county + "\" added to favourites");
+            toastingGood("Landkreis \"" + county + "\" wurde zu den favoriten hinzugefügt");
             logger.leave("addCounty", "App")
             return true;
         } catch (ex) {
-            toastingBad("An error occurred")
+            toastingBad("Es ist ein Fehler passiert")
             logger.exception(ex);
             logger.unexpectedLeft("addCounty", "App");
             return false;
@@ -97,7 +97,7 @@ export default function FavouriteCountyScreen(props) {
 
             softRerender();
 
-            toastingGood("County \"" + county + "\" removed from favourites")
+            toastingGood("Landkreis \"" + county + "\" wurde aus den Favoriten entfernt")
             logger.enter("removeCounty", "App");
         }
     }
@@ -107,7 +107,7 @@ export default function FavouriteCountyScreen(props) {
             return (
                 <View key={item.key}>
                     <CustomCountyCard county={item.details}
-                                      buttonText={"Remove"}
+                                      buttonText={"Entfernen"}
                                       onButton={()=> removeCounty(item)} />
                 </View>
             )
@@ -129,7 +129,7 @@ export default function FavouriteCountyScreen(props) {
                                 setSearchResult={setSearchResult}
                                 gps={props.gps}
                                 dataList={props.countyList}
-                                buttonText={"Add County"}
+                                buttonText={"Hinzufügen"}
                                 onSearch={() => addCounty()} />
                 </View>
                 {

@@ -1,6 +1,6 @@
 import {Card} from "react-native-elements";
 import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
-import {Button, Text} from "react-native";
+import {Text, TouchableOpacity} from "react-native";
 import {CustomTable} from "../../customElements/CustomTable/CustomTable";
 import React, {useState} from "react";
 
@@ -60,7 +60,13 @@ export const CustomCountyCard = (props) => {
             <Card.Divider/>
             <CustomTable data={extractCountyDataset(county.data)}/>
             <Card.Divider/>
-            {props.onButton && <Button color={'#B6FC95'} style={styles.button} onPress={props.onButton} title={props.buttonText}/>}
+            {props.onButton &&
+            <TouchableOpacity onPress={props.onButton} style={[styles.button_container]}>
+
+                    <Text style={styles.button_text}> {props.buttonText || 'search'} </Text>
+
+            </TouchableOpacity>}
+
         </Card>
     )
 }

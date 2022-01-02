@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {Modal, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {toastingBad, toastingGood, toastingWarning} from "../../../utils/GeneralUtils";
 import {styles} from "./FeedbackModalViewStyle";
 
@@ -40,7 +40,7 @@ export const FeedbackModalView = () => {    const [modalVisible, setModalVisible
                         placeholder="Feedback eingeben"
                     />
                     <View style={styles.container}>
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styles.buttonContainer}
 
                             onPress={() => {
@@ -49,24 +49,24 @@ export const FeedbackModalView = () => {    const [modalVisible, setModalVisible
                                 setModalVisible(!modalVisible);
                             }}>
                             <Text style={{fontSize:20, color: feedBackText}}>Abschicken</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
+                        </TouchableOpacity>
+                        <TouchableOpacity
                             style={styles.buttonContainer} onPress={() => {
                             setModalVisible(!modalVisible);
                         }}>
                             <Text style={{fontSize:20}}>Schließen</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
 
 
-            <TouchableHighlight style={styles.buttonContainer}
+            <TouchableOpacity style={styles.buttonContainer}
                                 onPress={() => {
                                     setModalVisible(true);
                                 }}>
                 <Text style={{fontSize: 20}}>Feedback geben</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
 
         </View>
 

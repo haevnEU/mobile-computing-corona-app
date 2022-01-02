@@ -45,7 +45,7 @@ const SearchElement = (props) => {
         <View style={styles.container}>
             <TextInput
                 style={[styles.input, styles.text]}
-                placeholder="Enter query"
+                placeholder="Suche eingeben"
                 value={currentlySelectedCountyName}
                 onChangeText={countyInput => setCurrentlySelectedCountyName(filterList(countyInput))}/>
             <FlatList

@@ -14,8 +14,25 @@ export const styles = StyleSheet.create({
     button_container:{
         flexDirection: 'row',
         justifyContent: 'center',
-        width: 50,
-        alignSelf: 'center'
+        backgroundColor: '#B6FC95',
+        width: '15vw',
+        minWidth: 200,
+        marginRight: 15,
+        marginLeft: 15,
+        height: 60,
+        alignSelf: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
+
+    multiple_button_container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button_text:{
+        fontSize: 25,
+        color: '#2d2d2d',
+
     },
 
     button:{
@@ -63,6 +80,6 @@ export const styles = StyleSheet.create({
     search_element: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
 
-    }
+    },
 
 });

@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
         width: (isMobile() ? CARD_ITEM_WIDTH : '90%'),
         backgroundColor: '#4A4A4A',
         borderRadius: 25,
+        marginBottom: 15,
 
     },
     card_content: {
