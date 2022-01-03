@@ -17,23 +17,25 @@ export const SettingsView = (props) => {
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
                 <Switch
-                        thumbColor = {'#B6FC95'}
-                        value={gps}
-                        onValueChange={gpsState => {
-                            if (!gpsState) {
-                                // Disable the gps module
-                                Locator.disable();
-                                gpsToggle(Locator.isGranted());
-                            } else {
-                                // Try to enable the gps module
-                                Locator.request().then(() => gpsToggle(Locator.isGranted()));
-                            }
-                        }}
+                    thumbColor={'#B6FC95'}
+                    value={gps}
+                    onValueChange={gpsState => {
+                        if (!gpsState) {
+                            // Disable the gps module
+                            Locator.disable();
+                            gpsToggle(Locator.isGranted());
+                        } else {
+                            // Try to enable the gps module
+                            Locator.request().then(() => gpsToggle(Locator.isGranted()));
+                        }
+                    }}
                 />
                 <Text style={styles.text}>GPS Tracking</Text>
             </View>
-            <FeedbackModalView />
-            <ImpressumView/>
+            <View style={styles.buttonContainer}>
+                <FeedbackModalView/>
+                <ImpressumView/>
+            </View>
         </View>
     )
 }

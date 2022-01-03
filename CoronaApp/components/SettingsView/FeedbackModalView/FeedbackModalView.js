@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Modal, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Modal, Text, TextInput, View} from 'react-native';
 import {toastingBad, toastingGood, toastingWarning} from "../../../utils/GeneralUtils";
 import {styles} from "./FeedbackModalViewStyle";
+import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 const sendFeedback = async (text) => {
     console.log(text)
     if(null === text || text === "" || !text.replace(/\s/g, '').length){
-        toastingWarning("Cannot send empty feedback")
+        toastingWarning("Das Feedback muss mindestens ein Zeichen enthalten")
         return true;
     }
     fetch('https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback', {
@@ -18,17 +19,15 @@ const sendFeedback = async (text) => {
         body: JSON.stringify({
             feedback: text
         })
-    }).then(() => toastingGood("Feedback received"))
-        .catch(() => toastingBad("Cannot send feedback")).finally(() => true);
+    }).then(() => toastingGood("Feedback erhalten"))
+        .catch(() => toastingBad("Feedback konnte nicht gesendet werden")).finally(() => true);
 
 }
 
 export const FeedbackModalView = () => {    const [modalVisible, setModalVisible] = useState(false);
-    const [feedBackText, onChangeText] = useState([])
     const [text, setText] = useState("");
     return(
         <View >
-
             <Modal visible={modalVisible} transparent={true}>
                 <View style={styles.modal}>
                     <Text style={styles.modalTextBold}>Feedback</Text>
@@ -40,35 +39,16 @@ export const FeedbackModalView = () => {    const [modalVisible, setModalVisible
                         placeholder="Feedback eingeben"
                     />
                     <View style={styles.container}>
-                        <TouchableOpacity
-                            style={styles.buttonContainer}
-
-                            onPress={() => {
-                                sendFeedback(text).then(setText(""));
-                                onChangeText(onChangeText)
-                                setModalVisible(!modalVisible);
-                            }}>
-                            <Text style={{fontSize:20, color: feedBackText}}>Abschicken</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.buttonContainer} onPress={() => {
+                        <CustomButton text={"Abschicken"} onPress={() => {
+                            sendFeedback(text).then(setText(""));
                             setModalVisible(!modalVisible);
-                        }}>
-                            <Text style={{fontSize:20}}>Schließen</Text>
-                        </TouchableOpacity>
+                        }} />
+
+                        <CustomButton text={"Schließen"} onPress={() => {setModalVisible(!modalVisible)}}/>
                     </View>
                 </View>
             </Modal>
-
-
-            <TouchableOpacity style={styles.buttonContainer}
-                                onPress={() => {
-                                    setModalVisible(true);
-                                }}>
-                <Text style={{fontSize: 20}}>Feedback geben</Text>
-            </TouchableOpacity>
-
+            <CustomButton text="Feedback" onPress={() => {setModalVisible(true)}} />
         </View>
-
     );
 }

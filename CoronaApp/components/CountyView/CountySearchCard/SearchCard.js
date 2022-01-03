@@ -1,8 +1,9 @@
-import {Text, TouchableOpacity, View} from "react-native";
+import {View} from "react-native";
 import {Card} from "react-native-elements";
 import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
 import {SearchElement} from "../../customElements/SearchElement/SearchElement";
 import React from "react";
+import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 /**
  * This component shows a generic search card
@@ -22,13 +23,7 @@ return (
                            setCurrentlySelectedCountyName={props.setSearchResult}/>
 
             <Card.Divider/>
-            <View style={[styles.button_container]}>
-                <TouchableOpacity onPress={props.onSearch} style={[styles.button_container]}>
-
-                        <Text style={styles.button_text}> {props.buttonText || 'search'} </Text>
-
-                </TouchableOpacity>
-            </View>
+                <CustomButton onPress={props.onSearch} text={props.buttonText || "Search"} />
         </Card>
     </View>
 )

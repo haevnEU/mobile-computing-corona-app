@@ -1,8 +1,9 @@
 import {Card} from "react-native-elements";
 import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
-import {Text, TouchableOpacity} from "react-native";
+import {Text} from "react-native";
 import {CustomTable} from "../../customElements/CustomTable/CustomTable";
 import React, {useState} from "react";
+import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 /**
  * Transforms a county data document into a processable entity
@@ -61,12 +62,8 @@ export const CustomCountyCard = (props) => {
             <CustomTable data={extractCountyDataset(county.data)}/>
             <Card.Divider/>
             {props.onButton &&
-            <TouchableOpacity onPress={props.onButton} style={[styles.button_container]}>
-
-                    <Text style={styles.button_text}> {props.buttonText || 'search'} </Text>
-
-            </TouchableOpacity>}
-
+                <CustomButton onPress={props.onButton} text={props.buttonText || 'search'}/>
+            }
         </Card>
     )
 }

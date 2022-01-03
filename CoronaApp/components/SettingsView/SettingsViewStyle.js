@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
         backgroundColor: '#4a4a4a',
     },
 
+    buttonContainer:{
+        display: "flex",
+        flexDirection: 'row',
+        alignItems: "center",
+    },
+
     text:{
         color: "#fff",
         margin: 10,

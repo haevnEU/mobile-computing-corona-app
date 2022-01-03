@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Modal, Text, TouchableOpacity, View} from 'react-native';
+import {Modal, Text, View} from 'react-native';
 import {styles} from "./ImpressumViewStyle";
+import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 
 
@@ -16,20 +17,10 @@ export const ImpressumView = () => {
                     <Text style={styles.modalText}>{'\n Hochschule Ruhr West \n Duisburger Straße 100 \n 45479 Mülheim an der Ruhr \n ' +
                     '\nErstellt durch: \n Nils Milewski \n Lucas Lichner\n\n'
                     }</Text>
-                    <TouchableOpacity
-                        style={styles.buttonContainer} onPress={() => {
-                        setModalVisible(!modalVisible);
-                    }}>
-                        <Text style={{fontSize:20}}>Schließen</Text>
-                    </TouchableOpacity>
+                    <CustomButton text={"Schließen"} onPress={() => setModalVisible(!modalVisible)} />
                 </View>
             </Modal>
-            <TouchableOpacity style={styles.buttonContainer}
-                                onPress={() => {
-                                    setModalVisible(true);
-                                }}>
-                <Text style={{fontSize: 20}}>Impressum</Text>
-            </TouchableOpacity>
+            <CustomButton text={"Impressum"} onPress={() => setModalVisible(true)} />
         </View>
 
     );
