@@ -20,15 +20,17 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationAlwaysAndWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map.",
-        "NSLocationAlwaysUsageDescription":"The app needs permission to access your location, if you want to be located on the map.",
+        "NSLocationAlwaysUsageDescription": "The app needs permission to access your location, if you want to be located on the map.",
         "NSLocationWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map."
-      }
+      },
+      "bundleIdentifier": "de.hrw.CoronaApp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "de.hrw.app.CoronaApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
