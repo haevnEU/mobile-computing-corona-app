@@ -14,6 +14,9 @@ export const styles = StyleSheet.create({
 
     input: {
     },
+    button:{
+        alignSelf: 'center'
+    },
 
     suggestions: {},
 

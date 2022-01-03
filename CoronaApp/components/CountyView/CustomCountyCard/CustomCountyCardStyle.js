@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
+import {CARD_ITEM_WIDTH} from "../../../utils/GeneralUtils";
 
 export const styles = StyleSheet.create({
 
@@ -13,11 +13,13 @@ export const styles = StyleSheet.create({
 
     button_container:{
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     button:{
-        alignItems: 'center'
+        borderRadius: 25,
+        width: 25,
+        alignSelf: 'center'
     },
 
     text:{
@@ -39,9 +41,10 @@ export const styles = StyleSheet.create({
     },
 
     card:{
-        width: ITEM_WIDTH,
+        width: CARD_ITEM_WIDTH,
         backgroundColor: '#4A4A4A',
-        borderRadius: 25
+        borderRadius: 25,
+
     },
 
     card_content: {
@@ -57,6 +60,6 @@ export const styles = StyleSheet.create({
     search_element: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
 
-    }
+    },
 
 });

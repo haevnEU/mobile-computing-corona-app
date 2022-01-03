@@ -1,19 +1,17 @@
 import CountyDoesNotExistsException from "../exceptions/CountyDoesNotExistsException";
-import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/ApplicationData";
+import {CountyDataServiceUrl} from "../utils/ApplicationData";
 import logger from "../utils/Logger";
-
-
+import {OneDayAsMilli} from "../utils/GeneralUtils";
 
 
 
 const dataSource = {update: 0};
-
 let germanCountiesDocument = {};
 
 /**
  * Updates the datasource for german counties(Landkreise).<br>
  * Note: To achieve a resource friendly usage the datasource can only be updated once a day
- * @returns {Promise<boolean>} Always truee
+ * @returns {Promise<boolean>} Always true
  */
 export const updateCountyDataSource = async () => {
     logger.enter("updateCountyDataSource()", "CountyDataController");
@@ -73,14 +71,14 @@ export async function getCountyInformationByName(name) {
         "name": county['name'],
         "state": county['state'],
         "data": {
-            "population":   Math.round(county['population']),
-            "cases":        Math.round(county['cases']),
-            "casesPerWeek": Math.round(county['casesPerWeek']),
-            "death":        Math.round(county['deaths']),
-            "deathPerWeek": Math.round(county['deathsPerWeek']),
-            "recovered":    Math.round(county['recovered']),
-            "incidence":    Math.round(county['weekIncidence']),
-            "casesPer100k": Math.round(county['casesPer100k']),
+            "population":   (Math.round(county['population'] * 100) / 100).toLocaleString(),
+            "cases":        (Math.round(county['cases'] * 100) / 100).toLocaleString(),
+            "casesPerWeek": (Math.round(county['casesPerWeek'] * 100) / 100).toLocaleString(),
+            "death":        (Math.round(county['deaths'] * 100) / 100).toLocaleString(),
+            "deathPerWeek": (Math.round(county['deathsPerWeek'] * 100) / 100).toLocaleString(),
+            "recovered":    (Math.round(county['recovered'] * 100) / 100).toLocaleString(),
+            "incidence":    (Math.round(county['weekIncidence'] * 100) / 100).toLocaleString(),
+            "casesPer100k": (Math.round(county['casesPer100k'] * 100) / 100).toLocaleString(),
             "delta": county['delta']
         }
     };
@@ -99,6 +97,14 @@ export async function getAllGermanCounties(){
     return germanCountiesDocument;
 }
 
+export function doesCountyExists(county){
+    logger.enter("doesCountyExists(" + county + ")", "CountyDataController");
+
+
+    logger.leave("doesCountyExists(" + county + ")", "CountyDataController");
+    return germanCountiesDocument.indexOf(county) >= 0;
+}
+
 /**
  * Maps all german counties(Landkreise) into a processable json entity with the form [{"key":"value"}, ...].
  * @returns {Promise<*[]>}
@@ -110,7 +116,7 @@ export async function getCountyListAsProcessableJsonObject(){
     let array = await getAllGermanCounties();
 
     logger.info("Filter counties");
-    // This filter removes all entries which occurr more than ones
+    // This filter removes all entries which occur more than ones
     array = array.filter((value, index) => array.indexOf(value)===index);
 
     logger.info("Map filtered counties to a json object")

@@ -1,72 +1,29 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 import {Header} from "react-native-elements";
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Locator} from "./services/LocationService";
-import {CountyView} from "./components/CountyView/CountyView";
-import {NationView} from "./components/NationView/NationView";
-import {updateCountyDataSource} from "./api/CountyDataController"
+import {
+    getCountyListAsProcessableJsonObject,
+    updateCountyDataSource
+} from "./api/CountyDataController"
 import {SettingsView} from "./components/SettingsView/SettingsView";
 import styles from './styles/default'
 import logger from "./utils/Logger";
-import ApplicationData, {ITEM_WIDTH} from "./utils/ApplicationData";
-import {AddCountyButtonView} from "./components/AddCountyButtonView/AddCountyButtonView";
-import {ImpressumView} from "./components/ImpressumView/ImpressumView";
+import ApplicationData from "./utils/ApplicationData";
+import HomeScreen from "./Screens/HomeScreen/HomeScreen";
+import FavouriteCountyScreen from "./Screens/CountyScreen/FavouriteCountyScreen";
+import Toast from "react-native-toast-notifications";
+import { Ionicons, MaterialIcons  } from '@expo/vector-icons';
 
 
-function HomeScreen() {
-    const [showSearch, setShowSearch] = useState(true);
-    const [data, setData] = useState({});
-    const [errorText, setErrorText] = useState("");
-    const [counties, setCounties] = useState([]);
-    const [chosenCounty, setChosenCounty] = useState("");
-
-    return (
-        <View style={{ flex: 1, backgroundColor: '#2D2D2D'}}>
-            <ScrollView
-
-                decelerationRate={"normal"}
-                snapToInterval={ITEM_WIDTH}
-                bounces={false}
-                style={{ marginTop: 40, paddingHorizontal: 0 }}
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={12}>
-            <NationView />
-            <CountyView showSearch={showSearch} setShowSearch={setShowSearch}
-                        data={data} setData={setData}
-                        errorText={errorText} setErrorText={setErrorText}
-                        counties={counties} setCounties={setCounties}
-                        chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
-            />
-        </ScrollView>
-        </View>
-    );
-}
-
-function CountyScreen() {
+function SettingScreen(props) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-            <ScrollView
-                horizontal={true}
-                decelerationRate={"normal"}
-                snapToInterval={ITEM_WIDTH}
-                bounces={false}
-                style={{ marginTop: 40, paddingHorizontal: 0 }}
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={12}>
-                <AddCountyButtonView />
-            </ScrollView>
-        </View>
-    );
-}
+            <SettingsView gps={props.gps} />
 
-function SettingScreen() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-            <SettingsView />
-            <ImpressumView />
         </View>
     );
 }
@@ -74,6 +31,10 @@ function SettingScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+    //General used states
+    const [gpsEnabled, setGpsEnabled] = useState(false);
+    const [countyList, setCountyList] = useState({});
+
     const [loading, setLoading] = useState(true);
     const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
 
@@ -87,9 +48,15 @@ export default function App() {
         await Locator.request();
 
         logger.info("Update data sources");
-        setLoadingText("Super fast V8 turbo is updating data sources");
+        setLoadingText("Super fast V8 turbo is updating data sources 1/2");
         await updateCountyDataSource();
 
+        logger.info("Updating county list");
+        setLoadingText("Super fast V8 turbo is updating data sources 2/2");
+        let result = await getCountyListAsProcessableJsonObject();
+        setCountyList(result);
+
+        setGpsEnabled(Locator.isGranted());
         if (Locator.isGranted()) {
             logger.info("Locate user");
             setLoadingText("Locating user inside real world using V8 turrrrrrbo");
@@ -105,9 +72,9 @@ export default function App() {
         logger.info("Done initializing");
         setLoadingText("...")
         setLoading(false);
-
         logger.leave("App initial useEffect");
     }, []);
+
 
     if (loading) {
         return (
@@ -119,22 +86,42 @@ export default function App() {
             </SafeAreaProvider>)
     } else {
         return (
-            <SafeAreaProvider>
-                <NavigationContainer>
-                    <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer}
-                            leftComponent={{text: 'InTrack', style: styles.heading}}/>
-                    <Tab.Navigator screenOptions={{
-                        headerShown: false, tabBarInactiveBackgroundColor: '#2D2D2D',
-                        tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white'
-                    }}
-                    >
-                        <Tab.Screen name="Home" component={HomeScreen}/>
-                        <Tab.Screen name="Counties" component={CountyScreen}/>
-                        <Tab.Screen name="Settings" component={SettingScreen}/>
-                    </Tab.Navigator>
-                </NavigationContainer>
-            </SafeAreaProvider>
+                <SafeAreaProvider>
+
+                    <NavigationContainer>
+                        <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer}
+                                leftComponent={{text: 'InTrack', style: styles.heading}}/>
+                        <Tab.Navigator screenOptions={{
+                            headerShown: false, tabBarInactiveBackgroundColor: '#2D2D2D',
+                            tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white',   showIcon: true
+                        }}
+                        >
+                            <Tab.Screen name="Start" children={() => <HomeScreen countyList={countyList}
+                                                                                gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Home',
+                            tabBarIcon: () => (
+                                <Ionicons name="home" color='white' size={24} />), }}/>
+
+                            <Tab.Screen name="Favoriten" children={() => <FavouriteCountyScreen countyList={countyList}
+                                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Favoriten',
+                            tabBarIcon: () => (
+                                <MaterialIcons name="favorite" size={24} color="white" />),}}/>
+
+
+                            <Tab.Screen name="Einstellungen"
+                                        children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}
+                            options={{
+                            tabBarLabel: 'Einstellungen',
+                            tabBarIcon: () => (
+                            <Ionicons name="settings-sharp" size={24} color="white" />),}}/>
+
+                        </Tab.Navigator>
+                    </NavigationContainer>
+                    <Toast ref={(ref) => global['toast'] = ref} />
+                </SafeAreaProvider>
         );
     }
 }
-

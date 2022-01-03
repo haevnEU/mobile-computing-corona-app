@@ -1,5 +1,6 @@
 import {StyleSheet} from "react-native";
-import {ITEM_WIDTH} from "../../utils/ApplicationData";
+import {CARD_ITEM_WIDTH, isMobile} from "../../../utils/GeneralUtils";
+
 
 export const styles = StyleSheet.create({
 
@@ -8,16 +9,37 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        margin: 100,
     },
 
     button_container:{
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#B6FC95',
+        width: '15vw',
+        minWidth: 200,
+        marginRight: 15,
+        marginLeft: 15,
+        height: 60,
+        alignSelf: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+    },
+
+    multiple_button_container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button_text:{
+        fontSize: 25,
+        color: '#2d2d2d',
+
     },
 
     button:{
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: 5,
+        width: 50,
+        color: 'white'
     },
 
     text:{
@@ -35,11 +57,12 @@ export const styles = StyleSheet.create({
     subtitle:{
         color: "#ffffff",
         textAlign: "center",
-        fontSize:25
+        fontSize: 25
     },
 
     card:{
-        width: ITEM_WIDTH,
+        width: (isMobile() ? CARD_ITEM_WIDTH : '90%'),
+        alignSelf: 'center',
         backgroundColor: '#4A4A4A',
         borderRadius: 25
     },
@@ -57,6 +80,6 @@ export const styles = StyleSheet.create({
     search_element: {
         backgroundColor: 'rgba(52, 52, 52, 0.8)'
 
-    }
+    },
 
 });

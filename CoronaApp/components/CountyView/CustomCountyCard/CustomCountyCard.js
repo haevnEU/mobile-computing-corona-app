@@ -1,7 +1,7 @@
 import {Card} from "react-native-elements";
-import {styles} from "../CountyView/CountyViewStyle";
-import {Button, Text} from "react-native";
-import {CustomTable} from "../CustomTable/CustomTable";
+import {styles} from "../CountyDetailCard/CountyDetailCardStyle";
+import {Text, TouchableOpacity} from "react-native";
+import {CustomTable} from "../../customElements/CustomTable/CustomTable";
 import React, {useState} from "react";
 
 /**
@@ -52,7 +52,7 @@ export const extractCountyDataset = (data) => {
  * @returns {JSX.Element} React native component
  */
 export const CustomCountyCard = (props) => {
-    const [county, setCounty] = useState(props.county);
+    const [county, _] = useState(props.county);
     return (
         <Card containerStyle={styles.card}>
             <Card.Title style={[styles.title]}>{county.name}</Card.Title>
@@ -60,7 +60,13 @@ export const CustomCountyCard = (props) => {
             <Card.Divider/>
             <CustomTable data={extractCountyDataset(county.data)}/>
             <Card.Divider/>
-            {props.onButton && <Button onPress={props.onButton} title={props.buttonText}/>}
+            {props.onButton &&
+            <TouchableOpacity onPress={props.onButton} style={[styles.button_container]}>
+
+                    <Text style={styles.button_text}> {props.buttonText || 'search'} </Text>
+
+            </TouchableOpacity>}
+
         </Card>
     )
 }
