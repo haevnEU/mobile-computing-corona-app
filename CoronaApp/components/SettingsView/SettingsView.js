@@ -5,6 +5,7 @@ import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "./ImpressumView/ImpressumView";
 import {FeedbackModalView} from "./FeedbackModalView/FeedbackModalView";
 
+
 /**
  * This component contains all elements for the application setting
  * @returns {JSX.Element} New React Native Custom settings component
@@ -15,7 +16,7 @@ export const SettingsView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
-                <Switch trackColor = {'#ff00ff'}
+                <Switch
                         thumbColor = {'#B6FC95'}
                         value={gps}
                         onValueChange={gpsState => {

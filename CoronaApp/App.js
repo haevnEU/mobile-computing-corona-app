@@ -96,27 +96,32 @@ export default function App() {
                             tabBarActiveBackgroundColor: '#858585', tabBarActiveTintColor: 'white',   showIcon: true
                         }}
                         >
-                            <Tab.Screen name="Start" children={() => <HomeScreen countyList={countyList}
-                                                                                gps={[gpsEnabled, setGpsEnabled]}/>}
-                            options={{
-                            tabBarLabel: 'Home',
-                            tabBarIcon: () => (
-                                <Ionicons name="home" color='white' size={24} />), }}/>
+                            <Tab.Screen name="Start"
+                                        children={() => <HomeScreen countyList={countyList}
+                                                                    gps={[gpsEnabled, setGpsEnabled]}/>
+                                        }
+                                        options={{
+                                            tabBarLabel: 'Home',
+                                            tabBarIcon: () => (<Ionicons name="home" color='white' size={24} />),
+                                        }}
+                            />
 
-                            <Tab.Screen name="Favoriten" children={() => <FavouriteCountyScreen countyList={countyList}
-                                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}
-                            options={{
-                            tabBarLabel: 'Favoriten',
-                            tabBarIcon: () => (
-                                <MaterialIcons name="favorite" size={24} color="white" />),}}/>
-
+                            <Tab.Screen name="Favoriten"
+                                        children={() => <FavouriteCountyScreen countyList={countyList}
+                                                                               gps={[gpsEnabled, setGpsEnabled]}/>}
+                                        options={{
+                                            tabBarLabel: 'Favoriten',
+                                            tabBarIcon: () => (<MaterialIcons name="favorite" size={24} color="white" />),
+                                        }}
+                            />
 
                             <Tab.Screen name="Einstellungen"
                                         children={() => <SettingScreen gps={[gpsEnabled, setGpsEnabled]}/>}
-                            options={{
-                            tabBarLabel: 'Einstellungen',
-                            tabBarIcon: () => (
-                            <Ionicons name="settings-sharp" size={24} color="white" />),}}/>
+                                        options={{
+                                            tabBarLabel: 'Einstellungen',
+                                            tabBarIcon: () => (<Ionicons name="settings-sharp" size={24} color="white" />),
+                                        }}
+                            />
 
                         </Tab.Navigator>
                     </NavigationContainer>
