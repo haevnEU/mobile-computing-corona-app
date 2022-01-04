@@ -1,5 +1,48 @@
 import {Dimensions, Platform} from "react-native";
 import logger from "./Logger";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {AppData} from "./ApplicationData";
+import {AppSettings} from "./ApplicationSettings";
+
+export const LocationServiceApiUrl = "https://nominatim.openstreetmap.org/reverse";
+export const CountyDataServiceUrl = "https://api.corona-zahlen.org/districts";
+export const NationDataServiceUrl = 'https://api.corona-zahlen.org/germany'
+
+export const storeData = async () => {
+    try {
+        logger.enter("storeData", "DataHandler");
+
+        logger.info("Storing AppData")
+        await AsyncStorage.setItem('ApplicationData', AppData.asJson());
+
+        logger.info("Storing AppSettings")
+        await AsyncStorage.setItem('ApplicationSettings', AppSettings.asJson());
+    } catch (error) {
+        logger.exception(error);
+        logger.unexpectedLeft("storeData", "DataHandler");
+    }
+
+    logger.leave("storeData", "DataHandler");
+}
+
+export const loadData = async () => {
+    try {
+        logger.enter("loadData", "DataHandler");
+
+        const appData = await AsyncStorage.getItem('ApplicationData');
+        if (appData !== null) { AppData.fromJson(appData); }
+
+        const appSettings = await AsyncStorage.getItem('ApplicationSettings');
+        if (appSettings !== null) { AppSettings.fromJson(appSettings); }
+
+    } catch (error) {
+        logger.exception(error);
+        logger.unexpectedLeft("loadData", "DataHandler");
+    }
+
+    logger.leave("loadData", "DataHandler");
+}
+
 
 
 export function isWeb(){

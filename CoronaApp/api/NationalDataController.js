@@ -1,4 +1,4 @@
-import {NationDataServiceUrl} from "../utils/ApplicationData";
+import {NationDataServiceUrl} from "../utils/GeneralUtils";
 import logger from "../utils/Logger";
 import {OneDayAsMilli} from "../utils/GeneralUtils";
 

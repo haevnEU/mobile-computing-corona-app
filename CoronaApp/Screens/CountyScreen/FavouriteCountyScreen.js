@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ScrollView, View} from "react-native";
-import ApplicationData from "../../utils/ApplicationData";
+import {AppData} from "../../utils/ApplicationData";
 import logger from "../../utils/Logger";
 import {doesCountyExists, getCountyInformationByName} from "../../api/CountyDataController";
 import {CustomCountyCard} from "../../components/CountyView/CustomCountyCard/CustomCountyCard";
@@ -29,7 +29,7 @@ export default function FavouriteCountyScreen(props) {
 
         favouriteCounties.length = 0;
         logger.info("Read favourites from application data")
-        for(let county of ApplicationData.favourites){
+        for(let county of AppData.getFavourites()){
             let details = await getCountyInformationByName(county);
             favouriteCounties.push({"key": county, "details": details});
         }
@@ -46,7 +46,7 @@ export default function FavouriteCountyScreen(props) {
         logger.enter("addCounty", "App")
         try {
             let county = searchResult;
-            if(ApplicationData.favourites.indexOf(county) >= 0){
+            if(AppData.getFavourites().indexOf(county) >= 0){
                 toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt")
                 logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
@@ -59,7 +59,7 @@ export default function FavouriteCountyScreen(props) {
             let result = await getCountyInformationByName(county)
 
             favouriteCounties.push({"key": county, "details": result});
-            ApplicationData.favourites.push(county)
+            AppData.addFavourite(county)
             softRerender();
 
             toastingGood("Landkreis \"" + county + "\" wurde zu den favoriten hinzugefügt");
@@ -88,12 +88,7 @@ export default function FavouriteCountyScreen(props) {
             // remove one element at given index
             favouriteCounties.splice(favouriteItemIndex, 1);
 
-            // Same as above get the index of the county from the favourite stored list
-            const applicationDataFavouriteItemIndex = ApplicationData.favourites.indexOf(county.key);
-            // Remove one favourite exists
-            if(applicationDataFavouriteItemIndex >= 0){
-                ApplicationData.favourites.splice(favouriteItemIndex, 1);
-            }
+            AppData.removeFavourite(county.key);
 
             softRerender();
 
@@ -127,7 +122,6 @@ export default function FavouriteCountyScreen(props) {
                 <View>
                     <SearchCard searchResult={searchResult}
                                 setSearchResult={setSearchResult}
-                                gps={props.gps}
                                 dataList={props.countyList}
                                 buttonText={"Hinzufügen"}
                                 onSearch={() => addCounty()} />
