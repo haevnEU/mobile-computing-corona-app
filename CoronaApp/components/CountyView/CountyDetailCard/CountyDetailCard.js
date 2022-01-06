@@ -50,7 +50,7 @@ const CountyDetailCard = (props) => {
                         )
                     }
                     <View style={[styles.multiple_button_container]}>
-                        {Locator.isEnabled() && <CustomButton text="Finden" onPress={() => {
+                        {Locator.isEnabled() && <CustomButton text="Orten" onPress={() => {
                             // Display loading state while the current city is located
                             setLoading(true);
                             Locator.getCurrentLocationName().then(result => {
