@@ -25,7 +25,7 @@ export default function FavouriteCountyScreen(props) {
      * Loads a favourite list into the application, should run once when the component is loaded
      */
     useEffect(async () => {
-        logger.enter("initialize of CountyScreen", "App")
+        logger.enter("initialize of FavouriteScreen", "App")
 
         favouriteCounties.length = 0;
         logger.info("Read favourites from application data")
@@ -35,7 +35,7 @@ export default function FavouriteCountyScreen(props) {
         }
         softRerender();
 
-        logger.leave("initialize of CountyScreen", "App")
+        logger.leave("initialize of FavouriteScreen", "App")
     }, []);
 
     /**
@@ -50,10 +50,12 @@ export default function FavouriteCountyScreen(props) {
                 toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt")
                 logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
+                setSearchResult("");
                 return false;
             }
             if(!doesCountyExists(county)){
                 toastingWarning("Landkreis \"" + county + "\" existiert nicht");
+                setSearchResult("");
                 return false;
             }
             let result = await getCountyInformationByName(county)
@@ -63,6 +65,7 @@ export default function FavouriteCountyScreen(props) {
             softRerender();
 
             toastingGood("Landkreis \"" + county + "\" wurde zu den favoriten hinzugefügt");
+            setSearchResult("");
             logger.leave("addCounty", "App")
             return true;
         } catch (ex) {
@@ -92,7 +95,7 @@ export default function FavouriteCountyScreen(props) {
 
             softRerender();
 
-            toastingGood("Landkreis \"" + county + "\" wurde aus den Favoriten entfernt")
+            toastingGood("Landkreis \"" + county.key + "\" wurde aus den Favoriten entfernt")
             logger.enter("removeCounty", "App");
         }
     }

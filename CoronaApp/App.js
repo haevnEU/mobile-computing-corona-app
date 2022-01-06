@@ -14,7 +14,7 @@ import styles from './styles/default'
 import logger from "./utils/Logger";
 import {AppData} from "./utils/ApplicationData";
 import HomeScreen from "./Screens/HomeScreen/HomeScreen";
-import FavouriteCountyScreen from "./Screens/CountyScreen/FavouriteCountyScreen";
+import FavouriteCountyScreen from "./Screens/FavouriteScreen/FavouriteCountyScreen";
 import Toast from "react-native-toast-notifications";
 import { Ionicons, MaterialIcons  } from '@expo/vector-icons';
 import {loadData, storeData} from "./utils/GeneralUtils";
@@ -24,7 +24,7 @@ import {AppSettings} from "./utils/ApplicationSettings";
 function SettingScreen(props) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-            <SettingsView setGps={props.setGps} />
+            <SettingsView setGps={props.setGps} gps={props.gps} />
         </View>
     );
 }
@@ -53,11 +53,10 @@ export default function App() {
         logger.info("Read AppData");
         setLoadingText("Lade Nutzerdaten")
         await loadData();
-
+        setGps(AppSettings.gpsEnabled())
         logger.info("Request all required permissions")
         setLoadingText("Request permissions");
         await Locator.request();
-        setGps(Locator.isGranted());
 
         logger.info("Update data sources");
         setLoadingText("Super fast V8 turbo is updating data sources 1/2");
@@ -132,7 +131,7 @@ export default function App() {
                             />
 
                             <Tab.Screen name="Einstellungen"
-                                        children={() => <SettingScreen setGps={setGps} />}
+                                        children={() => <SettingScreen setGps={setGps} gps={gps} />}
                                         options={{
                                             tabBarLabel: 'Einstellungen',
                                             tabBarIcon: () => (<Ionicons name="settings-sharp" size={24} color="white" />),

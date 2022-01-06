@@ -12,7 +12,7 @@ import {toastingWarning} from "../../utils/GeneralUtils";
  * @returns {JSX.Element} New React Native Custom settings component
  */
 export const SettingsView = (props) => {
-    const [gpsSwitchValue, setGpsSwitchValue] = useState(Locator.isGranted());
+    const [gpsSwitchValue, setGpsSwitchValue] = useState(props.gps);
     const setGps = props.setGps;
     return (
         <View style={styles.container}>
