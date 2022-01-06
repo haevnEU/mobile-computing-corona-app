@@ -18,13 +18,13 @@ import FavouriteCountyScreen from "./Screens/CountyScreen/FavouriteCountyScreen"
 import Toast from "react-native-toast-notifications";
 import { Ionicons, MaterialIcons  } from '@expo/vector-icons';
 import {loadData, storeData} from "./utils/GeneralUtils";
+import {AppSettings} from "./utils/ApplicationSettings";
 
 
-function SettingScreen() {
+function SettingScreen(props) {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#2D2D2D'}}>
-            <SettingsView />
-
+            <SettingsView setGps={props.setGps} />
         </View>
     );
 }
@@ -37,6 +37,8 @@ export default function App() {
 
     const [loading, setLoading] = useState(true);
     const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+
+    const [gps, setGps] = useState(AppSettings.gpsEnabled());
 
     // This is runs once when the application started, after finishing the loading screen will be hidden
     useEffect(async () => {
@@ -55,6 +57,7 @@ export default function App() {
         logger.info("Request all required permissions")
         setLoadingText("Request permissions");
         await Locator.request();
+        setGps(Locator.isGranted());
 
         logger.info("Update data sources");
         setLoadingText("Super fast V8 turbo is updating data sources 1/2");
@@ -87,7 +90,6 @@ export default function App() {
             setLoadingText("V8 is shutting down please stand by...");
             await storeData();
             setLoading(false);
-
         }
     }, []);
 
@@ -113,7 +115,7 @@ export default function App() {
                         }}
                         >
                             <Tab.Screen name="Start"
-                                        children={() => <HomeScreen countyList={countyList}/>
+                                        children={() => <HomeScreen countyList={countyList} gps={gps}/>
                                         }
                                         options={{
                                             tabBarLabel: 'Home',
@@ -130,7 +132,7 @@ export default function App() {
                             />
 
                             <Tab.Screen name="Einstellungen"
-                                        children={() => <SettingScreen />}
+                                        children={() => <SettingScreen setGps={setGps} />}
                                         options={{
                                             tabBarLabel: 'Einstellungen',
                                             tabBarIcon: () => (<Ionicons name="settings-sharp" size={24} color="white" />),

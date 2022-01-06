@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {View, Text, ActivityIndicator} from "react-native";
 import {Card} from "react-native-elements";
 import {getCountyInformationByName} from "../../../api/CountyDataController";
@@ -9,7 +9,6 @@ import {Locator} from "../../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
 import {toastingWarning} from "../../../utils/GeneralUtils";
 import {CustomButton} from "../../customElements/CustomButton/CustomButton";
-import {AppSettings} from "../../../utils/ApplicationSettings";
 
 /**
  * This is a custom react native component.<br>
@@ -26,16 +25,9 @@ const CountyDetailCard = (props) => {
     const [currentlySelectedCountyName, setCurrentlySelectedCountyName] = useState(AppData.getCounty());
     const [currentlySelectedCountyData, setCurrentlySelectedCountyData] = useState({});
     const [showSearch, setShowSearch] = useState(true);
-    const [rerender, setRerender] = useState(false);
+    const gps = props.gps;
 
-    /**
-     * This method starts a rendering process by using a toggle state
-     */
-    function softRerender(){
-        setRerender(!rerender);
-    }
 
-    useEffect(() => {AppSettings.addOnGpsChange(()=> softRerender())},[])
     // Toggle the view between a search view and a county details view
     if (showSearch) {
         return (
@@ -58,18 +50,17 @@ const CountyDetailCard = (props) => {
                         )
                     }
                     <View style={[styles.multiple_button_container]}>
-                        { AppSettings.getGps() && <CustomButton text="Finden" onPress={ () =>{
-                            if( AppSettings.getGps()) {
-                                // Display loading state while the current city is located
-                                setLoading(true);
-                                Locator.getCurrentLocationName().then(result => {
-                                    // The current county is located so disable search animation and update
-                                    // the currently selected county name
-                                    setCurrentlySelectedCountyName(result);
-                                    setLoading(false);
-                                }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
-                            }
-                        }} />
+                        {gps && <CustomButton text="Finden" onPress={() => {
+                            // Display loading state while the current city is located
+                            setLoading(true);
+                            Locator.getCurrentLocationName().then(result => {
+                                // The current county is located so disable search animation and update
+                                // the currently selected county name
+                                setCurrentlySelectedCountyName(result);
+                                setLoading(false);
+                            }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
+
+                        }}/>
                         }
 
 

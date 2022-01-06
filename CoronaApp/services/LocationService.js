@@ -2,7 +2,6 @@ import * as Location from 'expo-location';
 import GpsLocationException from "../exceptions/GpsLocationException";
 import logger from "../utils/Logger";
 import {LocationServiceApiUrl} from "../utils/GeneralUtils";
-import {AppSettings} from "../utils/ApplicationSettings";
 
 /**
  * This class contains method for a device location service
@@ -79,16 +78,14 @@ export default class LocationService {
      */
     async request() {
         logger.enter("request()", "LocationService");
-
-        if(AppSettings.getGps() === true) {
-            const {status} = await Location.requestForegroundPermissionsAsync();
-            logger.info("Status is " + status);
-            if (status === "granted") {
-                this.#granted = true;
-            }
-
-            logger.leave("request()", "LocationService");
+        const {status} = await Location.requestForegroundPermissionsAsync();
+        logger.info("Status is " + status);
+        if (status === "granted") {
+            this.#granted = true;
         }
+
+        logger.leave("request()", "LocationService");
+
         return this.#granted;
     }
 

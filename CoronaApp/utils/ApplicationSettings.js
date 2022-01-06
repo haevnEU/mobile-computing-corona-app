@@ -1,11 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 class ApplicationSettings {
     #data = {
-        "gps": true
+        "gps": false
     }
-
-    #gpsChangeCallbacks = [];
 
     fromJson(json){
         this.#data = JSON.parse(json);
@@ -15,21 +11,12 @@ class ApplicationSettings {
         return JSON.stringify(this.#data)
     }
 
-    getGps(){
+    gpsEnabled() {
         return this.#data.gps;
     }
 
-    async setGps(value){
+    setGpsState(value){
         this.#data.gps = value;
-        for(let callback of this.#gpsChangeCallbacks){
-            callback();
-        }
-        await AsyncStorage.setItem('ApplicationSettings', AppSettings.asJson());
-
-    }
-
-    addOnGpsChange(callback) {
-        this.#gpsChangeCallbacks.push(callback);
     }
 }
 

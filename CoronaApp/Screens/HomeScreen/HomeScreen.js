@@ -21,6 +21,7 @@ export default function HomeScreen(props) {
                 scrollEventThrottle={12}>
                 <CountyDetailCard
                                   data={data} setData={setData}
+                                  gps={props.gps}
                                   chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
                                   countyList={props.countyList}
                 />

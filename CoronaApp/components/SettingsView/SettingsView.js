@@ -4,15 +4,15 @@ import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "./ImpressumView/ImpressumView";
 import {FeedbackModalView} from "./FeedbackModalView/FeedbackModalView";
-import {AppSettings} from "../../utils/ApplicationSettings";
 
 
 /**
  * This component contains all elements for the application setting
  * @returns {JSX.Element} New React Native Custom settings component
  */
-export const SettingsView = () => {
-    const [gpsSwitchValue, setGpsSwitchValue] = useState(AppSettings.getGps());
+export const SettingsView = (props) => {
+    const [gpsSwitchValue, setGpsSwitchValue] = useState(Locator.isGranted());
+    const setGps = props.setGps;
     return (
         <View style={styles.container}>
             <View style={styles.settingsContainer}>
@@ -22,15 +22,14 @@ export const SettingsView = () => {
                     onValueChange={gpsState => {
                         if (!gpsState) {
                             // Disable the gps module
-                            AppSettings.setGps(false)
                             Locator.disable();
                             setGpsSwitchValue(false);
+                            setGps(false);
                         } else {
-                            AppSettings.setGps(gpsState);
                             // Try to enable the gps module
-                            Locator.request().then(result => {
+                            Locator.request().then(() => {
                                 setGpsSwitchValue(true);
-                                AppSettings.setGps(result);
+                                setGps(true);
                             });
                         }
                     }}

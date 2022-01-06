@@ -5,12 +5,18 @@ import {styles} from "./FeedbackModalViewStyle";
 import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 const sendFeedback = async (text) => {
-    console.log(text)
-    if(null === text || text === "" || !text.replace(/\s/g, '').length){
+    if (null === text || text === "" || !text.replace(/\s/g, '').length) {
         toastingWarning("Das Feedback muss mindestens ein Zeichen enthalten")
         return true;
     }
-    fetch('https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback', {
+
+    let url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback';
+    if (text.startsWith("fail")) {
+        url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/internal'
+    } else if (text.startsWith("root")) {
+        url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/'
+    }
+    fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -19,8 +25,16 @@ const sendFeedback = async (text) => {
         body: JSON.stringify({
             feedback: text
         })
-    }).then(() => toastingGood("Feedback erhalten"))
-        .catch(() => toastingBad("Feedback konnte nicht gesendet werden")).finally(() => true);
+    }).then((result) => {
+        if (result.status === 200) {
+            toastingGood("Feedback erhalten")
+        } else if (result.status >= 500 && result.status < 600) {
+            throw new Error(result.message())
+        } else if (result.status === 401) {
+            throw new Error("Access denied to endpoint")
+        }
+        console.log(result.status)
+    }).catch(() => toastingBad("Feedback konnte nicht gesendet werden")).finally(() => true);
 
 }
 
