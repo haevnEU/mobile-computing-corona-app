@@ -1,6 +1,5 @@
-import {NationDataServiceUrl} from "../utils/GeneralUtils";
+import {NationDataServiceUrl, OneDayAsMilli} from "../utils/GeneralUtils";
 import logger from "../utils/Logger";
-import {OneDayAsMilli} from "../utils/GeneralUtils";
 
 
 let dataSource = {update: 0};

@@ -1,7 +1,6 @@
 import CountyDoesNotExistsException from "../exceptions/CountyDoesNotExistsException";
-import {CountyDataServiceUrl} from "../utils/GeneralUtils";
+import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/GeneralUtils";
 import logger from "../utils/Logger";
-import {OneDayAsMilli} from "../utils/GeneralUtils";
 
 
 
