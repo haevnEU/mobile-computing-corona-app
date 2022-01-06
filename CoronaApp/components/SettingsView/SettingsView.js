@@ -4,6 +4,7 @@ import {Locator} from "../../services/LocationService";
 import {styles} from "./SettingsViewStyle";
 import {ImpressumView} from "./ImpressumView/ImpressumView";
 import {FeedbackModalView} from "./FeedbackModalView/FeedbackModalView";
+import {toastingWarning} from "../../utils/GeneralUtils";
 
 
 /**
@@ -20,14 +21,19 @@ export const SettingsView = (props) => {
                     thumbColor={'#B6FC95'}
                     value={gpsSwitchValue}
                     onValueChange={gpsState => {
-                        if (!gpsState) {
+                        if(!Locator.isGranted()){
+                            setGpsSwitchValue(false);
+                            setGps(false);
+                            toastingWarning("Bitte aktiviere den Ortungsdienst in den Einstellungen")
+                            Locator.request().then(()=>{});
+                        } else if (!gpsState) {
                             // Disable the gps module
                             Locator.disable();
                             setGpsSwitchValue(false);
                             setGps(false);
                         } else {
                             // Try to enable the gps module
-                            Locator.request().then(() => {
+                            Locator.enable().then(() => {
                                 setGpsSwitchValue(true);
                                 setGps(true);
                             });

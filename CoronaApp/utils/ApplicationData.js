@@ -1,11 +1,9 @@
 class ApplicationData {
     #data = {
-        "county": "Bochum",
+        "county": "Berlin Mitte",
         "state": "NRW",
         "Country": "Germany",
-        "favourites": [
-            "Oberhausen", "Essen"
-        ],
+        "favourites": [],
     }
 
     fromJson(json){

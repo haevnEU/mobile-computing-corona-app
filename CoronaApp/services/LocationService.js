@@ -2,6 +2,7 @@ import * as Location from 'expo-location';
 import GpsLocationException from "../exceptions/GpsLocationException";
 import logger from "../utils/Logger";
 import {LocationServiceApiUrl} from "../utils/GeneralUtils";
+import {AppSettings} from "../utils/ApplicationSettings";
 
 /**
  * This class contains method for a device location service
@@ -61,7 +62,7 @@ export default class LocationService {
      * @returns {boolean} true if module is enabled
      */
     isEnabled(){
-        return this.isGranted();
+        return this.isGranted() && AppSettings.gpsEnabled();
     }
 
     /**
@@ -69,7 +70,10 @@ export default class LocationService {
      * @returns {Promise<boolean>} true if successful enabled
      */
     async enable(){
-        return this.request();
+        if(await this.request()){
+            AppSettings.setGpsState(true);
+        }
+        return this.isEnabled();
     }
 
     /**
@@ -94,8 +98,7 @@ export default class LocationService {
      */
     disable() {
         logger.enter("disable()", "LocationService");
-
-        this.#granted = false;
+        AppSettings.setGpsState(false);
 
         logger.leave("disable()", "LocationService");
     }
@@ -108,7 +111,7 @@ export default class LocationService {
     async locate() {
         logger.enter("locate()", "LocationService");
 
-        if (!this.#granted) {
+        if (!this.isEnabled()) {
             logger.unexpectedLeft("locate()")
             throw new GpsLocationException("Gps Access denied");
         }
