@@ -96,8 +96,10 @@ export default function App() {
     if (loading) {
         return (
             <SafeAreaProvider>
-                <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-                    <Text>{loadingText}</Text>
+                <Header backgroundColor={'#2d2d2d'} style={styles.headerContainer}
+                        leftComponent={{text: 'InTrack', style: styles.heading}}/>
+                <View style={{justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor:'#2d2d2d'}}>
+                    <Text style={{fontSize:28, color: 'white'}}>{loadingText}</Text>
                     <ActivityIndicator size={"large"}/>
                 </View>
             </SafeAreaProvider>)
