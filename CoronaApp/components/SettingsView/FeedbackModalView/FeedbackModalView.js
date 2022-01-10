@@ -11,9 +11,9 @@ const sendFeedback = async (text) => {
     }
 
     let url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback';
-    if (text.startsWith("fail")) {
+    if (text.toLowerCase().startsWith("fail")) {
         url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/internal'
-    } else if (text.startsWith("root")) {
+    } else if (text.toLowerCase().startsWith("root")) {
         url = 'https://hrwmobilecomputingproject2022.free.beeceptor.com/'
     }
     fetch(url, {
