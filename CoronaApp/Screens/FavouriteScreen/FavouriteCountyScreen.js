@@ -43,11 +43,11 @@ export default function FavouriteCountyScreen(props) {
      * @returns {Promise<boolean>} Always true
      */
     async function addCounty() {
-        logger.enter("addCounty", "App")
+        logger.enter("addCounty", "App");
         try {
             let county = searchResult;
             if(AppData.getFavourites().indexOf(county) >= 0){
-                toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt")
+                toastingWarning("Landkreis \"" + county + "\" wurde bereits hinzugefügt");
                 logger.info("County " + county + " already added");
                 logger.leave("addCounty", "App");
                 setSearchResult("");
@@ -58,10 +58,10 @@ export default function FavouriteCountyScreen(props) {
                 setSearchResult("");
                 return false;
             }
-            let result = await getCountyInformationByName(county)
+            let result = await getCountyInformationByName(county);
 
             favouriteCounties.push({"key": county, "details": result});
-            AppData.addFavourite(county)
+            AppData.addFavourite(county);
             softRerender();
 
             toastingGood("Landkreis \"" + county + "\" wurde zu den favoriten hinzugefügt");
@@ -69,7 +69,7 @@ export default function FavouriteCountyScreen(props) {
             logger.leave("addCounty", "App")
             return true;
         } catch (ex) {
-            toastingBad("Es ist ein Fehler passiert")
+            toastingBad("Es ist ein Fehler passiert");
             logger.exception(ex);
             logger.unexpectedLeft("addCounty", "App");
             return false;
@@ -81,7 +81,7 @@ export default function FavouriteCountyScreen(props) {
      * @param county County to remove
      */
     function removeCounty(county){
-        logger.enter("removeCounty", "App")
+        logger.enter("removeCounty", "App");
 
         // Get the index of the favourite county
         const favouriteItemIndex = favouriteCounties.indexOf(county);
@@ -95,7 +95,7 @@ export default function FavouriteCountyScreen(props) {
 
             softRerender();
 
-            toastingGood("Landkreis \"" + county.key + "\" wurde aus den Favoriten entfernt")
+            toastingGood("Landkreis \"" + county.key + "\" wurde aus den Favoriten entfernt");
             logger.enter("removeCounty", "App");
         }
     }

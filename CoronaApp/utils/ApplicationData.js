@@ -4,7 +4,7 @@ class ApplicationData {
         "state": "NRW",
         "Country": "Germany",
         "favourites": [],
-    }
+    };
 
     fromJson(json){
         this.#data = JSON.parse(json);
@@ -12,7 +12,7 @@ class ApplicationData {
 
     asJson(){
         this.#data.firstRun = false;
-        return JSON.stringify(this.#data)
+        return JSON.stringify(this.#data);
     }
 
     getCounty() {

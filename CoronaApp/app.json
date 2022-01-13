@@ -19,9 +19,9 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map.",
-        "NSLocationAlwaysUsageDescription": "The app needs permission to access your location, if you want to be located on the map.",
-        "NSLocationWhenInUseUsageDescription": "The app needs permission to access your location, if you want to be located on the map."
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Diese App benutzt den Ortungsdienst um covid19 Zahlen für dein aktuellen Standort herauszufinden.",
+        "NSLocationAlwaysUsageDescription": "Diese App benutzt den Ortungsdienst um covid19 Zahlen für dein aktuellen Standort herauszufinden.",
+        "NSLocationWhenInUseUsageDescription": "Diese App benutzt den Ortungsdienst um covid19 Zahlen für dein aktuellen Standort herauszufinden."
       },
       "bundleIdentifier": "de.hrw.CoronaApp"
     },

@@ -15,11 +15,11 @@ const createRow = (key, value, index)=> {
             <Text style={styles.cell}>{key}</Text>
             <Text style={styles.cell}>{value}</Text>
         </View>
-    )
+    );
 }
 
 const generateRows = (data)=> {
-    const result = []
+    const result = [];
     let index = 0;
     // Iterate over each given data row and create a new table row
     data.map(row => {

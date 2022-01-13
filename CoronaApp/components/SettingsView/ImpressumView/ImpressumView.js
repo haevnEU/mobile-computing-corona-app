@@ -14,8 +14,13 @@ export const ImpressumView = () => {
             <Modal visible={modalVisible} transparent={true}>
                 <View style={styles.modal}>
                     <Text style={styles.modalTextBold}>Impressum</Text>
-                    <Text style={styles.modalText}>{'\n Hochschule Ruhr West \n Duisburger Straße 100 \n 45479 Mülheim an der Ruhr \n ' +
-                    '\nErstellt durch: \n Nils Milewski \n Lucas Lichner\n\n'
+                    <Text style={styles.modalText}>{'\nHochschule Ruhr West\n' +
+                        'Duisburger Straße 100\n' +
+                        '45479 Mülheim an der Ruhr\n' +
+                        '\n' +
+                        'Erstellt durch:\n' +
+                        '- Nils Milewski\n' +
+                        '- Lucas Lichner\n\n'
                     }</Text>
                     <CustomButton text={"Schließen"} onPress={() => setModalVisible(!modalVisible)} />
                 </View>

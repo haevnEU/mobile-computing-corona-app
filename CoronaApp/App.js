@@ -36,7 +36,7 @@ export default function App() {
     const [countyList, setCountyList] = useState({});
 
     const [loading, setLoading] = useState(true);
-    const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo")
+    const [loadingText, setLoadingText] = useState("Firing up ultra fast mega hypa hypa V8 turbo");
 
     const [gps, setGps] = useState(AppSettings.gpsEnabled());
 
@@ -51,7 +51,7 @@ export default function App() {
             }
         });
         logger.info("Read AppData");
-        setLoadingText("Lade Nutzerdaten")
+        setLoadingText("Lade Nutzerdaten");
         await loadData();
         setGps(AppSettings.gpsEnabled())
         logger.info("Request all required permissions")

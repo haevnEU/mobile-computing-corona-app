@@ -24,7 +24,7 @@ export const SettingsView = (props) => {
                         if(!Locator.isGranted()){
                             setGpsSwitchValue(false);
                             setGps(false);
-                            toastingWarning("Bitte aktiviere den Ortungsdienst in den Einstellungen")
+                            toastingWarning("Bitte aktiviere den Ortungsdienst in den Einstellungen");
                             Locator.request().then(()=>{});
                         } else if (!gpsState) {
                             // Disable the gps module

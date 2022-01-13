@@ -8,7 +8,7 @@ class ApplicationSettings {
     }
 
     asJson(){
-        return JSON.stringify(this.#data)
+        return JSON.stringify(this.#data);
     }
 
     gpsEnabled() {

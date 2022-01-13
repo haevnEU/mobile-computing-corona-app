@@ -46,7 +46,7 @@ class Logger {
             console.error("[ERR ] " + datetime + ":");
             console.error(message);
         }else if(level === EXCEPTION){
-            console.error(message)
+            console.error(message);
         }
     }
 

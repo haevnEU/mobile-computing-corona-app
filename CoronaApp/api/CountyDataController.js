@@ -3,7 +3,6 @@ import {CountyDataServiceUrl, OneDayAsMilli} from "../utils/GeneralUtils";
 import logger from "../utils/Logger";
 
 
-
 const dataSource = {update: 0};
 let germanCountiesDocument = {};
 
@@ -25,7 +24,7 @@ export const updateCountyDataSource = async () => {
         dataSource.update = currentTime + OneDayAsMilli;
 
         // Each update of the datasource also updates the county list
-        logger.info("Update county list")
+        logger.info("Update county list");
         let dataAsObject = dataSource.data.data;
         germanCountiesDocument = Object
             .keys(dataAsObject)
@@ -46,7 +45,7 @@ export async function getCountyInformationByName(name) {
 
     await updateCountyDataSource();
 
-    logger.info("Simplify datasource for local operation")
+    logger.info("Simplify datasource for local operation");
     // Get and map the data of the datasource.
     let dataAsObject = dataSource.data.data;
     let dataAsArray = Object
@@ -118,7 +117,7 @@ export async function getCountyListAsProcessableJsonObject(){
     // This filter removes all entries which occur more than ones
     array = array.filter((value, index) => array.indexOf(value)===index);
 
-    logger.info("Map filtered counties to a json object")
+    logger.info("Map filtered counties to a json object");
     // Map and add every entry of the array to the resulting county list
     for (let value of array) {
         resultingCountyList.push({ "key": value });

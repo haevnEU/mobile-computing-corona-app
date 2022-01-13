@@ -44,7 +44,7 @@ export const extractCountyDataset = (data) => {
             "key": "Tode/Woche",
             "value": data['deathPerWeek']
         }
-    ]
+    ];
 }
 
 /**

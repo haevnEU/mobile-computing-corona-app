@@ -19,18 +19,18 @@ export default class LocationService {
      * @returns {Promise<String>} Name of the location
      */
     async getCityName(long, lat) {
-        logger.enter("getCityName(" + long + "," +  lat + ")", "LocationService")
+        logger.enter("getCityName(" + long + "," +  lat + ")", "LocationService");
 
         const response = await fetch(LocationServiceApiUrl + "?lat=" + lat + "&lon=" + long + "&format=json");
         let result = await response.json();
 
         // When the city mapping api call returns not a valid object throw a new GpsLocationException
         if (!result.hasOwnProperty("address") || !result['address'].hasOwnProperty("city")) {
-            logger.unexpectedLeft("getCityName(" + long + "," +  lat + ")")
-            throw new GpsLocationException("Cannot locationService position")
+            logger.unexpectedLeft("getCityName(" + long + "," +  lat + ")");
+            throw new GpsLocationException("Cannot locationService position");
         }
 
-        logger.leave("getCityName(" + long + "," +  lat + ")", "LocationService")
+        logger.leave("getCityName(" + long + "," +  lat + ")", "LocationService");
         return result['address']['city'];
     }
 
@@ -112,7 +112,7 @@ export default class LocationService {
         logger.enter("locate()", "LocationService");
 
         if (!this.isEnabled()) {
-            logger.unexpectedLeft("locate()")
+            logger.unexpectedLeft("locate()");
             throw new GpsLocationException("Gps Access denied");
         }
         let location = await Location.getCurrentPositionAsync({});

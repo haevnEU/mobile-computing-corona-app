@@ -41,7 +41,7 @@ export const extractNationDataset = (data) => {
             "value": data.national.hospitalization
         }
     ]
-}
+};
 
 /**
  * This component represents information about a nation
@@ -66,7 +66,8 @@ export const NationView = () => {
             <View>
                 <ActivityIndicator size={"large"}/>
                 <Text>Loading.... </Text>
-            </View>)
+            </View>
+        );
     }else {
         return (
             <View>
@@ -77,7 +78,7 @@ export const NationView = () => {
                     <CustomTable data={extractNationDataset(data)}/>
                 </Card>
             </View>
-        )
+        );
     }
 }
 
