@@ -1,16 +1,28 @@
 import React, {useState} from 'react';
 import {Modal, Text, TextInput, View} from 'react-native';
-import {toastingBad, toastingGood, toastingWarning} from "../../../utils/GeneralUtils";
+import {
+    feedbackUrl, feedbackUrl_TestAccessDenied,
+    feedbackUrl_TestInternalFailure,
+    toastingBad,
+    toastingGood,
+    toastingWarning
+} from "../../../utils/GeneralUtils";
 import {styles} from "./FeedbackModalViewStyle";
 import {CustomButton} from "../../customElements/CustomButton/CustomButton";
 
 const sendFeedback = async (text) => {
-    console.log(text)
-    if(null === text || text === "" || !text.replace(/\s/g, '').length){
-        toastingWarning("Das Feedback muss mindestens ein Zeichen enthalten")
+    if (null === text || text === "" || !text.replace(/\s/g, '').length) {
+        toastingWarning("Das Feedback muss mindestens ein Zeichen enthalten");
         return true;
     }
-    fetch('https://hrwmobilecomputingproject2022.free.beeceptor.com/feedback', {
+
+    let url = feedbackUrl;
+    if (text.toLowerCase().startsWith("fail")) {
+        url = feedbackUrl_TestInternalFailure;
+    } else if (text.toLowerCase().startsWith("root")) {
+        url = feedbackUrl_TestAccessDenied;
+    }
+    fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -19,8 +31,15 @@ const sendFeedback = async (text) => {
         body: JSON.stringify({
             feedback: text
         })
-    }).then(() => toastingGood("Feedback erhalten"))
-        .catch(() => toastingBad("Feedback konnte nicht gesendet werden")).finally(() => true);
+    }).then((result) => {
+        if (result.status === 200) {
+            toastingGood("Feedback erhalten");
+        } else if (result.status >= 500 && result.status < 600) {
+            throw new Error(result.message());
+        } else if (result.status === 401) {
+            throw new Error("Access denied to endpoint");
+        }
+    }).catch(() => toastingBad("Feedback konnte nicht gesendet werden")).finally(() => true);
 
 }
 

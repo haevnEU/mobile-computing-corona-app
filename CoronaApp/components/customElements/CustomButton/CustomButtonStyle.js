@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
         minWidth: 150,
         marginRight: 15,
         marginLeft: 15,
+        margin: 5,
         height: 60,
         alignSelf: 'center',
         alignItems: 'center',

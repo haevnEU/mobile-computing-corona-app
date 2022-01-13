@@ -20,8 +20,8 @@ export default function HomeScreen(props) {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={12}>
                 <CountyDetailCard
-                                  gps={props.gps}
                                   data={data} setData={setData}
+                                  gps={props.gps}
                                   chosenCounty={chosenCounty} setChosenCounty={setChosenCounty}
                                   countyList={props.countyList}
                 />

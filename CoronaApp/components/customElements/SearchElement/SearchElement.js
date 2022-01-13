@@ -26,7 +26,7 @@ const SearchElement = (props) => {
 
         // When no county is provided return an empty array
         if (countyFilterInput.length === 0) {
-            logger.warn("Given county filter is empty")
+            logger.warn("Given county filter is empty");
             setSuggestionArray({})
         } else {
             logger.info("Apply filter to data");

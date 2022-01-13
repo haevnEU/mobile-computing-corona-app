@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
 
     buttonContainer:{
         display: "flex",
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: "center",
     },
 

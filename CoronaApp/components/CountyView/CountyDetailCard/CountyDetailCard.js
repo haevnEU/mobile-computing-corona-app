@@ -4,7 +4,7 @@ import {Card} from "react-native-elements";
 import {getCountyInformationByName} from "../../../api/CountyDataController";
 import {SearchElement} from "../../customElements/SearchElement/SearchElement";
 import {styles} from "./CountyDetailCardStyle";
-import ApplicationData from "../../../utils/ApplicationData";
+import {AppData} from "../../../utils/ApplicationData";
 import {Locator} from "../../../services/LocationService";
 import {CustomCountyCard} from "../CustomCountyCard/CustomCountyCard";
 import {toastingWarning} from "../../../utils/GeneralUtils";
@@ -22,11 +22,11 @@ const CountyDetailCard = (props) => {
      * If true a loading animation will be displayed and the search and locate button are disabled
      */
     const [loading, setLoading] = useState(false);
-    const [currentlySelectedCountyName, setCurrentlySelectedCountyName] = useState(ApplicationData.county);
+    const [currentlySelectedCountyName, setCurrentlySelectedCountyName] = useState(AppData.getCounty());
     const [currentlySelectedCountyData, setCurrentlySelectedCountyData] = useState({});
     const [showSearch, setShowSearch] = useState(true);
+    const gps = props.gps;
 
-    let gps = props.gps[0]
 
     // Toggle the view between a search view and a county details view
     if (showSearch) {
@@ -50,20 +50,17 @@ const CountyDetailCard = (props) => {
                         )
                     }
                     <View style={[styles.multiple_button_container]}>
+                        {Locator.isEnabled() && <CustomButton text="Orten" onPress={() => {
+                            // Display loading state while the current city is located
+                            setLoading(true);
+                            Locator.getCurrentLocationName().then(result => {
+                                // The current county is located so disable search animation and update
+                                // the currently selected county name
+                                setCurrentlySelectedCountyName(result);
+                                setLoading(false);
+                            }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
 
-
-                        {gps && <CustomButton text="Finden" onPress={ () =>{
-                            if(gps) {
-                                // Display loading state while the current city is located
-                                setLoading(true);
-                                Locator.getCurrentLocationName().then(result => {
-                                    // The current county is located so disable search animation and update
-                                    // the currently selected county name
-                                    setCurrentlySelectedCountyName(result);
-                                    setLoading(false);
-                                }).catch(() => toastingWarning("Landkreis mit diesen Koordinaten \"" + gps + "\" existiert nicht"));
-                            }
-                        }} />
+                        }}/>
                         }
 
 

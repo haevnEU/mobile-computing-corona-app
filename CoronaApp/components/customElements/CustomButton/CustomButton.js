@@ -6,10 +6,9 @@ export const CustomButton = (props) => {
     const [styles_, setStyles_] = useState(styles)
     useEffect(() => {
         if(props.style !== undefined){
-            console.log(props.style)
             setStyles_(props.style);
         }
-    }, [])
+    }, []);
 
     return (
         <TouchableOpacity disabled={props.disabled}

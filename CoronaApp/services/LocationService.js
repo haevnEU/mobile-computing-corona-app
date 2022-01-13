@@ -1,7 +1,8 @@
 import * as Location from 'expo-location';
 import GpsLocationException from "../exceptions/GpsLocationException";
-import {ApplicationSettings, LocationServiceApiUrl} from "../utils/ApplicationData";
 import logger from "../utils/Logger";
+import {LocationServiceApiUrl} from "../utils/GeneralUtils";
+import {AppSettings} from "../utils/ApplicationSettings";
 
 /**
  * This class contains method for a device location service
@@ -18,18 +19,18 @@ export default class LocationService {
      * @returns {Promise<String>} Name of the location
      */
     async getCityName(long, lat) {
-        logger.enter("getCityName(" + long + "," +  lat + ")", "LocationService")
+        logger.enter("getCityName(" + long + "," +  lat + ")", "LocationService");
 
         const response = await fetch(LocationServiceApiUrl + "?lat=" + lat + "&lon=" + long + "&format=json");
         let result = await response.json();
 
         // When the city mapping api call returns not a valid object throw a new GpsLocationException
         if (!result.hasOwnProperty("address") || !result['address'].hasOwnProperty("city")) {
-            logger.unexpectedLeft("getCityName(" + long + "," +  lat + ")")
-            throw new GpsLocationException("Cannot locationService position")
+            logger.unexpectedLeft("getCityName(" + long + "," +  lat + ")");
+            throw new GpsLocationException("Cannot locationService position");
         }
 
-        logger.leave("getCityName(" + long + "," +  lat + ")", "LocationService")
+        logger.leave("getCityName(" + long + "," +  lat + ")", "LocationService");
         return result['address']['city'];
     }
 
@@ -61,7 +62,7 @@ export default class LocationService {
      * @returns {boolean} true if module is enabled
      */
     isEnabled(){
-        return this.isGranted();
+        return this.isGranted() && AppSettings.gpsEnabled();
     }
 
     /**
@@ -69,7 +70,10 @@ export default class LocationService {
      * @returns {Promise<boolean>} true if successful enabled
      */
     async enable(){
-        return this.request();
+        if(await this.request()){
+            AppSettings.setGpsState(true);
+        }
+        return this.isEnabled();
     }
 
     /**
@@ -78,16 +82,14 @@ export default class LocationService {
      */
     async request() {
         logger.enter("request()", "LocationService");
-
         const {status} = await Location.requestForegroundPermissionsAsync();
-
         logger.info("Status is " + status);
         if (status === "granted") {
             this.#granted = true;
         }
-        ApplicationSettings.gps = this.#granted;
 
         logger.leave("request()", "LocationService");
+
         return this.#granted;
     }
 
@@ -96,9 +98,7 @@ export default class LocationService {
      */
     disable() {
         logger.enter("disable()", "LocationService");
-
-        this.#granted = false;
-        ApplicationSettings.gps = this.#granted;
+        AppSettings.setGpsState(false);
 
         logger.leave("disable()", "LocationService");
     }
@@ -111,8 +111,8 @@ export default class LocationService {
     async locate() {
         logger.enter("locate()", "LocationService");
 
-        if (!this.#granted) {
-            logger.unexpectedLeft("locate()")
+        if (!this.isEnabled()) {
+            logger.unexpectedLeft("locate()");
             throw new GpsLocationException("Gps Access denied");
         }
         let location = await Location.getCurrentPositionAsync({});
